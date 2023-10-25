@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">JuegAlmi</string>
+    <string name="pestanya1">Videojuegos</string>
+    <string name="pestanya2">Consolas</string>
+    <string name="pestanya3">Móviles</string>
+    <string name="pestanya4">Tablets</string>
 </resources>

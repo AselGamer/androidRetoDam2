@@ -39,48 +39,100 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutArriba"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@color/colorTab"
         >
 
-        <TextView
-            android:id="@+id/txtVideojuegos"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/pestanya1"
+            android:layout_height="wrap_content"
+            android:text="@string/tabArriba1"
+            android:id="@+id/tabTodo"
             />
 
-        <TextView
-            android:id="@+id/txtConsolas"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/pestanya2"
+            android:layout_height="wrap_content"
+            android:text="@string/tabArriba2"
+            android:id="@+id/tabVideojuegos"
             />
 
-        <TextView
-            android:id="@+id/txtMoviles"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/pestanya3"
+            android:layout_height="wrap_content"
+            android:text="@string/tabArriba3"
+            android:id="@+id/tabConsolas"
             />
 
-        <TextView
-            android:id="@+id/txtTablets"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/pestanya4"
+            android:layout_height="wrap_content"
+            android:text="@string/tabArriba4"
+            android:id="@+id/tabMoviles"
             />
 
-    </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabArriba5"
+            android:id="@+id/tabTablets"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutAbajo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTab"
+        >
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabAbajo1"
+            android:icon="@drawable/cesta"
+            android:id="@+id/tabProductos"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabAbajo2"
+            android:id="@+id/tabReparaciones"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabAbajo3"
+            android:id="@+id/tabUbicacion"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabAbajo4"
+            android:id="@+id/tabGaleria"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabAbajo5"
+            android:id="@+id/tabNosotros"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </LinearLayout>

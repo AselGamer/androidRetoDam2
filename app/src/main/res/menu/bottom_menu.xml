@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/productos"
+        android:title="@string/botonAbajo1"
+        android:icon="@drawable/mando"/>
+
+    <item
+        android:id="@+id/reparaciones"
+        android:title="@string/botonAbajo2"
+        android:icon="@drawable/reparacion"
+        />
+
+    <item
+        android:id="@+id/ubicacion"
+        android:title="@string/botonAbajo3"
+        android:icon="@drawable/ubicacion"
+        />
+
+    <item
+        android:id="@+id/galeria"
+        android:title="@string/botonAbajo4"
+        android:icon="@drawable/galeria" />
+
+    <item
+        android:id="@+id/nosotros"
+        android:title="@string/botonAbajo5"
+        android:icon="@drawable/nosotros"
+        />
+
+</menu>

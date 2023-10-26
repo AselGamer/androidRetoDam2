@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.juegalmi.tabsAbajo.Galeria;
-import com.example.juegalmi.tabsAbajo.Productos;
-import com.example.juegalmi.tabsAbajo.Reparaciones;
-import com.example.juegalmi.tabsAbajo.SobreNosotros;
-import com.example.juegalmi.tabsAbajo.Ubicacion;
+import com.example.juegalmi.botonesAbajo.Galeria;
+import com.example.juegalmi.botonesAbajo.Productos;
+import com.example.juegalmi.botonesAbajo.Reparaciones;
+import com.example.juegalmi.botonesAbajo.SobreNosotros;
+import com.example.juegalmi.botonesAbajo.Ubicacion;
 
 public class PagerAdaptador extends FragmentPagerAdapter {
     int numTabs;

@@ -90,49 +90,12 @@
         android:layout_weight="1"
         />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutAbajo"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTab"
-        >
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_menu" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabAbajo1"
-            android:icon="@drawable/cesta"
-            android:id="@+id/tabProductos"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabAbajo2"
-            android:id="@+id/tabReparaciones"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabAbajo3"
-            android:id="@+id/tabUbicacion"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabAbajo4"
-            android:id="@+id/tabGaleria"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabAbajo5"
-            android:id="@+id/tabNosotros"
-            />
-
-    </com.google.android.material.tabs.TabLayout>
 
 </LinearLayout>

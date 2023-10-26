@@ -29,6 +29,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    //Para el binding: Requisito para los botones de abajo
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {

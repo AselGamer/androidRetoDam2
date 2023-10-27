@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".botonesAbajo.Productos">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="73dp"
+        android:background="@color/colorTab"
         android:orientation="horizontal">
 
         <EditText
@@ -38,10 +40,14 @@
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutArriba"
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTab"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="50dp"
+        app:tabIndicatorColor="@color/colorTabSeleccionado"
+        app:tabSelectedTextAppearance="@style/estiloBold"
         >
 
         <com.google.android.material.tabs.TabItem
@@ -70,13 +76,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tabArriba4"
             android:id="@+id/tabMoviles"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabArriba5"
-            android:id="@+id/tabTablets"
             />
 
     </com.google.android.material.tabs.TabLayout>

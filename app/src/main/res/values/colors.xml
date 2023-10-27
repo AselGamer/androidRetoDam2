@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorTab">#dae7ff</color>
+    <color name="colorTabSeleccionado">#b7cffa</color>
+    <color name="tab_color_selected">#CC3535</color>
+    <color name="tab_color_unselected">#A3E853</color>
 </resources>

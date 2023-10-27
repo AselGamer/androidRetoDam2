@@ -5,7 +5,9 @@
     <item
         android:id="@+id/productos"
         android:title="@string/botonAbajo1"
-        android:icon="@drawable/mando"/>
+        android:icon="@drawable/mando"
+
+        />
 
     <item
         android:id="@+id/reparaciones"

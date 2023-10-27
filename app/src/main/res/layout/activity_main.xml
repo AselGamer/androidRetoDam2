@@ -21,8 +21,8 @@
         android:background="?android:attr/windowBackground"
         app:labelVisibilityMode="labeled"
         app:itemBackground="@color/colorTab"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:menu="@menu/bottom_menu" />
 
 </LinearLayout>

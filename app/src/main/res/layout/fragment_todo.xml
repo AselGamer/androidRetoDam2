@@ -9,7 +9,7 @@
     tools:context=".tabsArriba.Todo">
 
     <TextView
-        style="@style/estiloSubtitulo"
+        style="@style/estiloSubtitulo.margen"
         android:text="Titulo"
         />
 

@@ -1,6 +1,7 @@
 package com.example.juegalmi.adaptadores;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class SpinnerAdaptador extends BaseAdapter {
     //Devuelve el numero de vistas que se van a retornar
     @Override
     public int getCount() {
-        return datos.length + 1;   //+1 porque tambien está la vista "Selecciona dispositivo "
+        return datos.length;   //+1 porque tambien está la vista "Selecciona dispositivo "
     }
 
     //Devuelve el dato correspondiente a la fila
@@ -50,7 +51,17 @@ public class SpinnerAdaptador extends BaseAdapter {
     //Vista desplegable
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return getVistaPersonalizada(position, convertView, parent);
+        //Se instancia el inflador
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        //Cargamos la vista personalizada: inflater.inflate(la vista a cargar, grupo de vistas del spinner_personalizado, false para que no de errores)
+        View fila = inflater.inflate(R.layout.spinner_personalizado, parent, false);
+
+        //Se accede a lo que quieras
+        TextView texto = fila.findViewById(R.id.txtSpinner);
+        texto.setText(datos[position]);
+
+        return fila;
     }
 
     //Para personalizar la vista de cada uno de los elementos que compone el Spinner
@@ -64,14 +75,9 @@ public class SpinnerAdaptador extends BaseAdapter {
 
         //Se accede a lo que quieras
         TextView texto = fila.findViewById(R.id.txtSpinner);
-        //Cambiamos el texto de las filas
-        if(position == 0)
-        {
-            texto.setText("Selecciona dispositivo ");
-        } else
-        {
-            texto.setText(datos[position - 1]);
-        }
+        texto.setText("Selecciona dispositivo");
+        texto.setTextColor(fila.getResources().getColor(R.color.colorTabSeleccionado, null));
+
         return fila;
     }
 }

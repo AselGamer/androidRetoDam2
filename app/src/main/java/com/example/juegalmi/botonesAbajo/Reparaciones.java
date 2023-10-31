@@ -1,5 +1,6 @@
 package com.example.juegalmi.botonesAbajo;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,8 @@ public class Reparaciones extends Fragment {
 
         //Asignamos el adaptador
         sp.setAdapter(adapter);
+
+        //sp.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
 
         //Generamos el listener al seleccionar elemento
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

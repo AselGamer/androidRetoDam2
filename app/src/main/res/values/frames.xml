@@ -4,4 +4,34 @@
         <item>Consola</item>
         <item>Móvil</item>
     </string-array>
+
+    <string-array name="fotos">
+        <item>@drawable/galeria1</item>
+        <item>@drawable/galeria2</item>
+        <item>@drawable/galeria3</item>
+        <item>@drawable/galeria4</item>
+        <item>@drawable/galeria5</item>
+        <item>@drawable/galeria6</item>
+        <item>@drawable/galeria7</item>
+        <item>@drawable/galeria8</item>
+        <item>@drawable/galeria9</item>
+        <item>@drawable/galeria10</item>
+        <item>@drawable/galeria11</item>
+        <item>@drawable/galeria12</item>
+    </string-array>
+
+    <string-array name="fotosDescripcion">
+        <item>Foto 1</item>
+        <item>Foto 2</item>
+        <item>Foto 3</item>
+        <item>Foto 4</item>
+        <item>Foto 5</item>
+        <item>Foto 6</item>
+        <item>Foto 7</item>
+        <item>Foto 8</item>
+        <item>Foto 9</item>
+        <item>Foto 10</item>
+        <item>Foto 11</item>
+        <item>Foto 12</item>
+    </string-array>
 </resources>

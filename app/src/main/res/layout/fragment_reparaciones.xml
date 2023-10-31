@@ -66,12 +66,20 @@
             style="@style/estiloSubtitulo"
             />
 
-        <Spinner
-            android:id="@+id/spDispositivo"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="40dp"
-            />
+            android:layout_marginRight="130dp"
+            android:background="@color/colorTab">
+            <Spinner
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overlapAnchor="false"
+                android:id="@+id/spDispositivo"
+                />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="120dp"
@@ -94,6 +102,7 @@
             android:minLines="6"
             android:scrollbars="vertical"
             android:hint="@string/descripcion"
+            android:textColorHint="@color/colorTabSeleccionado"
             android:background="@color/colorTab"
             />
 

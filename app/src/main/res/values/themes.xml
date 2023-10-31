@@ -14,6 +14,13 @@
         <item name="cardElevation">0dp</item>
     </style>
 
+    <style name="estiloCardViewGaleria">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">160dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
     <style name="estiloSubtitulo">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>

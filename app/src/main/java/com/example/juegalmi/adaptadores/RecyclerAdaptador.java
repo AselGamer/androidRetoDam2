@@ -31,7 +31,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     @NonNull
     @Override
     public RecyclerAdaptador.MiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.foto_texto, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_texto, parent, false);
         return new MiViewHolder(vista);
     }
 

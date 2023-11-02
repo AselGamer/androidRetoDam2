@@ -18,6 +18,40 @@
 
     <string name="descripcion">Descripción del problema</string>
     <string name="enviar">ENVIAR</string>
+    <string name="iniciar">INICIAR SESIÓN</string>
+    <string name="cuenta">¿No tienes cuenta?</string>
+    <string name="registrate">Regístrate</string>
+    <string name="crear">Crear Cuenta</string>
+
+    <string name="email">E-mail</string>
+    <string name="emailP">E-mail:</string>
+    <string name="contrasenya">Contraseña</string>
+    <string name="contrasenyaP">Contraseña:</string>
+    <string name="caracteres">Mínimo 8 caracteres incluyendo minúscula, mayúscula, un número y un carácter especial.</string>
+    <string name="recontrasenya">Repetir Contraseña</string>
+    <string name="recontrasenyaP">Repetir Contraseña:</string>
+    <string name="nombre">Nombre</string>
+    <string name="nombreP">Nombre:</string>
+    <string name="apellido1">Primer Apellido</string>
+    <string name="apellido1P">Primer Apellido:</string>
+    <string name="apellido2">Segundo Apellido</string>
+    <string name="apellido2P">Segundo Apellido:</string>
+    <string name="telefono">Teléfono móvil</string>
+    <string name="telefonoP">Teléfono móvil:</string>
+    <string name="direccion">Dirección</string>
+    <string name="direccionP">Dirección:</string>
+    <string name="numero">Número</string>
+    <string name="numeroP">Número:</string>
+    <string name="piso">Piso</string>
+    <string name="pisoP">Piso:</string>
+    <string name="cp">Código Postal</string>
+    <string name="cpP">Código Postal:</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="ciudadP">Ciudad:</string>
+    <string name="provincia">Provincia</string>
+    <string name="provinciaP">Provincia:</string>
+    <string name="pais">País</string>
+    <string name="paisP">País:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -76,7 +76,7 @@ public class SpinnerAdaptador extends BaseAdapter {
         //Se accede a lo que quieras
         TextView texto = fila.findViewById(R.id.txtSpinner);
         texto.setText("Selecciona dispositivo");
-        texto.setTextColor(fila.getResources().getColor(R.color.colorTabSeleccionado, null));
+        texto.setTextColor(fila.getResources().getColor(R.color.colorBoton, null));
 
         return fila;
     }

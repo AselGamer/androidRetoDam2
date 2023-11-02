@@ -8,40 +8,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="73dp"
-        android:background="@color/colorTab"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="270dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/botonAbajo2"
-            style="@style/estiloTitulo"
-            />
-
-        <ImageButton
-            android:id="@+id/imgCesta"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/cesta" />
-
-        <ImageButton
-            android:id="@+id/imgUsuario"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/usuario" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
@@ -102,7 +68,7 @@
             android:minLines="6"
             android:scrollbars="vertical"
             android:hint="@string/descripcion"
-            android:textColorHint="@color/colorTabSeleccionado"
+            android:textColorHint="@color/colorBoton"
             android:background="@color/colorTab"
             />
 
@@ -114,7 +80,7 @@
             android:layout_marginRight="40dp"
             android:id="@+id/btnEnviar"
             android:text="@string/enviar"
-            android:backgroundTint="@color/colorTabSeleccionado"
+            android:backgroundTint="@color/colorBoton"
             android:textColor="@color/black"
             style="@style/estiloTexto"
             android:textStyle="bold"

@@ -5,14 +5,14 @@
     <item
         android:id="@+id/productos"
         android:title="@string/botonAbajo1"
-        android:icon="@drawable/mando"
+        android:icon="@drawable/productos"
 
         />
 
     <item
         android:id="@+id/reparaciones"
         android:title="@string/botonAbajo2"
-        android:icon="@drawable/reparacion"
+        android:icon="@drawable/reparaciones"
         />
 
     <item
@@ -29,7 +29,7 @@
     <item
         android:id="@+id/nosotros"
         android:title="@string/botonAbajo5"
-        android:icon="@drawable/nosotros"
+        android:icon="@drawable/sobre_nosotros"
         />
 
 </menu>

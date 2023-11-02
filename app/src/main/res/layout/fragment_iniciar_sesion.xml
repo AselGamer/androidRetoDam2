@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".IniciarSesion">
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/emailP"
+        style="@style/estiloSubtitulo"
+        />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:padding="10dp"
+        android:hint="@string/email"
+        android:textColorHint="@color/colorBoton"
+        android:background="@color/colorTab"
+        />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="31dp"
+        android:text="@string/contrasenyaP"
+        style="@style/estiloSubtitulo"
+        />
+
+    <EditText
+        android:id="@+id/edtContrasenya"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:padding="10dp"
+        android:hint="@string/contrasenya"
+        android:textColorHint="@color/colorBoton"
+        android:background="@color/colorTab"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/btnEnviar"
+        android:text="@string/iniciar"
+        android:backgroundTint="@color/colorBoton"
+        android:textColor="@color/black"
+        style="@style/estiloTexto"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="@string/cuenta"
+            style="@style/estiloTexto"
+            />
+
+        <TextView
+            android:id="@+id/txtRegistrate"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="@string/registrate"
+            style="@style/estiloTexto"
+            android:textStyle="bold"
+            android:textColor="@color/colorBoton"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

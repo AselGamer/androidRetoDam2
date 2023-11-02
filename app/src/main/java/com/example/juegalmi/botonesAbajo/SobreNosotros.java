@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.juegalmi.R;
 
@@ -29,6 +31,13 @@ public class SobreNosotros extends Fragment {
 
     }
 
+    public static SobreNosotros newInstance(Bundle args)
+    {
+        SobreNosotros fragment = new SobreNosotros();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     //Se ejecuta cuando se crea el fragmento, no necesariamente si se muestra
     @Override
     public void onAttach(@NonNull Context context) {
@@ -40,6 +49,7 @@ public class SobreNosotros extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_sobre_nosotros, container, false);
+
         imgInstagram = vista.findViewById(R.id.imgInstagram);
         imgTwitter = vista.findViewById(R.id.imgTwitter);
         imgTikTok = vista.findViewById(R.id.imgTikTok);
@@ -58,6 +68,7 @@ public class SobreNosotros extends Fragment {
         imgInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Hipervinculo
                 Uri uri = Uri.parse(urlInstagram);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -67,6 +78,7 @@ public class SobreNosotros extends Fragment {
         imgTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Hipervinculo
                 Uri uri = Uri.parse(urlTwitter);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -76,11 +88,13 @@ public class SobreNosotros extends Fragment {
         imgTikTok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Hipervinculo
                 Uri uri = Uri.parse(urlTikTok);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
         });
+
     }
 
 }

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CrearCuenta">
-    
+    tools:context=".DatosPersonales">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +21,7 @@
             />
 
         <EditText
+            android:id="@+id/edtEmail"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -28,6 +29,7 @@
             android:hint="@string/email"
             android:textColorHint="@color/colorBoton"
             android:background="@color/colorTab"
+            android:enabled="false"
             />
 
         <TextView
@@ -396,7 +398,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:id="@+id/btnEnviar"
-            android:text="@string/crear"
+            android:text="@string/guardar"
             android:backgroundTint="@color/colorBoton"
             android:textColor="@color/black"
             style="@style/estiloTexto"

@@ -13,10 +13,18 @@
         android:text="Titulo"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/miRecyclerTodo"
-        />
+        android:id="@+id/scroll"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/miRecyclerTodo"
+            />
+
+    </ScrollView>
 
 </LinearLayout>

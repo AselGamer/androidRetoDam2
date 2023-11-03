@@ -1,4 +1,4 @@
-package com.example.juegalmi;
+package com.example.juegalmi.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.example.juegalmi.R;
 
 public class DialogFoto extends DialogFragment {
     private int foto;

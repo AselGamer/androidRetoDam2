@@ -14,11 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.juegalmi.DialogFoto;
+import com.example.juegalmi.dialogs.DialogFoto;
 import com.example.juegalmi.R;
-import com.example.juegalmi.model.FotoGaleria;
-
-import java.util.ArrayList;
 
 public class RecyclerAdaptadorGaleria extends RecyclerView.Adapter<RecyclerAdaptadorGaleria.MiViewHolder>{
     private Bundle bundle = new Bundle();

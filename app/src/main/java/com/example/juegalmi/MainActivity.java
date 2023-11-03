@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.juegalmi.botonesAbajo.Galeria;
@@ -105,4 +107,10 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     public void cambiarSesion(String sesion) {
         txtSesion = sesion;
     }
+
+    @Override
+    public String obtenerSesion() {
+        return txtSesion;
+    }
+
 }

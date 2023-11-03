@@ -1,6 +1,8 @@
 package com.example.juegalmi.adaptadores;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
 import com.example.juegalmi.model.Imagen;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.MiViewHolder>{
@@ -45,6 +48,11 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
         holder.txtJuego.setText(listaFotos.get(position).getTexto1());
         holder.txtPrecio.setText(listaFotos.get(position).getTexto2());
         holder.txtDesarrollador.setText(listaFotos.get(position).getTexto3());
+
+        if(position == 10){
+            holder.imagen.getLayoutParams().width = 100;
+            holder.imagen.getLayoutParams().height = 100;
+        }
     }
 
     @Override

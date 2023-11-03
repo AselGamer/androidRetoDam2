@@ -6,11 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
 
 import com.example.juegalmi.R;
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
@@ -27,6 +30,7 @@ public class Todo extends Fragment {
 
     private RecyclerView recyclerView;
     ArrayList<Imagen> listaImagenes = new ArrayList<>();
+    ImageButton imgMas;
     RecyclerAdaptador adaptador;
 
     public Todo() {
@@ -58,7 +62,7 @@ public class Todo extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_todo, container, false);
 
         recyclerView = vista.findViewById(R.id.miRecyclerTodo);
-        recyclerView.setLayoutManager(new GridLayoutManager(vista.getContext(), 3));    //numero de columnas
+        recyclerView.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));    //numero de columnas
         adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
         recyclerView.setAdapter(adaptador);
 
@@ -74,5 +78,14 @@ public class Todo extends Fragment {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
+        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
     }
 }

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Pedido">
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    tools:context=".Alquiler">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="vertical">
 
         <TextView
@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10005842"
+            android:text="20008952"
             style="@style/estiloSubtitulo"
             />
 
@@ -34,8 +34,6 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/colorTab"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
         />
 
@@ -43,8 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="vertical">
 
         <TextView
@@ -83,18 +79,14 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/colorTab"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,21 +96,14 @@
             android:textStyle="bold"
             />
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="3€"
-                style="@style/estiloTexto"
-                android:textStyle="bold"
-                />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="3€"
+            style="@style/estiloTexto"
+            android:textStyle="bold"
+            />
 
     </LinearLayout>
 

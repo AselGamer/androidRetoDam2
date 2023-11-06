@@ -10,17 +10,17 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Pedido#newInstance} factory method to
+ * Use the {@link Cesta#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Pedido extends Fragment {
+public class Cesta extends Fragment {
 
-    public Pedido() {
+    public Cesta() {
         // Required empty public constructor
     }
 
-    public static Pedido newInstance(String param1, String param2) {
-        Pedido fragment = new Pedido();
+    public static Cesta newInstance(String param1, String param2) {
+        Cesta fragment = new Cesta();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -39,6 +39,6 @@ public class Pedido extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedido, container, false);
+        return inflater.inflate(R.layout.fragment_cesta, container, false);
     }
 }

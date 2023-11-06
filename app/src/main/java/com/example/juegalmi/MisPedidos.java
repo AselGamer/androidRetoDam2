@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.juegalmi.interfaces.IControlFragmentos;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MisPedidos#newInstance} factory method to
@@ -66,7 +68,7 @@ public class MisPedidos extends Fragment {
         btnDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.cambiarTitulo("Mis Pedidos");
+                activity.cambiarTitulo("Pedido");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenedor, new Pedido())

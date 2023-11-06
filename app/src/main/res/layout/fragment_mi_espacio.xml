@@ -92,6 +92,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layAlquileres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -133,6 +134,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layReparaciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
@@ -171,23 +173,27 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorTab"/>
-
-        <Button
-            android:id="@+id/btnCerrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/cerrar"
-            android:backgroundTint="@color/colorBoton"
-            android:textColor="@color/black"
-            style="@style/estiloTexto"
-            android:textStyle="bold"
-            />
-
     </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/colorTab"/>
+
+    <Button
+        android:id="@+id/btnCerrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="@string/cerrar"
+        android:backgroundTint="@color/colorBoton"
+        android:textColor="@color/black"
+        style="@style/estiloTexto"
+        android:textStyle="bold"
+        />
 
 </LinearLayout>

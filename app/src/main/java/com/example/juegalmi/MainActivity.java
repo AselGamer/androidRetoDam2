@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.juegalmi.botonesAbajo.Galeria;
@@ -15,13 +13,14 @@ import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.botonesAbajo.Reparaciones;
 import com.example.juegalmi.botonesAbajo.SobreNosotros;
 import com.example.juegalmi.botonesAbajo.Ubicacion;
+import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements IControlFragmentos{
+public class MainActivity extends AppCompatActivity implements IControlFragmentos {
 
     private BottomNavigationView bottomNavigationView;
     private TextView txtTitulo;
-    private ImageButton imgUsuario;
+    private ImageButton imgUsuario, imgCesta;
     private String txtSesion = "";
 
     @Override
@@ -51,6 +50,26 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.contenedor, new MiEspacio())
+                            .commit();
+                }
+            }
+        });
+
+        imgCesta = findViewById(R.id.imgCesta);
+        imgCesta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(txtSesion.equals("")){
+                    txtTitulo.setText("Iniciar Sesión");
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, new IniciarSesion())
+                            .commit();
+                }else{
+                    txtTitulo.setText("Cesta");
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, new Cesta())
                             .commit();
                 }
             }

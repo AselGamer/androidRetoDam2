@@ -10,26 +10,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 
 import com.example.juegalmi.interfaces.IControlFragmentos;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DatosPersonales#newInstance} factory method to
+ * Use the {@link MisReparaciones#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DatosPersonales extends Fragment {
+public class MisReparaciones extends Fragment {
 
-    private EditText edtEmail;
+    private Button btnDetalle;
     private IControlFragmentos activity;
 
-    public DatosPersonales() {
+    public MisReparaciones() {
         // Required empty public constructor
     }
 
-    public static DatosPersonales newInstance(String param1, String param2) {
-        DatosPersonales fragment = new DatosPersonales();
+    public static MisReparaciones newInstance(String param1, String param2) {
+        MisReparaciones fragment = new MisReparaciones();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -44,7 +44,6 @@ public class DatosPersonales extends Fragment {
         }
     }
 
-    //Metodo para interactuar con la actividad principal
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -52,22 +51,29 @@ public class DatosPersonales extends Fragment {
         activity = (IControlFragmentos) context;
     }
 
-    //Es el metodo para cargar el layout asociado al fragmento
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_datos_personales, container, false);
+        View vista = inflater.inflate(R.layout.fragment_mis_reparaciones, container, false);
 
-        edtEmail = vista.findViewById(R.id.edtEmail);
+        btnDetalle = vista.findViewById(R.id.btnDetalle);
 
         return vista;
     }
 
-    //Se ejecuta al cargar el fragmento
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        edtEmail.setHint(activity.obtenerSesion());
+        btnDetalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.cambiarTitulo("Reaparación");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenedor, new Pedido())
+                        .commit();
+            }
+        });
     }
 }

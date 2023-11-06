@@ -1,4 +1,4 @@
-package com.example.juegalmi;
+package com.example.juegalmi.detalles;
 
 import android.os.Bundle;
 
@@ -8,19 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.juegalmi.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Pedido#newInstance} factory method to
+ * Use the {@link DetalleConsola#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Pedido extends Fragment {
+public class DetalleConsola extends Fragment {
 
-    public Pedido() {
+    public DetalleConsola() {
         // Required empty public constructor
     }
 
-    public static Pedido newInstance(String param1, String param2) {
-        Pedido fragment = new Pedido();
+    public static DetalleConsola newInstance(String param1, String param2) {
+        DetalleConsola fragment = new DetalleConsola();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -39,6 +41,6 @@ public class Pedido extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedido, container, false);
+        return inflater.inflate(R.layout.fragment_detalle_consola, container, false);
     }
 }

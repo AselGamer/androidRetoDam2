@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class Todo extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recycler1, recycler2, recycler3;
     ArrayList<Imagen> listaImagenes = new ArrayList<>();
     ImageButton imgMas;
     RecyclerAdaptador adaptador;
@@ -61,10 +61,20 @@ public class Todo extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        recyclerView = vista.findViewById(R.id.miRecyclerTodo);
-        recyclerView.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));    //numero de columnas
+        recycler1 = vista.findViewById(R.id.recycler1);
+        recycler1.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
         adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
-        recyclerView.setAdapter(adaptador);
+        recycler1.setAdapter(adaptador);
+
+        recycler2 = vista.findViewById(R.id.recycler2);
+        recycler2.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
+        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
+        recycler2.setAdapter(adaptador);
+
+        recycler3 = vista.findViewById(R.id.recycler3);
+        recycler3.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
+        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
+        recycler3.setAdapter(adaptador);
 
         return vista;
     }

@@ -1,4 +1,4 @@
-package com.example.juegalmi;
+package com.example.juegalmi.interfaces;
 
 public interface IControlFragmentos {
     public void cambiarTitulo(String titulo);

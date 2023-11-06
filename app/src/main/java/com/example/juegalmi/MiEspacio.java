@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.juegalmi.botonesAbajo.Productos;
+import com.example.juegalmi.interfaces.IControlFragmentos;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +24,7 @@ import com.example.juegalmi.botonesAbajo.Productos;
 public class MiEspacio extends Fragment {
 
     private Button btnCerrar;
-    private LinearLayout layDatos, layPedidos;
+    private LinearLayout layDatos, layPedidos, layAlquileres, layReparaciones;
     private IControlFragmentos activity;
 
     public MiEspacio() {
@@ -63,6 +64,8 @@ public class MiEspacio extends Fragment {
         btnCerrar = vista.findViewById(R.id.btnCerrar);
         layDatos = vista.findViewById(R.id.layDatos);
         layPedidos = vista.findViewById(R.id.layPedidos);
+        layAlquileres = vista.findViewById(R.id.layAlquileres);
+        layReparaciones = vista.findViewById(R.id.layReparaciones);
 
         return vista;
     }
@@ -102,6 +105,28 @@ public class MiEspacio extends Fragment {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenedor, new MisPedidos())
+                        .commit();
+            }
+        });
+
+        layAlquileres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.cambiarTitulo("Mis Alquileres");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenedor, new MisAlquileres())
+                        .commit();
+            }
+        });
+
+        layReparaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.cambiarTitulo("Mis Reparaciones");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenedor, new MisReparaciones())
                         .commit();
             }
         });

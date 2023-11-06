@@ -46,21 +46,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Super Mario Bros Wonder"
+            android:text="Problema: Arreglo pantalla"
             style="@style/estiloTexto"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha Inicio: 2023/10/23"
+            android:text="Tipo: Móvil"
             style="@style/estiloTexto"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha Fin: 2023/10/26"
+            android:text="Estado: Finalizado"
+            style="@style/estiloTexto"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: 2023/10/23"
+            style="@style/estiloTexto"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comentario: Pantalla cambiada"
             style="@style/estiloTexto"
             />
 
@@ -68,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="3€"
+            android:text="53,29€"
             style="@style/estiloTexto"
             android:textStyle="bold"
             />
@@ -100,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="3€"
+            android:text="53,29€"
             style="@style/estiloTexto"
             android:textStyle="bold"
             />

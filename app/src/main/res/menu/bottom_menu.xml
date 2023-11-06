@@ -6,7 +6,6 @@
         android:id="@+id/productos"
         android:title="@string/botonAbajo1"
         android:icon="@drawable/productos"
-
         />
 
     <item

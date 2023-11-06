@@ -16,6 +16,9 @@
     <string name="Subtitulo2a">Tipo de dispositivo:</string>
     <string name="Subtitulo2b">Problema:</string>
 
+    <string name="mapa">Puedes encontrarnos en:</string>
+    <string name="ubicacion">Agirre Lehendakariaren Etorb., 29, 48014 Bilbo, Bizkaia</string>
+
     <string name="descripcion">Descripción del problema</string>
     <string name="enviar">ENVIAR</string>
     <string name="iniciar">INICIAR SESIÓN</string>

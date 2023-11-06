@@ -37,7 +37,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bolsa" />
+            android:background="@drawable/bolsa"
+            style="@style/estiloBottomNavigation"
+            />
 
         <ImageButton
             android:id="@+id/imgUsuario"
@@ -62,10 +64,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
+        style="@style/estiloBottomNavigation"
         app:labelVisibilityMode="labeled"
-        app:itemBackground="@color/colorTab"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:menu="@menu/bottom_menu" />
+        app:itemActiveIndicatorStyle="@style/estiloBottomNavigation"
+        app:itemIconSize="35dp"
+        app:itemTextAppearanceInactive="@style/estiloTextoBottomNavigationInactivo"
+        app:itemTextAppearanceActive="@style/estiloTextoBottomNavigationActivo"
+        app:menu="@menu/bottom_menu"
+        />
 
 </LinearLayout>

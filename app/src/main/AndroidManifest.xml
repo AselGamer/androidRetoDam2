@@ -14,6 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JuegAlmi"
         tools:targetApi="31">
+
+        <!-- Para el GoogleMaps, value: clave API que te dan -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD3yov1Pfw7dlub17sbCEvDNq20zrEidR4"
+            />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

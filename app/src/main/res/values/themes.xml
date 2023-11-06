@@ -59,5 +59,21 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="estiloBottomNavigation">
+        <item name="android:background">@color/colorTab</item>
+        <item name="itemBackground">@color/bottom_navigation_bg</item>
+        <item name="itemIconTint">@color/bottom_navigation_selector</item>
+        <item name="itemTextColor">@color/bottom_navigation_selector</item>
+    </style>
+
+    <style name="estiloTextoBottomNavigationInactivo">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="estiloTextoBottomNavigationActivo">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

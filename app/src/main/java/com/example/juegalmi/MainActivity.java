@@ -3,6 +3,7 @@ package com.example.juegalmi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,7 +15,18 @@ import com.example.juegalmi.botonesAbajo.Reparaciones;
 import com.example.juegalmi.botonesAbajo.SobreNosotros;
 import com.example.juegalmi.botonesAbajo.Ubicacion;
 import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.io.ApiAdaptador;
+import com.example.juegalmi.io.ApiServicio;
+import com.example.juegalmi.model.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements IControlFragmentos {
 
@@ -22,11 +34,22 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private TextView txtTitulo;
     private ImageButton imgUsuario, imgCesta;
     private String txtSesion = "";
+    private Call<ArrayList<Login>> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Callback
+        /*call = ApiAdaptador.getApiService().getUsuario();
+        call.enqueue(this); //lo pone en cola*/
+
+        /*Call<Usuario> call = ApiAdaptador.getApiService().getLogin("example@email.com", "Almi123");
+        call.enqueue(this);*/
+
+
+
 
         txtTitulo = findViewById(R.id.txtTitulo);
 
@@ -131,5 +154,17 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     public String obtenerSesion() {
         return txtSesion;
     }
+/*
+    @Override
+    public void onResponse(Call<ArrayList<Login>> call, Response<ArrayList<Login>> response) {
+        if(response.isSuccessful()){
+            ArrayList<Login> logins = response.body();
+            Log.d("Dam2", "Tamaño de usuarios: " + logins.size());
+        }
+    }
 
+    @Override
+    public void onFailure(Call<ArrayList<Login>> call, Throwable t) {
+
+    }*/
 }

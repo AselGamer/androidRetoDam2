@@ -7,15 +7,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.io.ApiAdaptador;
+import com.example.juegalmi.io.ApiServicio;
+import com.example.juegalmi.model.Login;
+import com.example.juegalmi.model.Respuesta;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,9 +45,10 @@ public class IniciarSesion extends Fragment {
     private EditText edtEmail;
     private EditText edtContrasenya;
     private IControlFragmentos activity;
+    private Call<ArrayList<Login>> call;
 
     public IniciarSesion() {
-        // Required empty public constructor
+
     }
 
     public static IniciarSesion newInstance(String param1, String param2) {
@@ -77,6 +94,14 @@ public class IniciarSesion extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.129:8000/api/")
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        ApiServicio apiServicio = retrofit.create(ApiServicio.class);
+
         txtRegistrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +116,7 @@ public class IniciarSesion extends Fragment {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
+                /*if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
                     activity.cambiarTitulo("Productos");
                     activity.cambiarSesion("Almi");
                     getActivity().getSupportFragmentManager()
@@ -100,7 +125,33 @@ public class IniciarSesion extends Fragment {
                             .commit();
                 }else{
 
-                }
+                }*/
+
+                /*Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                        .create();*/
+
+                Login login = new Login("example@email.com", "Almi123");
+                Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
+
+                call.enqueue(new Callback<Respuesta>() {
+                    @Override
+                    public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(getContext(), response.body().getToken(), Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Log.d("Dam2", response.message());
+                            Toast.makeText(getContext(), "El Login no es correcto", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Respuesta> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

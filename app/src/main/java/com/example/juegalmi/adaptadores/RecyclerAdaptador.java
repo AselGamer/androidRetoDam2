@@ -49,10 +49,10 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
         holder.txtPrecio.setText(listaFotos.get(position).getTexto2());
         holder.txtDesarrollador.setText(listaFotos.get(position).getTexto3());
 
-        if(position == 10){
+        /*if(position == 10){
             holder.imagen.getLayoutParams().width = 100;
             holder.imagen.getLayoutParams().height = 100;
-        }
+        }*/
     }
 
     @Override

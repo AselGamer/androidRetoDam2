@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,8 +27,10 @@ import com.example.juegalmi.model.Respuesta;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,11 +45,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IniciarSesion extends Fragment {
 
     private TextView txtRegistrate;
-    private Button btnEnviar;
+    private Button btnEnviar, btnToken;
     private EditText edtEmail;
     private EditText edtContrasenya;
     private IControlFragmentos activity;
     private Call<ArrayList<Login>> call;
+    private String token = "";
+    private TextView txtPrueba;
+    private Animation animation;
 
     public IniciarSesion() {
 
@@ -86,6 +93,11 @@ public class IniciarSesion extends Fragment {
         edtEmail = vista.findViewById(R.id.edtEmail);
         edtContrasenya = vista.findViewById(R.id.edtContrasenya);
 
+        btnToken = vista.findViewById(R.id.btnToken);
+
+        txtPrueba = vista.findViewById(R.id.txtPrueba);
+        animation = AnimationUtils.loadAnimation(vista.getContext(), R.anim.mover);
+
         return vista;
     }
 
@@ -95,12 +107,12 @@ public class IniciarSesion extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Retrofit
-        Retrofit.Builder builder = new Retrofit.Builder()
+        /*Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://192.168.0.129:8000/api/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
-        ApiServicio apiServicio = retrofit.create(ApiServicio.class);
+        ApiServicio apiServicio = retrofit.create(ApiServicio.class);*/
 
         txtRegistrate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +143,7 @@ public class IniciarSesion extends Fragment {
                         .setLenient()
                         .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();*/
+                btnEnviar.startAnimation(animation);
 
                 Login login = new Login("example@email.com", "Almi123");
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
@@ -140,7 +153,7 @@ public class IniciarSesion extends Fragment {
                     public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
                         if(response.isSuccessful()){
                             Toast.makeText(getContext(), response.body().getToken(), Toast.LENGTH_SHORT).show();
-
+                            token = response.body().getToken();
                         }else{
                             Log.d("Dam2", response.message());
                             Toast.makeText(getContext(), "El Login no es correcto", Toast.LENGTH_SHORT).show();
@@ -152,6 +165,40 @@ public class IniciarSesion extends Fragment {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        btnToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResponseBody> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            try {
+                                Toast.makeText(getContext(), response.body().string(), Toast.LENGTH_SHORT).show();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }else{
+                            Log.d("Dam2", response.message());
+                            Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        txtPrueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtPrueba.startAnimation(animation);
             }
         });
     }

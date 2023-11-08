@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,10 @@ import java.util.ArrayList;
 public class Todo extends Fragment {
 
     private RecyclerView recycler1, recycler2, recycler3;
-    ArrayList<Imagen> listaImagenes = new ArrayList<>();
-    ImageButton imgMas;
-    RecyclerAdaptador adaptador;
+    private ArrayList<Imagen> listaImagenes = new ArrayList<>();
+    private ImageButton imgMas;
+    private RecyclerAdaptador adaptador;
+    private int suma = 0;
 
     public Todo() {
         // Required empty public constructor
@@ -81,7 +83,38 @@ public class Todo extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        recycler1.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler1.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
 
+        recycler2.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler2.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
+
+        recycler3.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler3.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
     }
 
     private void rellenarFotos() {
@@ -95,7 +128,7 @@ public class Todo extends Fragment {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
-        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
+        /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
+        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
     }
 }

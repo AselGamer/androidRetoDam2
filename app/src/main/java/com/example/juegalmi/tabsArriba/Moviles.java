@@ -30,6 +30,7 @@ public class Moviles extends Fragment {
     ArrayList<Imagen> listaImagenes = new ArrayList<>();
     ImageButton imgMas;
     RecyclerAdaptador adaptador;
+    private int suma = 0;
 
     public Moviles() {
         // Required empty public constructor
@@ -80,6 +81,39 @@ public class Moviles extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        recycler1.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler1.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
+
+        recycler2.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler2.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
+
+        recycler3.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
+                suma = suma + oldX;
+                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
+                    recycler3.scrollToPosition(0);
+                    suma = 0;
+                }
+            }
+        });
     }
 
     private void rellenarFotos() {
@@ -93,7 +127,7 @@ public class Moviles extends Fragment {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
-        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
+        /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
+        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
     }
 }

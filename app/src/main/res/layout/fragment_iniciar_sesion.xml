@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:padding="10dp"
+        android:inputType="textPassword"
         android:hint="@string/contrasenya"
         android:textColorHint="@color/colorBoton"
         android:background="@color/colorTab"
@@ -55,7 +56,21 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:id="@+id/btnEnviar"
-        android:text="@string/iniciar"
+        android:text="Recibir token"
+        android:backgroundTint="@color/colorBoton"
+        android:textColor="@color/black"
+        style="@style/estiloTexto"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/btnToken"
+        android:text="Enviar token"
         android:backgroundTint="@color/colorBoton"
         android:textColor="@color/black"
         style="@style/estiloTexto"
@@ -89,5 +104,15 @@
             />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:text="PRUEBA"
+        android:id="@+id/txtPrueba"
+        style="@style/estiloTexto"
+        />
 
 </LinearLayout>

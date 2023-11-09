@@ -78,7 +78,7 @@ public class MiEspacio extends Fragment {
         btnCerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.cambiarTitulo("Productos");
+
                 activity.cambiarSesion("");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()

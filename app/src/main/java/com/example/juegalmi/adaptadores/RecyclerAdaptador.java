@@ -3,7 +3,9 @@ package com.example.juegalmi.adaptadores;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +21,19 @@ import com.example.juegalmi.model.Imagen;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.MiViewHolder>{
 
     private Bundle bundle = new Bundle();
     private Context context;
-    private ArrayList<Imagen> listaFotos;
+    private ArrayList<Imagen> listaFotos, listaFotosFiltro;
 
     public RecyclerAdaptador(Context context, ArrayList<Imagen> listaFotos) {
         this.context = context;
         this.listaFotos = listaFotos;
+        listaFotosFiltro = listaFotos;
     }
 
     @NonNull
@@ -53,6 +58,13 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
             holder.imagen.getLayoutParams().width = 100;
             holder.imagen.getLayoutParams().height = 100;
         }*/
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //DE AQUI A DETALLE VIDEOJUEGO, CONSOLA, MOVIL...
+            }
+        });
     }
 
     @Override
@@ -70,5 +82,28 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
             txtPrecio = itemView.findViewById(R.id.txtPrecio);
             txtDesarrollador = itemView.findViewById(R.id.txtDesarrollador);
         }
+    }
+
+    public void filtrar(String filtro){
+        if(filtro.length() == 0){
+            listaFotosFiltro.clear();
+            listaFotosFiltro.addAll(listaFotos);
+        }else{
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                listaFotosFiltro.clear();
+                List<Imagen> collect = listaFotos.stream()
+                        .filter(i -> i.getTexto1().toLowerCase().contains(filtro))
+                        .collect(Collectors.toList());
+                listaFotosFiltro.addAll(collect);
+            }else{
+                listaFotosFiltro.clear();
+                for(Imagen i : listaFotos){
+                    if(i.getTexto1().toLowerCase().contains(filtro)){
+                        listaFotosFiltro.add(i);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

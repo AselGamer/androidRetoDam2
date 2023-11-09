@@ -94,6 +94,8 @@ public class Todo extends Fragment {
             }
         });
 
+
+
         recycler2.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int x, int y, int oldX, int oldY) {

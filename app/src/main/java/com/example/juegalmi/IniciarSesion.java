@@ -118,6 +118,7 @@ public class IniciarSesion extends Fragment {
             @Override
             public void onClick(View view) {
                 activity.cambiarTitulo("Crear Cuenta");
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenedor, new CrearCuenta())
@@ -128,8 +129,8 @@ public class IniciarSesion extends Fragment {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
-                    activity.cambiarTitulo("Productos");
+                if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
+                    activity.cambiarTitulo("");
                     activity.cambiarSesion("Almi");
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -137,13 +138,13 @@ public class IniciarSesion extends Fragment {
                             .commit();
                 }else{
 
-                }*/
+                }
 
                 /*Gson gson = new GsonBuilder()
                         .setLenient()
                         .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();*/
-                btnEnviar.startAnimation(animation);
+                /*btnEnviar.startAnimation(animation);
 
                 Login login = new Login("example@email.com", "Almi123");
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
@@ -164,7 +165,7 @@ public class IniciarSesion extends Fragment {
                     public void onFailure(Call<Respuesta> call, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             }
         });
 

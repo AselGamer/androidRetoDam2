@@ -67,11 +67,11 @@
     </style>
 
     <style name="estiloTextoBottomNavigationInactivo">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="estiloTextoBottomNavigationActivo">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -33,7 +33,8 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     public RecyclerAdaptador(Context context, ArrayList<Imagen> listaFotos) {
         this.context = context;
         this.listaFotos = listaFotos;
-        listaFotosFiltro = listaFotos;
+        listaFotosFiltro = new ArrayList<>();
+        listaFotosFiltro.addAll(listaFotos);
     }
 
     @NonNull
@@ -86,20 +87,20 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
     public void filtrar(String filtro){
         if(filtro.length() == 0){
-            listaFotosFiltro.clear();
-            listaFotosFiltro.addAll(listaFotos);
+            listaFotos.clear();
+            listaFotos.addAll(listaFotosFiltro);
         }else{
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                listaFotosFiltro.clear();
                 List<Imagen> collect = listaFotos.stream()
-                        .filter(i -> i.getTexto1().toLowerCase().contains(filtro))
+                        .filter(i -> i.getTexto1().toLowerCase().contains(filtro.toLowerCase()))
                         .collect(Collectors.toList());
-                listaFotosFiltro.addAll(collect);
+                listaFotos.clear();
+                listaFotos.addAll(collect);
             }else{
-                listaFotosFiltro.clear();
-                for(Imagen i : listaFotos){
-                    if(i.getTexto1().toLowerCase().contains(filtro)){
-                        listaFotosFiltro.add(i);
+                listaFotos.clear();
+                for(Imagen i : listaFotosFiltro){
+                    if(i.getTexto1().toLowerCase().contains(filtro.toLowerCase())){
+                        listaFotos.add(i);
                     }
                 }
             }

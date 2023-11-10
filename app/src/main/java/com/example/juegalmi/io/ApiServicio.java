@@ -1,9 +1,11 @@
 package com.example.juegalmi.io;
 
+import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Respuesta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,7 +25,7 @@ public interface ApiServicio {
     @POST("login")
     Call<Respuesta> login(@Body Login login);
 
-    @GET("usuario")
-    Call<ResponseBody> getAutorizacion(@Header("Authorization") String authToken);
+    @GET("usuarios")
+    Call<List<Articulo>> getAutorizacion(@Header("Authorization") String authToken);
 
 }

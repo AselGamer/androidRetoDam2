@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiAdaptador {
     private static ApiServicio API_SERVICE;
-    private static final String BASE_URL = "http://192.168.0.129:8000/api/";
+    private static final String BASE_URL = "https://retoasel.duckdns.org/api/";
 
     public static ApiServicio getApiService() {
         // Creamos un interceptor y le indicamos el log level a usar

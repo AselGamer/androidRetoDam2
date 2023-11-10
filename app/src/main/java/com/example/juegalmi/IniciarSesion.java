@@ -22,13 +22,20 @@ import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.io.ApiServicio;
+import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Login;
+import com.example.juegalmi.model.Marca;
 import com.example.juegalmi.model.Respuesta;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -51,7 +58,6 @@ public class IniciarSesion extends Fragment {
     private IControlFragmentos activity;
     private Call<ArrayList<Login>> call;
     private String token = "";
-    private TextView txtPrueba;
     private Animation animation;
 
     public IniciarSesion() {
@@ -95,7 +101,6 @@ public class IniciarSesion extends Fragment {
 
         btnToken = vista.findViewById(R.id.btnToken);
 
-        txtPrueba = vista.findViewById(R.id.txtPrueba);
         animation = AnimationUtils.loadAnimation(vista.getContext(), R.anim.mover);
 
         return vista;
@@ -129,6 +134,7 @@ public class IniciarSesion extends Fragment {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //INICIAR SESION: Contraseña inventada
                 if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
                     activity.cambiarTitulo("");
                     activity.cambiarSesion("Almi");
@@ -144,6 +150,8 @@ public class IniciarSesion extends Fragment {
                         .setLenient()
                         .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();*/
+
+                //INICIAR SESION: Retrofit
                 /*btnEnviar.startAnimation(animation);
 
                 Login login = new Login("example@email.com", "Almi123");
@@ -172,16 +180,14 @@ public class IniciarSesion extends Fragment {
         btnToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResponseBody> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
-                call.enqueue(new Callback<ResponseBody>() {
+                Call<List<Articulo>> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
+                call.enqueue(new Callback<List<Articulo>>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
                         if(response.isSuccessful()){
-                            try {
-                                Toast.makeText(getContext(), response.body().string(), Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            List<Articulo> lr = response.body();
+                            Log.d("token", lr.get(0).getArticulonombre());
+                            //Log.d("token", response);
                         }else{
                             Log.d("Dam2", response.message());
                             Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
@@ -189,18 +195,35 @@ public class IniciarSesion extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<List<Articulo>> call, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+    }
 
-        txtPrueba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txtPrueba.startAnimation(animation);
+    //parseJSON
+    private List<Articulo> parseJson(JSONArray jsonArray)
+    {
+        List<Articulo> listArticulos = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++)
+        {
+            try {
+                JSONObject objetoArticulo = jsonArray.getJSONObject(i);
+                Articulo articulo = new Articulo(objetoArticulo.getString("idarticulo"),
+                        objetoArticulo.getString("articulonombre"),
+                        objetoArticulo.getString("tipoarticulo"),
+                        (float) objetoArticulo.getDouble("precio"),
+                        objetoArticulo.getInt("stock"),
+                        (Marca) objetoArticulo.get("idmarca"),
+                        objetoArticulo.getInt("idtipoClase"));
+                listArticulos.add(articulo);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-        });
+        }
+
+        return listArticulos;
     }
 }

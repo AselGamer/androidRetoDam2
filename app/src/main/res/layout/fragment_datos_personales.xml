@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DatosPersonales">
 
     <LinearLayout
@@ -17,18 +18,24 @@
             android:layout_marginLeft="50dp"
             android:orientation="horizontal">
 
-            <ImageButton
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgUsuario"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:background="@drawable/usuario" />
+                android:padding="2dp"
+                android:background="@drawable/ic_launcher_background"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/estiloImagen"
+                app:strokeColor="@color/black"
+                app:strokeWidth="4dp"
+                />
 
             <Button
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/btn"
+                android:id="@+id/btnFoto"
                 android:text="@string/cambiarFoto"
                 android:backgroundTint="@color/colorBoton"
                 android:textColor="@color/black"

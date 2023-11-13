@@ -2,6 +2,7 @@ package com.example.juegalmi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import com.example.juegalmi.model.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private String txtSesion = "";
     private Call<ArrayList<Login>> call;
     private SearchView buscador;
-    private LinearLayout.LayoutParams params;
+    private LinearLayout.LayoutParams params, paramsMP;
     private RecyclerAdaptador adaptador;
     private RecyclerView recyclerBuscador;
     private ArrayList<Imagen> listaImagenes;
+    private LinearLayout layRecycler;
+    private int ver = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +67,17 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         rellenarFotos();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         txtTitulo = findViewById(R.id.txtTitulo);
         buscador = findViewById(R.id.buscador);
+        layRecycler = findViewById(R.id.layRecycler);
 
         recyclerBuscador = findViewById(R.id.recyclerBuscador);
-        recyclerBuscador.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        recyclerBuscador.setLayoutManager(new GridLayoutManager(this, 2));
         adaptador = new RecyclerAdaptador(this, listaImagenes);
-        recyclerBuscador.setAdapter(adaptador);
+        //recyclerBuscador.setAdapter(adaptador);
+        //adaptador.filtrar("");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this::onItemSelectedListener);
@@ -210,14 +217,47 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     @Override
     public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
+
+        //if(!query.equals("") || query!=null){
+            //adaptador.filtrar(query);
+            recyclerBuscador.setAdapter(adaptador);
+            filtro(query);
+        //}
+
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {  //cada vez que escribamos una letra
-        adaptador.filtrar(newText);
-        recyclerBuscador.setAdapter(adaptador);
+        if(newText.equals("")){
+            recyclerBuscador.setAdapter(adaptador);
+            filtro(newText);
+        }
         return false;
+    }
+
+    private void filtro(String newText) {
+        ArrayList<Imagen> listaFiltro = new ArrayList<>();
+        if(!newText.equals("")){
+            for(Imagen item : listaImagenes){
+                if(item.getTexto1().toLowerCase().contains(newText.toLowerCase())){
+                    listaFiltro.add(item);
+                }
+            }
+            if(listaFiltro.size() > 0){
+                recyclerBuscador.setVisibility(View.VISIBLE);
+                adaptador.filtrar(listaFiltro);
+                layRecycler.setLayoutParams(paramsMP);/////////////////
+            }else{
+                Log.d("hola", "hola");
+                recyclerBuscador.setVisibility(View.INVISIBLE);
+                layRecycler.setLayoutParams(paramsMP);//////////////
+                adaptador.filtrar(listaImagenes);
+            }
+        }else{
+            //recyclerBuscador.setVisibility(View.VISIBLE);
+            adaptador.filtrar(listaFiltro);
+        }
     }
 /*
     @Override
@@ -236,14 +276,14 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private void rellenarFotos() {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        /*listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));*/
         /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
         listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
     }

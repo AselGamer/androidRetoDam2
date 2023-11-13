@@ -23,7 +23,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:padding="2dp"
-                android:background="@drawable/ic_launcher_background"
+                android:background="@drawable/usuario2"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/estiloImagen"
                 app:strokeColor="@color/black"

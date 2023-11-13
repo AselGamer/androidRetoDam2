@@ -28,13 +28,12 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
     private Bundle bundle = new Bundle();
     private Context context;
-    private ArrayList<Imagen> listaFotos, listaFotosFiltro;
+    private ArrayList<Imagen> listaFotos;
+    private int ver = 0;
 
     public RecyclerAdaptador(Context context, ArrayList<Imagen> listaFotos) {
         this.context = context;
         this.listaFotos = listaFotos;
-        listaFotosFiltro = new ArrayList<>();
-        listaFotosFiltro.addAll(listaFotos);
     }
 
     @NonNull
@@ -85,26 +84,8 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
         }
     }
 
-    public void filtrar(String filtro){
-        if(filtro.length() == 0){
-            listaFotos.clear();
-            listaFotos.addAll(listaFotosFiltro);
-        }else{
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                List<Imagen> collect = listaFotos.stream()
-                        .filter(i -> i.getTexto1().toLowerCase().contains(filtro.toLowerCase()))
-                        .collect(Collectors.toList());
-                listaFotos.clear();
-                listaFotos.addAll(collect);
-            }else{
-                listaFotos.clear();
-                for(Imagen i : listaFotosFiltro){
-                    if(i.getTexto1().toLowerCase().contains(filtro.toLowerCase())){
-                        listaFotos.add(i);
-                    }
-                }
-            }
-        }
+    public void filtrar(ArrayList<Imagen> filtro){
+        listaFotos = filtro;
         notifyDataSetChanged();
     }
 }

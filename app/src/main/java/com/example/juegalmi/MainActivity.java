@@ -56,13 +56,6 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Callback
-        /*call = ApiAdaptador.getApiService().getUsuario();
-        call.enqueue(this); //lo pone en cola*/
-
-        /*Call<Usuario> call = ApiAdaptador.getApiService().getLogin("example@email.com", "Almi123");
-        call.enqueue(this);*/
-
         listaImagenes = new ArrayList<>();
         rellenarFotos();
 
@@ -247,43 +240,30 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
             if(listaFiltro.size() > 0){
                 recyclerBuscador.setVisibility(View.VISIBLE);
                 adaptador.filtrar(listaFiltro);
-                layRecycler.setLayoutParams(paramsMP);/////////////////
+                layRecycler.setLayoutParams(paramsMP);
             }else{
-                Log.d("hola", "hola");
                 recyclerBuscador.setVisibility(View.INVISIBLE);
-                layRecycler.setLayoutParams(paramsMP);//////////////
+                layRecycler.setLayoutParams(paramsMP);
                 adaptador.filtrar(listaImagenes);
             }
         }else{
-            //recyclerBuscador.setVisibility(View.VISIBLE);
+            recyclerBuscador.setVisibility(View.VISIBLE);
             adaptador.filtrar(listaFiltro);
+            layRecycler.setLayoutParams(params);
         }
     }
-/*
-    @Override
-    public void onResponse(Call<ArrayList<Login>> call, Response<ArrayList<Login>> response) {
-        if(response.isSuccessful()){
-            ArrayList<Login> logins = response.body();
-            Log.d("Dam2", "Tamaño de usuarios: " + logins.size());
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ArrayList<Login>> call, Throwable t) {
-
-    }*/
 
     private void rellenarFotos() {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        /*listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));*/
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
         listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
     }

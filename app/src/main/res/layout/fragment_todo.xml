@@ -15,6 +15,7 @@
         <TextView
             style="@style/estiloSubtitulo.margen"
             android:text="Titulo"
+            android:id="@+id/txtSubtitulo"
             />
 
         <androidx.recyclerview.widget.RecyclerView

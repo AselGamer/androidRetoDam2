@@ -151,9 +151,15 @@ public class IniciarSesion extends Fragment {
                         .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();*/
 
-                //INICIAR SESION: Retrofit
-                /*btnEnviar.startAnimation(animation);
+                //
 
+                //PROGRESSBAR
+
+
+                /*ANIMACION
+                btnEnviar.startAnimation(animation);*/
+
+                //INICIAR SESION: Retrofit
                 Login login = new Login("example@email.com", "Almi123");
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
 
@@ -173,11 +179,11 @@ public class IniciarSesion extends Fragment {
                     public void onFailure(Call<Respuesta> call, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
-                });*/
+                });
             }
         });
 
-        btnToken.setOnClickListener(new View.OnClickListener() {
+        /*btnToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Call<List<Articulo>> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
@@ -200,11 +206,11 @@ public class IniciarSesion extends Fragment {
                     }
                 });
             }
-        });
+        });*/
     }
 
     //parseJSON
-    private List<Articulo> parseJson(JSONArray jsonArray)
+    /*private List<Articulo> parseJson(JSONArray jsonArray)
     {
         List<Articulo> listArticulos = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++)
@@ -225,5 +231,5 @@ public class IniciarSesion extends Fragment {
         }
 
         return listArticulos;
-    }
+    }*/
 }

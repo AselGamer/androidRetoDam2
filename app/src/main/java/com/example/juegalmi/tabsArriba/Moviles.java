@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 
 import com.example.juegalmi.R;
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
-import com.example.juegalmi.model.Imagen;
+import com.example.juegalmi.model.Articulo;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class Moviles extends Fragment {
 
     private RecyclerView recycler1, recycler2, recycler3;
-    ArrayList<Imagen> listaImagenes = new ArrayList<>();
+    ArrayList<Articulo> listaImagenes = new ArrayList<>();
     ImageButton imgMas;
     RecyclerAdaptador adaptador;
     private int suma = 0;
@@ -117,6 +117,7 @@ public class Moviles extends Fragment {
     }
 
     private void rellenarFotos() {
+        /*listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
@@ -125,8 +126,7 @@ public class Moviles extends Fragment {
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
         listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
+        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));*/
         /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
         listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
     }

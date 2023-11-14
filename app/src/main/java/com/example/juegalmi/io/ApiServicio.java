@@ -1,6 +1,7 @@
 package com.example.juegalmi.io;
 
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Respuesta;
 
@@ -25,7 +26,16 @@ public interface ApiServicio {
     @POST("login")
     Call<Respuesta> login(@Body Login login);
 
-    @GET("usuarios")
-    Call<List<Articulo>> getAutorizacion(@Header("Authorization") String authToken);
+    /*@GET("articulos")
+    Call<List<Articulo>> getAutorizacion(@Header("Authorization") String authToken);*/
+
+    @GET("articulos")
+    Call<List<Articulo>> getArticulos();
+
+    @GET("etiquetas")
+    Call<List<Etiqueta>> getEtiquetas();
+
+    /*@GET("images")
+    Call<List<Articulo>> getArticulos();*/
 
 }

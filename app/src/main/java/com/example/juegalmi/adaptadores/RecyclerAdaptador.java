@@ -1,11 +1,7 @@
 package com.example.juegalmi.adaptadores;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
-import com.example.juegalmi.model.Imagen;
+import com.example.juegalmi.model.Articulo;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.MiViewHolder>{
 
     private Bundle bundle = new Bundle();
     private Context context;
-    private ArrayList<Imagen> listaFotos;
+    private ArrayList<Articulo> listaFotos;
     private int ver = 0;
 
-    public RecyclerAdaptador(Context context, ArrayList<Imagen> listaFotos) {
+    public RecyclerAdaptador(Context context, ArrayList<Articulo> listaFotos) {
         this.context = context;
         this.listaFotos = listaFotos;
     }
@@ -47,12 +40,12 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     public void onBindViewHolder(@NonNull RecyclerAdaptador.MiViewHolder holder, int position) {
         Glide
                 .with(context)
-                .load(listaFotos.get(position).getUrl())
+                .load("https://retoasel.duckdns.org/images/" + listaFotos.get(position).getFoto())
                 .into(holder.imagen);
 
-        holder.txtJuego.setText(listaFotos.get(position).getTexto1());
-        holder.txtPrecio.setText(listaFotos.get(position).getTexto2());
-        holder.txtDesarrollador.setText(listaFotos.get(position).getTexto3());
+        holder.txtJuego.setText(listaFotos.get(position).getArticulonombre());
+        holder.txtPrecio.setText(String.valueOf(listaFotos.get(position).getPrecio()));
+        holder.txtDesarrollador.setText(listaFotos.get(position).getIdmarca().getNombre());
 
         /*if(position == 10){
             holder.imagen.getLayoutParams().width = 100;
@@ -84,7 +77,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
         }
     }
 
-    public void filtrar(ArrayList<Imagen> filtro){
+    public void filtrar(ArrayList<Articulo> filtro){
         listaFotos = filtro;
         notifyDataSetChanged();
     }

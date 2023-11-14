@@ -9,18 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.juegalmi.R;
-import com.example.juegalmi.adaptadores.RecyclerAdaptador;
 import com.example.juegalmi.adaptadores.RecyclerAdaptadorGaleria;
-import com.example.juegalmi.model.FotoGaleria;
-import com.example.juegalmi.model.Imagen;
-
-import java.util.ArrayList;
 
 public class Galeria extends Fragment {
 

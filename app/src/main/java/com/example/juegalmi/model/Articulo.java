@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Articulo {
     @SerializedName("idarticulo")
-    String idarticulo;
+    int idarticulo;
     @SerializedName("articulonombre")
     String articulonombre;
     @SerializedName("tipoarticulo")
@@ -13,26 +13,29 @@ public class Articulo {
     float precio;
     @SerializedName("stock")
     int stock;
+    @SerializedName("foto")
+    String foto;
     @SerializedName("idmarca")
     Marca idmarca;
     @SerializedName("idtipoClase")
     int idtipoClase;
 
-    public Articulo(String idarticulo, String articulonombre, String tipoarticulo, float precio, int stock, Marca idmarca, int idtipoClase) {
+    public Articulo(int idarticulo, String articulonombre, String tipoarticulo, float precio, int stock, String foto, Marca idmarca, int idtipoClase) {
         this.idarticulo = idarticulo;
         this.articulonombre = articulonombre;
         this.tipoarticulo = tipoarticulo;
         this.precio = precio;
         this.stock = stock;
+        this.foto = foto;
         this.idmarca = idmarca;
         this.idtipoClase = idtipoClase;
     }
 
-    public String getIdarticulo() {
+    public int getIdarticulo() {
         return idarticulo;
     }
 
-    public void setIdarticulo(String idarticulo) {
+    public void setIdarticulo(int idarticulo) {
         this.idarticulo = idarticulo;
     }
 
@@ -66,6 +69,14 @@ public class Articulo {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public Marca getIdmarca() {

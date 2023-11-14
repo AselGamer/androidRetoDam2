@@ -62,7 +62,14 @@
         style="@style/estiloTexto"
         android:textStyle="bold"
         />
-
+<!--
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

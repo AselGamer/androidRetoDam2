@@ -3,7 +3,6 @@ package com.example.juegalmi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
 import com.example.juegalmi.botonesAbajo.Galeria;
@@ -22,8 +22,8 @@ import com.example.juegalmi.botonesAbajo.SobreNosotros;
 import com.example.juegalmi.botonesAbajo.Ubicacion;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
-import com.example.juegalmi.io.ApiServicio;
-import com.example.juegalmi.model.Imagen;
+import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,8 +33,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements IControlFragmentos, SearchView.OnQueryTextListener {
 
@@ -47,17 +45,19 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private LinearLayout.LayoutParams params, paramsMP;
     private RecyclerAdaptador adaptador;
     private RecyclerView recyclerBuscador;
-    private ArrayList<Imagen> listaImagenes;
-    private LinearLayout layRecycler;
-    private int ver = 0;
+    private ArrayList<Articulo> listaArticulos;
+    private ArrayList<Etiqueta> listaEtiquetas;
+    private LinearLayout layRecycler, contenedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listaImagenes = new ArrayList<>();
-        rellenarFotos();
+        listaArticulos = new ArrayList<>();
+        listaEtiquetas = new ArrayList<>();
+        rellenarArticulos();
+        rellenarEtiquetas();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -65,12 +65,13 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         txtTitulo = findViewById(R.id.txtTitulo);
         buscador = findViewById(R.id.buscador);
         layRecycler = findViewById(R.id.layRecycler);
+        contenedor = findViewById(R.id.contenedor);
+
+        buscador.setOnQueryTextListener(this);
 
         recyclerBuscador = findViewById(R.id.recyclerBuscador);
         recyclerBuscador.setLayoutManager(new GridLayoutManager(this, 2));
-        adaptador = new RecyclerAdaptador(this, listaImagenes);
-        //recyclerBuscador.setAdapter(adaptador);
-        //adaptador.filtrar("");
+        adaptador = new RecyclerAdaptador(this, listaArticulos);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this::onItemSelectedListener);
@@ -120,8 +121,6 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                 }
             }
         });
-
-        buscador.setOnQueryTextListener(this);
     }
 
     private boolean onItemSelectedListener(MenuItem item) {
@@ -209,13 +208,24 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
+    public ArrayList<Articulo> obtenerListaArticulos() {
+        return listaArticulos;
+    }
 
-        //if(!query.equals("") || query!=null){
-            //adaptador.filtrar(query);
-            recyclerBuscador.setAdapter(adaptador);
-            filtro(query);
-        //}
+    @Override
+    public ArrayList<Etiqueta> obtenerListaEtiquetas() {
+        return listaEtiquetas;
+    }
+
+    @Override
+    public void cambiarFocus() {
+        buscador.requestFocus();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
+        recyclerBuscador.setAdapter(adaptador);
+        filtro(query);
 
         return false;
     }
@@ -230,10 +240,10 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     }
 
     private void filtro(String newText) {
-        ArrayList<Imagen> listaFiltro = new ArrayList<>();
+        ArrayList<Articulo> listaFiltro = new ArrayList<>();
         if(!newText.equals("")){
-            for(Imagen item : listaImagenes){
-                if(item.getTexto1().toLowerCase().contains(newText.toLowerCase())){
+            for(Articulo item : listaArticulos){
+                if(item.getArticulonombre().toLowerCase().contains(newText.toLowerCase())){
                     listaFiltro.add(item);
                 }
             }
@@ -244,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
             }else{
                 recyclerBuscador.setVisibility(View.INVISIBLE);
                 layRecycler.setLayoutParams(paramsMP);
-                adaptador.filtrar(listaImagenes);
+                adaptador.filtrar(listaArticulos);
             }
         }else{
             recyclerBuscador.setVisibility(View.VISIBLE);
@@ -253,18 +263,49 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         }
     }
 
-    private void rellenarFotos() {
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        listaImagenes.add(new Imagen("https://media.game.es/COVERV2/3D_L/130/130519.png", "Dark Souls", "10€", "Infinity"));
-        /*listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));
-        listaImagenes.add(new Imagen("https://cdn-icons-png.flaticon.com/512/992/992651.png", "Ver Todo", "", ""));*/
+    private void rellenarArticulos() {
+        Call<List<Articulo>> call = ApiAdaptador.getApiService().getArticulos();
+        call.enqueue(new Callback<List<Articulo>>() {
+            @Override
+            public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
+                if(response.isSuccessful()){
+                    List<Articulo> lr = response.body();
+                    for(int i=0; i<lr.size(); i++){
+                        listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(),
+                                lr.get(i).getTipoarticulo(), lr.get(i).getPrecio(), lr.get(i).getStock(),
+                                lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase()));
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Articulo>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void rellenarEtiquetas() {
+        Call<List<Etiqueta>> call = ApiAdaptador.getApiService().getEtiquetas();
+        call.enqueue(new Callback<List<Etiqueta>>() {
+            @Override
+            public void onResponse(Call<List<Etiqueta>> call, Response<List<Etiqueta>> response) {
+                if(response.isSuccessful()){
+                    List<Etiqueta> lr = response.body();
+                    for(int i=0; i<lr.size(); i++){
+                        listaEtiquetas.add(new Etiqueta(lr.get(i).getIdetiqueta(), lr.get(i).getNombre()));
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Etiqueta>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

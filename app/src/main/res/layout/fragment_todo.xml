@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/estiloSubtitulo.margen"
-            android:text="Titulo"
+            android:text="@string/tabArriba2"
             android:id="@+id/txtSubtitulo"
             />
 
@@ -26,7 +26,7 @@
 
         <TextView
             style="@style/estiloSubtitulo.margen"
-            android:text="Titulo"
+            android:text="@string/tabArriba3"
             />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +37,7 @@
 
         <TextView
             style="@style/estiloSubtitulo.margen"
-            android:text="Titulo"
+            android:text="@string/tabArriba4"
             />
 
         <androidx.recyclerview.widget.RecyclerView

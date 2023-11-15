@@ -25,6 +25,7 @@ import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
+import com.example.juegalmi.model.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -43,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private Call<ArrayList<Login>> call;
     private SearchView buscador;
     private LinearLayout.LayoutParams params, paramsMP;
-    private RecyclerAdaptador adaptador;
+    private RecyclerAdaptador adaptador, adaptadorBuscador;
     private RecyclerView recyclerBuscador;
     private ArrayList<Articulo> listaArticulos;
     private ArrayList<Etiqueta> listaEtiquetas;
     private LinearLayout layRecycler, contenedor;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
         listaArticulos = new ArrayList<>();
         listaEtiquetas = new ArrayList<>();
+
         rellenarArticulos();
-        rellenarEtiquetas();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -70,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         buscador.setOnQueryTextListener(this);
 
         recyclerBuscador = findViewById(R.id.recyclerBuscador);
-        recyclerBuscador.setLayoutManager(new GridLayoutManager(this, 2));
-        adaptador = new RecyclerAdaptador(this, listaArticulos);
+        recyclerBuscador.setLayoutManager(new GridLayoutManager(this, 1));
+        adaptador = new RecyclerAdaptador(this, listaArticulos, false);
+        adaptadorBuscador = new RecyclerAdaptador(this, listaArticulos, true);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this::onItemSelectedListener);
@@ -198,13 +201,13 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     }
 
     @Override
-    public void cambiarSesion(String sesion) {
-        txtSesion = sesion;
+    public void cambiarSesion(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
-    public String obtenerSesion() {
-        return txtSesion;
+    public Usuario obtenerSesion() {
+        return usuario;
     }
 
     @Override
@@ -218,13 +221,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     }
 
     @Override
-    public void cambiarFocus() {
-        buscador.requestFocus();
-    }
-
-    @Override
     public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
-        recyclerBuscador.setAdapter(adaptador);
+        recyclerBuscador.setAdapter(adaptadorBuscador);
         filtro(query);
 
         return false;
@@ -233,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public boolean onQueryTextChange(String newText) {  //cada vez que escribamos una letra
         if(newText.equals("")){
-            recyclerBuscador.setAdapter(adaptador);
+            recyclerBuscador.setAdapter(adaptadorBuscador);
             filtro(newText);
         }
         return false;
@@ -249,16 +247,16 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
             }
             if(listaFiltro.size() > 0){
                 recyclerBuscador.setVisibility(View.VISIBLE);
-                adaptador.filtrar(listaFiltro);
+                adaptadorBuscador.filtrar(listaFiltro);
                 layRecycler.setLayoutParams(paramsMP);
             }else{
                 recyclerBuscador.setVisibility(View.INVISIBLE);
                 layRecycler.setLayoutParams(paramsMP);
-                adaptador.filtrar(listaArticulos);
+                adaptadorBuscador.filtrar(listaArticulos);
             }
         }else{
             recyclerBuscador.setVisibility(View.VISIBLE);
-            adaptador.filtrar(listaFiltro);
+            adaptadorBuscador.filtrar(listaFiltro);
             layRecycler.setLayoutParams(params);
         }
     }
@@ -287,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         });
     }
 
-    private void rellenarEtiquetas() {
+    /*private void rellenarEtiquetas() {
         Call<List<Etiqueta>> call = ApiAdaptador.getApiService().getEtiquetas();
         call.enqueue(new Callback<List<Etiqueta>>() {
             @Override
@@ -307,5 +305,5 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 }

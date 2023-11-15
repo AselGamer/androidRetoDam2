@@ -26,6 +26,7 @@ import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Marca;
 import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -135,16 +136,14 @@ public class IniciarSesion extends Fragment {
             @Override
             public void onClick(View view) {
                 //INICIAR SESION: Contraseña inventada
-                if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
+                /*if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
                     activity.cambiarTitulo("");
                     activity.cambiarSesion("Almi");
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.contenedor, new Productos())
                             .commit();
-                }else{
-
-                }
+                }*/
 
                 /*Gson gson = new GsonBuilder()
                         .setLenient()
@@ -156,11 +155,11 @@ public class IniciarSesion extends Fragment {
                 //PROGRESSBAR
 
 
-                /*ANIMACION
-                btnEnviar.startAnimation(animation);*/
+                //ANIMACION
+                btnEnviar.startAnimation(animation);
 
                 //INICIAR SESION: Retrofit
-                Login login = new Login("example@email.com", "Almi123");
+                Login login = new Login("example@email.com", "Almi123");    //cambiar antes del la presentacion del reto
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
 
                 call.enqueue(new Callback<Respuesta>() {
@@ -183,53 +182,32 @@ public class IniciarSesion extends Fragment {
             }
         });
 
-        /*btnToken.setOnClickListener(new View.OnClickListener() {
+        btnToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<List<Articulo>> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
-                call.enqueue(new Callback<List<Articulo>>() {
+                Call<Usuario> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
+                call.enqueue(new Callback<Usuario>() {
                     @Override
-                    public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
+                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                         if(response.isSuccessful()){
-                            List<Articulo> lr = response.body();
-                            Log.d("token", lr.get(0).getArticulonombre());
-                            //Log.d("token", response);
+                            Usuario usuario = response.body();
+                            activity.cambiarTitulo("");
+                            activity.cambiarSesion(usuario);
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.contenedor, new Productos())
+                                    .commit();
                         }else{
-                            Log.d("Dam2", response.message());
                             Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Articulo>> call, Throwable t) {
+                    public void onFailure(Call<Usuario> call, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        });*/
+        });
     }
-
-    //parseJSON
-    /*private List<Articulo> parseJson(JSONArray jsonArray)
-    {
-        List<Articulo> listArticulos = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++)
-        {
-            try {
-                JSONObject objetoArticulo = jsonArray.getJSONObject(i);
-                Articulo articulo = new Articulo(objetoArticulo.getString("idarticulo"),
-                        objetoArticulo.getString("articulonombre"),
-                        objetoArticulo.getString("tipoarticulo"),
-                        (float) objetoArticulo.getDouble("precio"),
-                        objetoArticulo.getInt("stock"),
-                        (Marca) objetoArticulo.get("idmarca"),
-                        objetoArticulo.getInt("idtipoClase"));
-                listArticulos.add(articulo);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return listArticulos;
-    }*/
 }

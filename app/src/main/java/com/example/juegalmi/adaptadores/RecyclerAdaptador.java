@@ -21,18 +21,26 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
     private Bundle bundle = new Bundle();
     private Context context;
-    private ArrayList<Articulo> listaFotos;
+    private ArrayList<Articulo> listaArticulos;
+    private boolean buscador;
     private int ver = 0;
 
-    public RecyclerAdaptador(Context context, ArrayList<Articulo> listaFotos) {
+    public RecyclerAdaptador(Context context, ArrayList<Articulo> listaArticulos, boolean buscador) {
         this.context = context;
-        this.listaFotos = listaFotos;
+        this.listaArticulos = listaArticulos;
+        this.buscador = buscador;
     }
 
     @NonNull
     @Override
     public RecyclerAdaptador.MiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_texto, parent, false);
+        View vista;
+        if(buscador == true){
+            vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_texto_buscador, parent, false);
+        }else{
+            vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_texto, parent, false);
+        }
+        //txtSubtitulo = vista.findViewById(R.id.txtSubtitulo);
         return new MiViewHolder(vista);
     }
 
@@ -40,29 +48,25 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     public void onBindViewHolder(@NonNull RecyclerAdaptador.MiViewHolder holder, int position) {
         Glide
                 .with(context)
-                .load("https://retoasel.duckdns.org/images/" + listaFotos.get(position).getFoto())
+                .load("https://retoasel.duckdns.org/images/" + listaArticulos.get(position).getFoto())
                 .into(holder.imagen);
 
-        holder.txtJuego.setText(listaFotos.get(position).getArticulonombre());
-        holder.txtPrecio.setText(String.valueOf(listaFotos.get(position).getPrecio()));
-        holder.txtDesarrollador.setText(listaFotos.get(position).getIdmarca().getNombre());
-
-        /*if(position == 10){
-            holder.imagen.getLayoutParams().width = 100;
-            holder.imagen.getLayoutParams().height = 100;
-        }*/
+        holder.txtJuego.setText(listaArticulos.get(position).getArticulonombre());
+        holder.txtPrecio.setText(String.valueOf(listaArticulos.get(position).getPrecio()));
+        holder.txtDesarrollador.setText(listaArticulos.get(position).getIdmarca().getNombre());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //DE AQUI A DETALLE VIDEOJUEGO, CONSOLA, MOVIL...
+                //CREAR UNA NUEVA ACTIVITY?
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return listaFotos.size();
+        return listaArticulos.size();
     }
 
     class MiViewHolder extends RecyclerView.ViewHolder{
@@ -78,7 +82,11 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     }
 
     public void filtrar(ArrayList<Articulo> filtro){
-        listaFotos = filtro;
+        listaArticulos = filtro;
         notifyDataSetChanged();
+    }
+
+    public void setListaArticulos(ArrayList<Articulo> listaArticulos) {
+        this.listaArticulos = listaArticulos;
     }
 }

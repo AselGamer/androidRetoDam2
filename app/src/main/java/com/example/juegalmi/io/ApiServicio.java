@@ -4,6 +4,7 @@ import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiServicio {
@@ -26,16 +28,19 @@ public interface ApiServicio {
     @POST("login")
     Call<Respuesta> login(@Body Login login);
 
-    /*@GET("articulos")
-    Call<List<Articulo>> getAutorizacion(@Header("Authorization") String authToken);*/
+    @GET("usuario/data")
+    Call<Usuario> getAutorizacion(@Header("Authorization") String authToken);
 
     @GET("articulos")
     Call<List<Articulo>> getArticulos();
 
+    @GET("articulos/tipo/{tipoarticulo}")
+    Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);
+
+    @GET("articulos/tipo")
+    Call<Object> getAllByType();
+
     @GET("etiquetas")
     Call<List<Etiqueta>> getEtiquetas();
-
-    /*@GET("images")
-    Call<List<Articulo>> getArticulos();*/
 
 }

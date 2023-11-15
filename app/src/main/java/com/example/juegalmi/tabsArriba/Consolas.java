@@ -62,17 +62,17 @@ public class Consolas extends Fragment {
 
         recycler1 = vista.findViewById(R.id.recycler1);
         recycler1.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
-        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
+        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler1.setAdapter(adaptador);
 
         recycler2 = vista.findViewById(R.id.recycler2);
         recycler2.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
-        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
+        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler2.setAdapter(adaptador);
 
         recycler3 = vista.findViewById(R.id.recycler3);
         recycler3.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
-        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes);
+        adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler3.setAdapter(adaptador);
 
         return vista;

@@ -92,6 +92,7 @@ public class DatosPersonales extends Fragment {
         super.onAttach(context);
 
         activity = (IControlFragmentos) context;
+        //iniciarSesion = (IControlFragmentos) context;
     }
 
     //Es el metodo para cargar el layout asociado al fragmento
@@ -112,7 +113,7 @@ public class DatosPersonales extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        edtEmail.setHint(activity.obtenerSesion());
+        edtEmail.setHint(activity.obtenerSesion().getNombre());
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +130,8 @@ public class DatosPersonales extends Fragment {
 
 
     }
+
+    /////////////////////PARA LA CAMARA/////////////////////////
 
     private void abrirCamara()
     {

@@ -34,4 +34,11 @@
         <item>Foto 11</item>
         <item>Foto 12</item>
     </string-array>
+
+    <string-array name="loading">
+        <item>@drawable/loading1</item>
+        <item>@drawable/loading2</item>
+        <item>@drawable/loading3</item>
+        <item>@drawable/loading4</item>
+    </string-array>
 </resources>

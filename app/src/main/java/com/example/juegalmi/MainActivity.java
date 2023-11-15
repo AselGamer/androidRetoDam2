@@ -5,6 +5,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -56,10 +57,13 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Intent intent = new Intent(this, Cargando.class);
+        startActivity(intent);
+
         listaArticulos = new ArrayList<>();
         listaEtiquetas = new ArrayList<>();
 
-        rellenarArticulos();
+        //rellenarArticulos();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);

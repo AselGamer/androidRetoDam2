@@ -67,7 +67,8 @@ public class Todo extends Fragment {
         listaVideojuegos = new ArrayList<>();
         listaConsolas = new ArrayList<>();
         listaMoviles = new ArrayList<>();
-        rellenarArticulos();
+
+        //rellenarArticulos();
 
         if (getArguments() != null) {
 

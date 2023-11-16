@@ -125,18 +125,18 @@ public class DatosPersonales extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        edtEmail.setHint(activity.obtenerSesion().getEmail());
-        edtNombre.setHint(activity.obtenerSesion().getNombre());
-        edtApellido1.setHint(activity.obtenerSesion().getApellido1());
-        edtApellido2.setHint(activity.obtenerSesion().getApellido2());
-        edtTelefono.setHint(activity.obtenerSesion().getTelefono());
-        edtDireccion.setHint(activity.obtenerSesion().getCalle());
-        edtNumDireccion.setHint(activity.obtenerSesion().getNumPortal());
-        edtPiso.setHint(activity.obtenerSesion().getPiso());
-        edtCp.setHint(activity.obtenerSesion().getCodigoPostal());
-        edtCiudad.setHint(activity.obtenerSesion().getCiudad());
-        edtProvincia.setHint(activity.obtenerSesion().getProvincia());
-        edtPais.setHint(activity.obtenerSesion().getPais());
+        edtEmail.setText(activity.obtenerSesion().getEmail());
+        edtNombre.setText(activity.obtenerSesion().getNombre());
+        edtApellido1.setText(activity.obtenerSesion().getApellido1());
+        edtApellido2.setText(activity.obtenerSesion().getApellido2());
+        edtTelefono.setText(activity.obtenerSesion().getTelefono());
+        edtDireccion.setText(activity.obtenerSesion().getCalle());
+        edtNumDireccion.setText(activity.obtenerSesion().getNumPortal());
+        edtPiso.setText(activity.obtenerSesion().getPiso());
+        edtCp.setText(activity.obtenerSesion().getCodigoPostal());
+        edtCiudad.setText(activity.obtenerSesion().getCiudad());
+        edtProvincia.setText(activity.obtenerSesion().getProvincia());
+        edtPais.setText(activity.obtenerSesion().getPais());
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override

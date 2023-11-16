@@ -62,7 +62,7 @@ public class TipoAdaptador extends BaseAdapter {
 
         ArrayList<Articulo> ar = new ArrayList<Articulo>(this.tipoArticulos.get(tipos[i]));
 
-        RecyclerAdaptador recyclerAdaptador = new RecyclerAdaptador(fila.getContext(), ar, false);
+        RecyclerAdaptador recyclerAdaptador = new RecyclerAdaptador(fila.getContext(), ar, false);  //añadir tipos[i] para saber que fragmento hay que cambiar
 
         RecyclerView recyclerView = fila.findViewById(R.id.recycler);
 

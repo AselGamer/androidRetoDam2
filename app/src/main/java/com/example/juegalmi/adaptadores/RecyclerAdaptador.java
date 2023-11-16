@@ -10,11 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
+import com.example.juegalmi.botonesAbajo.Productos;
+import com.example.juegalmi.detalles.DetalleVideojuego;
+import com.example.juegalmi.dialogs.DialogFoto;
+import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.tabsArriba.Videojuegos;
 
 import java.util.ArrayList;
 
@@ -25,6 +31,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     private ArrayList<Articulo> listaArticulos;
     private boolean buscador;
     private int ver = 0;
+    private IControlFragmentos activity;
 
     public RecyclerAdaptador(Context context, ArrayList<Articulo> listaArticulos, boolean buscador) {
         this.context = context;
@@ -62,9 +69,29 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
             @Override
             public void onClick(View view) {
                 //DE AQUI A DETALLE VIDEOJUEGO, CONSOLA, MOVIL...
-                //CREAR UNA NUEVA ACTIVITY?
+                LayoutInflater inflater = LayoutInflater.from(context);  //Declaración del inflador
+
+                //Carga de la vista. Parametros: 1.-Archivo XML, 2.-El linear layout
+                View vista = inflater.inflate(R.layout.imagen_texto, holder.itemView.findViewById(R.id.layoutCard));
+                ImageView imgImagen = vista.findViewById(R.id.imgImagen);
+
+                activity.cambiarTitulo("Videojuego");
+
+                activity.cambiarFragmento(new DetalleVideojuego()); //con Bundle?
+
+                //vista.getContext().get
+
+                /*dialog = new DialogFoto(listaFotos.getResourceId(position, -1));
+                dialog.show(((AppCompatActivity) holder.itemView.getContext()).getSupportFragmentManager(), "imgFoto");*/  //Abrimos el fragmento
             }
         });
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        activity = (IControlFragmentos) context;
     }
 
     @Override

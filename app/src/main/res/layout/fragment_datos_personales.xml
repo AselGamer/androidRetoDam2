@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:padding="10dp"
-            android:hint="@string/email"
+            android:text="Texto"
             android:textColorHint="@color/colorBoton"
             android:background="@color/colorTab"
             android:enabled="false"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:padding="10dp"
-                    android:hint="@string/nombre"
+                    android:text="Texto"
                     android:textColorHint="@color/colorBoton"
                     android:background="@color/colorTab"
                     />
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:background="@color/colorTab"
-                    android:hint="@string/apellido1"
+                    android:text="Texto"
                     android:padding="10dp"
                     android:textColorHint="@color/colorBoton" />
 
@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:padding="10dp"
-                    android:hint="@string/nombre"
+                    android:text="Texto"
                     android:textColorHint="@color/colorBoton"
                     android:background="@color/colorTab"
                     />
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:background="@color/colorTab"
-                    android:hint="@string/telefono"
+                    android:text="Texto"
                     android:padding="10dp"
                     android:textColorHint="@color/colorBoton" />
 
@@ -252,7 +252,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:padding="10dp"
-            android:hint="@string/direccion"
+            android:text="Texto"
             android:textColorHint="@color/colorBoton"
             android:background="@color/colorTab"
             />
@@ -283,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:padding="10dp"
-                    android:hint="@string/numero"
+                    android:text="Texto"
                     android:textColorHint="@color/colorBoton"
                     android:background="@color/colorTab"
                     />
@@ -309,7 +309,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:background="@color/colorTab"
-                    android:hint="@string/piso"
+                    android:text="Texto"
                     android:padding="10dp"
                     android:textColorHint="@color/colorBoton" />
 
@@ -343,7 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:padding="10dp"
-                    android:hint="@string/cp"
+                    android:text="Texto"
                     android:textColorHint="@color/colorBoton"
                     android:background="@color/colorTab"
                     />
@@ -369,7 +369,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:background="@color/colorTab"
-                    android:hint="@string/ciudad"
+                    android:text="Texto"
                     android:padding="10dp"
                     android:textColorHint="@color/colorBoton" />
 
@@ -403,7 +403,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:padding="10dp"
-                    android:hint="@string/provincia"
+                    android:text="Texto"
                     android:textColorHint="@color/colorBoton"
                     android:background="@color/colorTab"
                     />
@@ -429,7 +429,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:background="@color/colorTab"
-                    android:hint="@string/pais"
+                    android:text="Texto"
                     android:padding="10dp"
                     android:textColorHint="@color/colorBoton" />
 

@@ -47,16 +47,8 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class Todo extends Fragment {
-
-    private RecyclerView recycler;
-    private ArrayList<Articulo> listaVideojuegos, listaConsolas, listaMoviles;
     private ArrayList<Etiqueta> listaEtiquetas = new ArrayList<>();
-    private ImageButton imgMas;
-    private RecyclerAdaptador adaptador;
-    private int suma = 0;
     private IControlFragmentos activity;
-    private TextView txtSubtitulo;
-    private int numTipo = 0;
     private ListView listaTipos = null;
 
     public Todo() {
@@ -75,12 +67,6 @@ public class Todo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listaVideojuegos = new ArrayList<>();
-        listaConsolas = new ArrayList<>();
-        listaMoviles = new ArrayList<>();
-
-        rellenarArticulos();
-
         if (getArguments() != null) {
 
         }
@@ -98,11 +84,11 @@ public class Todo extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        Call<Map<String, List<Articulo>>> callMoviles = ApiAdaptador.getApiService().getAllByType();
-        callMoviles.enqueue(new Callback<Map<String, List<Articulo>>>() {
+        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllByType();
+        call.enqueue(new Callback<Map<String, List<Articulo>>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(Call<Map<String, List<Articulo>>> callMoviles, Response<Map<String, List<Articulo>>> response) {
+            public void onResponse(Call<Map<String, List<Articulo>>> call, Response<Map<String, List<Articulo>>> response) {
                 if(response.isSuccessful()){
                     HashMap<String, List<Articulo>> lr = new HashMap<>(response.body());
 
@@ -110,19 +96,16 @@ public class Todo extends Fragment {
 
                     listaTipos = vista.findViewById(R.id.listTipos);
                     listaTipos.setAdapter(tipoAdaptador);
-
-
                 }else{
                     Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Map<String, List<Articulo>>> callMoviles, Throwable t) {
+            public void onFailure(Call<Map<String, List<Articulo>>> call, Throwable t) {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         return vista;
     }

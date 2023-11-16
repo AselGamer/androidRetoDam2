@@ -1,5 +1,6 @@
 package com.example.juegalmi.tabsArriba;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.juegalmi.R;
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
+import com.example.juegalmi.adaptadores.TipoAdaptador;
+import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,12 +38,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Videojuegos extends Fragment {
-
-    private RecyclerView recycler1, recycler2, recycler3;
-    ArrayList<Articulo> listaImagenes = new ArrayList<>();
-    ImageButton imgMas;
-    RecyclerAdaptador adaptador;
-    private int suma = 0;
+    private IControlFragmentos activity;
+    private ListView listaCategorias = null;
 
     public Videojuegos() {
         // Required empty public constructor
@@ -48,8 +57,6 @@ public class Videojuegos extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rellenarFotos();
-
         if (getArguments() != null) {
 
         }
@@ -59,6 +66,33 @@ public class Videojuegos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_videojuegos, container, false);
+
+        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllByType();   /////////////////////////////Cambiar
+        call.enqueue(new Callback<Map<String, List<Articulo>>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<Map<String, List<Articulo>>> call, Response<Map<String, List<Articulo>>> response) {
+                if(response.isSuccessful()){
+                    HashMap<String, List<Articulo>> lr = new HashMap<>(response.body());
+
+                    TipoAdaptador tipoAdaptador = new TipoAdaptador(vista.getContext(), lr);
+
+                    listaCategorias = vista.findViewById(R.id.listCategorias);
+                    listaCategorias.setAdapter(tipoAdaptador);
+                }else{
+                    Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, List<Articulo>>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return vista;
+
+        /*View vista = inflater.inflate(R.layout.fragment_videojuegos, container, false);
 
         recycler1 = vista.findViewById(R.id.recycler1);
         recycler1.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
@@ -75,45 +109,14 @@ public class Videojuegos extends Fragment {
         adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler3.setAdapter(adaptador);
 
-        return vista;
+        return vista;*/
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recycler1.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
-                suma = suma + oldX;
-                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
-                    recycler1.scrollToPosition(0);
-                    suma = 0;
-                }
-            }
-        });
 
-        recycler2.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
-                suma = suma + oldX;
-                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
-                    recycler2.scrollToPosition(0);
-                    suma = 0;
-                }
-            }
-        });
-
-        recycler3.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
-                suma = suma + oldX;
-                if( suma <= -196-(listaImagenes.size()-4)*319 ){  //Si llega al final del scroll
-                    recycler3.scrollToPosition(0);
-                    suma = 0;
-                }
-            }
-        });
     }
 
     private void rellenarFotos() {

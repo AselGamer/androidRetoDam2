@@ -2,6 +2,7 @@ package com.example.juegalmi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         return false;
     }
 
-    private void cambiarParametros(){
+    private void cambiarParametros(){   //sin buscador
         params.height = 90;
         params.width = 700;
         params.setMargins(20, 50, 100, 0);
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         buscador.setVisibility(View.INVISIBLE);
     }
 
-    private void cambiarParametrosBuscador(){
+    private void cambiarParametrosBuscador(){   //con buscador
         params.height = 0;
         params.width = 0;
         params.setMargins(0, 0, 0, 0);
@@ -222,6 +223,15 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public ArrayList<Etiqueta> obtenerListaEtiquetas() {
         return listaEtiquetas;
+    }
+
+    @Override
+    public void cambiarFragmento(Fragment fragmento) {
+        cambiarParametros();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contenedor, fragmento)
+                .commit();
     }
 
     @Override

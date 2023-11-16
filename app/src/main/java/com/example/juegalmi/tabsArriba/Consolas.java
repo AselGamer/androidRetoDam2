@@ -1,5 +1,6 @@
 package com.example.juegalmi.tabsArriba;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.juegalmi.R;
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
+import com.example.juegalmi.adaptadores.TipoAdaptador;
+import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,11 +39,8 @@ import java.util.ArrayList;
  */
 public class Consolas extends Fragment {
 
-    private RecyclerView recycler1, recycler2, recycler3;
-    ArrayList<Articulo> listaImagenes = new ArrayList<>();
-    ImageButton imgMas;
-    RecyclerAdaptador adaptador;
-    private int suma = 0;
+    private IControlFragmentos activity;
+    private ListView listaTipos = null;
 
     public Consolas() {
         // Required empty public constructor
@@ -48,8 +58,6 @@ public class Consolas extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rellenarFotos();
-
         if (getArguments() != null) {
 
         }
@@ -60,7 +68,32 @@ public class Consolas extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_consolas, container, false);
 
-        recycler1 = vista.findViewById(R.id.recycler1);
+        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllByType();///////////////////////Cambiar
+        call.enqueue(new Callback<Map<String, List<Articulo>>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(Call<Map<String, List<Articulo>>> call, Response<Map<String, List<Articulo>>> response) {
+                if(response.isSuccessful()){
+                    HashMap<String, List<Articulo>> lr = new HashMap<>(response.body());
+
+                    TipoAdaptador tipoAdaptador = new TipoAdaptador(vista.getContext(), lr);
+
+                    listaTipos = vista.findViewById(R.id.listTipos);
+                    listaTipos.setAdapter(tipoAdaptador);
+                }else{
+                    Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, List<Articulo>>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return vista;
+
+        /*recycler1 = vista.findViewById(R.id.recycler1);
         recycler1.setLayoutManager(new LinearLayoutManager(vista.getContext(), RecyclerView.HORIZONTAL, false));
         adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler1.setAdapter(adaptador);
@@ -75,14 +108,16 @@ public class Consolas extends Fragment {
         adaptador = new RecyclerAdaptador(vista.getContext(), listaImagenes, false);
         recycler3.setAdapter(adaptador);
 
-        return vista;
+        return vista;*/
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recycler1.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+
+
+        /*recycler1.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int x, int y, int oldX, int oldY) {
                 suma = suma + oldX;
@@ -113,7 +148,7 @@ public class Consolas extends Fragment {
                     suma = 0;
                 }
             }
-        });
+        });*/
     }
 
     private void rellenarFotos() {

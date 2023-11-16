@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
+import com.example.juegalmi.asynctask.Cargando;
 import com.example.juegalmi.botonesAbajo.Galeria;
 import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.botonesAbajo.Reparaciones;
@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Intent intent = new Intent(this, Cargando.class);
-        startActivity(intent);
+        /*final Intent intent = new Intent(this, Cargando.class);
+        startActivity(intent);*/
 
         listaArticulos = new ArrayList<>();
         listaEtiquetas = new ArrayList<>();
 
-        //rellenarArticulos();
+        rellenarArticulos();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         imgUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(txtSesion.equals("")){
+                if(usuario == null){
                     txtTitulo.setText("Iniciar Sesión");
                     cambiarParametros();
                     getSupportFragmentManager()
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                             .replace(R.id.contenedor, new IniciarSesion())
                             .commit();
                 }else{
-                    txtTitulo.setText("Hola " + txtSesion);
+                    txtTitulo.setText("Hola " + usuario.getNombre());
                     cambiarParametros();
                     getSupportFragmentManager()
                             .beginTransaction()
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         imgCesta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(txtSesion.equals("")){
+                if(usuario == null){
                     txtTitulo.setText("Iniciar Sesión");
                     cambiarParametros();
                     getSupportFragmentManager()
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public void cambiarTitulo(String titulo) {
         txtTitulo.setText(titulo);
-        if(txtSesion.equals("") && !titulo.equals("Crear Cuenta")){
+        if(usuario == null && !titulo.equals("Crear Cuenta")){
             cambiarParametrosBuscador();
         }else{
             cambiarParametros();

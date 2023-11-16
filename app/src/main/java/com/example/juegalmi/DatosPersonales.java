@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class DatosPersonales extends Fragment {
 
-    private EditText edtEmail;
+    private EditText edtEmail, edtNombre, edtApellido1, edtApellido2, edtTelefono, edtDireccion, edtNumDireccion, edtPiso, edtCp, edtCiudad, edtProvincia, edtPais;
     private IControlFragmentos activity;
     private Button btnFoto;
     private ImageView mPhotoImageView;
@@ -102,6 +102,18 @@ public class DatosPersonales extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_datos_personales, container, false);
 
         edtEmail = vista.findViewById(R.id.edtEmail);
+        edtNombre = vista.findViewById(R.id.edtNombre);
+        edtApellido1 = vista.findViewById(R.id.edtApellido1);
+        edtApellido2 = vista.findViewById(R.id.edtApellido2);
+        edtTelefono = vista.findViewById(R.id.edtTelefono);
+        edtDireccion = vista.findViewById(R.id.edtDireccion);
+        edtNumDireccion = vista.findViewById(R.id.edtNumDireccion);
+        edtPiso = vista.findViewById(R.id.edtPiso);
+        edtCp = vista.findViewById(R.id.edtCp);
+        edtCiudad = vista.findViewById(R.id.edtCiudad);
+        edtProvincia = vista.findViewById(R.id.edtProvincia);
+        edtPais = vista.findViewById(R.id.edtPais);
+
         btnFoto = vista.findViewById(R.id.btnFoto);
         mPhotoImageView = vista.findViewById(R.id.imgUsuario);
 
@@ -113,7 +125,18 @@ public class DatosPersonales extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        edtEmail.setHint(activity.obtenerSesion().getNombre());
+        edtEmail.setHint(activity.obtenerSesion().getEmail());
+        edtNombre.setHint(activity.obtenerSesion().getNombre());
+        edtApellido1.setHint(activity.obtenerSesion().getApellido1());
+        edtApellido2.setHint(activity.obtenerSesion().getApellido2());
+        edtTelefono.setHint(activity.obtenerSesion().getTelefono());
+        edtDireccion.setHint(activity.obtenerSesion().getCalle());
+        edtNumDireccion.setHint(activity.obtenerSesion().getNumPortal());
+        edtPiso.setHint(activity.obtenerSesion().getPiso());
+        edtCp.setHint(activity.obtenerSesion().getCodigoPostal());
+        edtCiudad.setHint(activity.obtenerSesion().getCiudad());
+        edtProvincia.setHint(activity.obtenerSesion().getProvincia());
+        edtPais.setHint(activity.obtenerSesion().getPais());
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override

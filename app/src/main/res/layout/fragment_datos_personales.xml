@@ -137,6 +137,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/edtNombre"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -162,6 +163,7 @@
                     android:text="@string/apellido1P" />
 
                 <EditText
+                    android:id="@+id/edtApellido1"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -195,6 +197,7 @@
                     android:text="@string/apellido2P" />
 
                 <EditText
+                    android:id="@+id/edtApellido2"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -220,6 +223,7 @@
                     android:text="@string/telefonoP" />
 
                 <EditText
+                    android:id="@+id/edtTelefono"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -243,6 +247,7 @@
             />
 
         <EditText
+            android:id="@+id/edtDireccion"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -273,6 +278,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/edtNumDireccion"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -298,6 +304,7 @@
                     android:text="@string/pisoP" />
 
                 <EditText
+                    android:id="@+id/edtPiso"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -331,6 +338,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/edtCp"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -356,6 +364,7 @@
                     android:text="@string/ciudadP" />
 
                 <EditText
+                    android:id="@+id/edtCiudad"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -389,6 +398,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/edtProvincia"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -414,6 +424,7 @@
                     android:text="@string/paisP" />
 
                 <EditText
+                    android:id="@+id/edtPais"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

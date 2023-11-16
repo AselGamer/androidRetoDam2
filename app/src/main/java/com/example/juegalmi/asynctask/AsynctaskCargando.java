@@ -1,4 +1,4 @@
-package com.example.juegalmi;
+package com.example.juegalmi.asynctask;
 
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -27,7 +27,7 @@ public class AsynctaskCargando extends AsyncTask<Void,Integer,Void> {
     //Es la parte que se ejecuta en segundo plano en el hilo
     @Override
     protected Void doInBackground(Void... voids) {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 5; i++)
         {
             try
             {

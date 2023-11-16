@@ -6,8 +6,12 @@ import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Usuario;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,7 +42,7 @@ public interface ApiServicio {
     Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);
 
     @GET("articulos/tipo")
-    Call<Object> getAllByType();
+    Call<Map<String, List<Articulo>>> getAllByType();
 
     @GET("etiquetas")
     Call<List<Etiqueta>> getEtiquetas();

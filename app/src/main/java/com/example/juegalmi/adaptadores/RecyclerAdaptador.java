@@ -2,6 +2,7 @@ package com.example.juegalmi.adaptadores;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
     @NonNull
     @Override
     public RecyclerAdaptador.MiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View vista;
         if(buscador == true){
             vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_texto_buscador, parent, false);
@@ -46,6 +48,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdaptador.MiViewHolder holder, int position) {
+
         Glide
                 .with(context)
                 .load("https://retoasel.duckdns.org/images/" + listaArticulos.get(position).getFoto())

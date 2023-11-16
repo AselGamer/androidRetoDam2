@@ -1,4 +1,4 @@
-package com.example.juegalmi;
+package com.example.juegalmi.asynctask;
 
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.juegalmi.R;
+import com.example.juegalmi.asynctask.AsynctaskCargando;
 
 public class Cargando extends AppCompatActivity {
     private ProgressBar barra;

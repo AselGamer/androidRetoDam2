@@ -21,9 +21,8 @@ public class DetalleConsola extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetalleConsola newInstance(String param1, String param2) {
+    public static DetalleConsola newInstance(Bundle args) {
         DetalleConsola fragment = new DetalleConsola();
-        Bundle args = new Bundle();
 
         fragment.setArguments(args);
         return fragment;

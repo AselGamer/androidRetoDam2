@@ -12,6 +12,8 @@ public interface IControlFragmentos {
     public void cambiarTitulo(String titulo);
     public void cambiarSesion(Usuario usuario);
     public Usuario obtenerSesion();
+    public void cambiarToken(String token);
+    public String obtenerToken();
     public ArrayList<Articulo> obtenerListaArticulos();
     public ArrayList<Etiqueta> obtenerListaEtiquetas();
     public void cambiarFragmento(Fragment fragmento);

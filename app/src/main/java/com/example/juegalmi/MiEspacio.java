@@ -79,6 +79,7 @@ public class MiEspacio extends Fragment {
             @Override
             public void onClick(View view) {
                 activity.cambiarSesion(null);
+                activity.cambiarToken("");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenedor, new Productos())

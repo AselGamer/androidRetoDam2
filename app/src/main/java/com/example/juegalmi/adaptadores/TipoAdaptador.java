@@ -58,8 +58,6 @@ public class TipoAdaptador extends BaseAdapter {
         TextView textoNombre = fila.findViewById(R.id.txtSubtitulo);
         textoNombre.setText(tipos[i]);
 
-
-
         ArrayList<Articulo> ar = new ArrayList<Articulo>(this.tipoArticulos.get(tipos[i]));
 
         RecyclerAdaptador recyclerAdaptador = new RecyclerAdaptador(fila.getContext(), ar, false);  //añadir tipos[i] para saber que fragmento hay que cambiar

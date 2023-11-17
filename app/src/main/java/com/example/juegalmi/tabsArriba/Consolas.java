@@ -68,7 +68,7 @@ public class Consolas extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_consolas, container, false);
 
-        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllByType();///////////////////////Cambiar
+        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllConsolas();
         call.enqueue(new Callback<Map<String, List<Articulo>>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

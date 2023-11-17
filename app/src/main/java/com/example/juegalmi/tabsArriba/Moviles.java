@@ -68,7 +68,7 @@ public class Moviles extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_moviles, container, false);
 
-        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllByType();/////////////////Cambiar
+        Call<Map<String, List<Articulo>>> call = ApiAdaptador.getApiService().getAllMoviles();
         call.enqueue(new Callback<Map<String, List<Articulo>>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

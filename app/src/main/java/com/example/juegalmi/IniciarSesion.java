@@ -193,6 +193,7 @@ public class IniciarSesion extends Fragment {
                             Usuario usuario = response.body();
                             activity.cambiarTitulo("");
                             activity.cambiarSesion(usuario);
+                            activity.cambiarToken(token);
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.contenedor, new Productos())

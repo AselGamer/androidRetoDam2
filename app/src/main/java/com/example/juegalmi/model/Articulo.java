@@ -2,7 +2,9 @@ package com.example.juegalmi.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Articulo {
+import java.io.Serializable;
+
+public class Articulo implements Serializable {
     @SerializedName("idarticulo")
     int idarticulo;
     @SerializedName("articulonombre")
@@ -19,8 +21,10 @@ public class Articulo {
     Marca idmarca;
     @SerializedName("idtipoClase")
     int idtipoClase;
+    @SerializedName("stockAlquiler")
+    int stockAlquiler;
 
-    public Articulo(int idarticulo, String articulonombre, String tipoarticulo, float precio, int stock, String foto, Marca idmarca, int idtipoClase) {
+    public Articulo(int idarticulo, String articulonombre, String tipoarticulo, float precio, int stock, String foto, Marca idmarca, int idtipoClase, int stockAlquiler) {
         this.idarticulo = idarticulo;
         this.articulonombre = articulonombre;
         this.tipoarticulo = tipoarticulo;
@@ -29,6 +33,7 @@ public class Articulo {
         this.foto = foto;
         this.idmarca = idmarca;
         this.idtipoClase = idtipoClase;
+        this.stockAlquiler = stockAlquiler;
     }
 
     public int getIdarticulo() {
@@ -93,5 +98,13 @@ public class Articulo {
 
     public void setIdtipoClase(int idtipoClase) {
         this.idtipoClase = idtipoClase;
+    }
+
+    public int getStockAlquiler() {
+        return stockAlquiler;
+    }
+
+    public void setStockAlquiler(int stockAlquiler) {
+        this.stockAlquiler = stockAlquiler;
     }
 }

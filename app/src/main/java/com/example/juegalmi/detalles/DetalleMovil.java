@@ -21,9 +21,8 @@ public class DetalleMovil extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetalleMovil newInstance(String param1, String param2) {
+    public static DetalleMovil newInstance(Bundle args) {
         DetalleMovil fragment = new DetalleMovil();
-        Bundle args = new Bundle();
 
         fragment.setArguments(args);
         return fragment;

@@ -4,6 +4,7 @@ import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Transaccion;
 import com.example.juegalmi.model.Usuario;
 
 import org.json.JSONArray;
@@ -41,10 +42,25 @@ public interface ApiServicio {
     @GET("articulos/tipo/{tipoarticulo}")
     Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);
 
-    @GET("articulos/tipo")
+    @GET("articulos/ver/{idarticulo}")
+    Call<Articulo> getArticulo(@Path("idarticulo") int idarticulo);
+
+    @GET("articulos/tipos")
     Call<Map<String, List<Articulo>>> getAllByType();
+
+    @GET("articulos/etiquetas")
+    Call<Map<String, List<Articulo>>> getAllVideojuegos();
+
+    @GET("articulos/marcas/tipo/Consola")
+    Call<Map<String, List<Articulo>>> getAllConsolas();
+
+    @GET("articulos/marcas/tipo/DispositivoMovil")
+    Call<Map<String, List<Articulo>>> getAllMoviles();
 
     @GET("etiquetas")
     Call<List<Etiqueta>> getEtiquetas();
+
+    @GET("transaccion/{tipoTransaccion}")
+    Call<List<Transaccion>> getCompras(@Header("Authorization") String authToken, @Path("tipoTransaccion") String tipoTransaccion);
 
 }

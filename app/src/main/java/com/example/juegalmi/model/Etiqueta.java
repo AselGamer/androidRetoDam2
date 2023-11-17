@@ -2,7 +2,9 @@ package com.example.juegalmi.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Etiqueta {
+import java.io.Serializable;
+
+public class Etiqueta implements Serializable {
     @SerializedName("idetiqueta")
     int idetiqueta;
     @SerializedName("nombre")

@@ -14,21 +14,21 @@
         />
 
     <TextView
-        android:id="@+id/txtJuego"
+        android:id="@+id/txtTexto1"
         style="@style/estiloTextoFoto"
         android:layout_marginBottom="30dp"
         android:text="Texto"
         />
 
     <TextView
-        android:id="@+id/txtPrecio"
+        android:id="@+id/txtTexto2"
         style="@style/estiloTextoFoto"
         android:layout_marginBottom="15dp"
         android:text="Texto"
         />
 
     <TextView
-        android:id="@+id/txtDesarrollador"
+        android:id="@+id/txtTexto3"
         style="@style/estiloTextoFoto"
         android:text="Texto"
         />

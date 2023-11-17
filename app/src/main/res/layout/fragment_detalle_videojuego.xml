@@ -7,6 +7,7 @@
     tools:context=".detalles.DetalleVideojuego">
 
     <TextView
+        android:id="@+id/txtTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -23,6 +24,7 @@
         >
 
         <ImageView
+            android:id="@+id/imgVideojuego"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
@@ -44,6 +46,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtPlataforma"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Switch"
@@ -59,6 +62,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtCategoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acción, RPG"
@@ -75,6 +79,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtPrecioAlquiler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3€"
@@ -90,6 +95,7 @@
                 />
 
             <TextView
+                android:id="@+id/txtPrecioCompra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="46,99€"

@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private ArrayList<Etiqueta> listaEtiquetas;
     private LinearLayout layRecycler, contenedor;
     private Usuario usuario;
+    private String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
         recyclerBuscador = findViewById(R.id.recyclerBuscador);
         recyclerBuscador.setLayoutManager(new GridLayoutManager(this, 1));
-        adaptador = new RecyclerAdaptador(this, listaArticulos, false);
         adaptadorBuscador = new RecyclerAdaptador(this, listaArticulos, true);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -216,6 +216,16 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     }
 
     @Override
+    public void cambiarToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public String obtenerToken() {
+        return token;
+    }
+
+    @Override
     public ArrayList<Articulo> obtenerListaArticulos() {
         return listaArticulos;
     }
@@ -228,6 +238,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public void cambiarFragmento(Fragment fragmento) {
         cambiarParametros();
+        recyclerBuscador.setVisibility(View.INVISIBLE);
+        layRecycler.setLayoutParams(params);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.contenedor, fragmento)
@@ -285,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                     for(int i=0; i<lr.size(); i++){
                         listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(),
                                 lr.get(i).getTipoarticulo(), lr.get(i).getPrecio(), lr.get(i).getStock(),
-                                lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase()));
+                                lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase(), lr.get(i).getStockAlquiler()));
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();

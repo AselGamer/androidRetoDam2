@@ -93,7 +93,7 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
                     vista = inflater.inflate(R.layout.imagen_texto_buscador, holder.itemView.findViewById(R.id.layoutCardBuscador));
                 }
 
-                ImageView imgImagen = vista.findViewById(R.id.imgImagen);
+                //ImageView imgImagen = vista.findViewById(R.id.imgImagen);
 
                 Articulo articulo = listaArticulos.get(position);
 
@@ -101,8 +101,8 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
                 /*bundle.putString("texto1", holder.txtTexto1.getText().toString());
                 bundle.putString("texto2", holder.txtTexto2.getText().toString());
-                bundle.putString("texto3", holder.txtTexto3.getText().toString());
-                bundle.putSerializable("articulo", articulo);*/
+                bundle.putString("texto3", holder.txtTexto3.getText().toString());*/
+                bundle.putSerializable("articulo", articulo);
 
                 if(listaArticulos.get(position).getTipoarticulo().equals("Videojuego")){
                     activity.cambiarFragmento(DetalleVideojuego.newInstance(bundle));

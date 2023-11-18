@@ -138,7 +138,7 @@ public class IniciarSesion extends Fragment {
                 //INICIAR SESION: Contraseña inventada
                 /*if(edtEmail.getText().toString().equals("Almi") && edtContrasenya.getText().toString().equals("Almi123")){
                     activity.cambiarTitulo("");
-                    activity.cambiarSesion("Almi");
+                    activity.cambiarSesion(new Usuario(100, "Almi", "", "", "", "", "", "", "", "", "", "", ""));
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.contenedor, new Productos())
@@ -185,6 +185,7 @@ public class IniciarSesion extends Fragment {
         btnToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Call<Usuario> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
                 call.enqueue(new Callback<Usuario>() {
                     @Override

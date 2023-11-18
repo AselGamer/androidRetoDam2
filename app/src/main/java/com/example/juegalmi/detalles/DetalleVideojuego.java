@@ -6,13 +6,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.juegalmi.R;
+import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.Producto;
+import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Videojuego;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,14 +85,32 @@ public class DetalleVideojuego extends Fragment {
         }*/
         if(getArguments().containsKey("articulo"))
         {
-            /*FALTA CAMBIAR LA BBDD
-            Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
-            txtTitulo.setText(articulo.getArticulonombre());
-            txtPlataforma.setText(articulo.getId());
-            txtCategoria.setText(articulo.getArticulonombre());
-            txtPrecioAlquiler.setText(articulo.getArticulonombre());
-            txtPrecioCompra.setText(articulo.getArticulonombre());
-            */
+            /*Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
+            Call<Videojuego> call = ApiAdaptador.getApiService().getProducto(articulo.getIdarticulo());
+            call.enqueue(new Callback<Videojuego>() {
+                @Override
+                public void onResponse(Call<Videojuego> call, Response<Videojuego> response) {
+                    if(response.isSuccessful()){
+                        Videojuego videojuego = (Videojuego) response.body();
+
+                        txtTitulo.setText(articulo.getArticulonombre());
+                        txtPlataforma.setText(videojuego.getIdplataforma().getNombre());
+                        for(int i=0; i<videojuego.getEtiquetas().length; i++){
+                            txtCategoria.setText(videojuego.getEtiquetas()[i].getNombre());
+                        }
+                        //txtPrecioAlquiler.setText(articulo.getArticulonombre());
+                        txtPrecioCompra.setText(articulo.getPrecio() + "€");
+                    }else{
+                        Toast.makeText(getContext(), "No se ha podido obtener el videojuego", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Videojuego> call, Throwable t) {
+                    Log.d("calll", String.valueOf(call.request()));
+                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+            });*/
         }
     }
 }

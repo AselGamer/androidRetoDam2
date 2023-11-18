@@ -6,16 +6,21 @@ import java.io.Serializable;
 
 public class Marca implements Serializable {
     @SerializedName("idmarca")
-    String idmarca;
+    int idmarca;
 
     @SerializedName("nombre")
     String nombre;
 
-    public String getIdmarca() {
+    public Marca(int idmarca, String nombre) {
+        this.idmarca = idmarca;
+        this.nombre = nombre;
+    }
+
+    public int getIdmarca() {
         return idmarca;
     }
 
-    public void setIdmarca(String idmarca) {
+    public void setIdmarca(int idmarca) {
         this.idmarca = idmarca;
     }
 

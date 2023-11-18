@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                 if(response.isSuccessful()){
                     List<Articulo> lr = response.body();
                     for(int i=0; i<lr.size(); i++){
-                        listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(),
+                        listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(), lr.get(i).getNombre(),
                                 lr.get(i).getTipoarticulo(), lr.get(i).getPrecio(), lr.get(i).getStock(),
                                 lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase(), lr.get(i).getStockAlquiler()));
                     }

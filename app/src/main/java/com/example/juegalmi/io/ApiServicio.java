@@ -1,11 +1,14 @@
 package com.example.juegalmi.io;
 
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.DispositivoMovil;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
+import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Transaccion;
 import com.example.juegalmi.model.Usuario;
+import com.example.juegalmi.model.Videojuego;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,7 +46,7 @@ public interface ApiServicio {
     Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);
 
     @GET("articulos/ver/{idarticulo}")
-    Call<Articulo> getArticulo(@Path("idarticulo") int idarticulo);
+    Call<List<DispositivoMovil>> getProducto(@Path("idarticulo") int idarticulo);
 
     @GET("articulos/tipos")
     Call<Map<String, List<Articulo>>> getAllByType();

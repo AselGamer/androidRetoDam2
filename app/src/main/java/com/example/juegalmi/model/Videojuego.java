@@ -11,6 +11,38 @@ public class Videojuego implements Serializable {
     Plataforma idplataforma;
     @SerializedName("idarticulo")
     Articulo idarticulo;
+    @SerializedName("etiquetas")
+    Etiqueta[] etiquetas;
 
-    //FALTA CAMBIAR LA BBDD
+    public Videojuego(int idvideojuego, Plataforma idplataforma, Articulo idarticulo, Etiqueta[] etiquetas) {
+        //super(idarticulo);
+        this.idvideojuego = idvideojuego;
+        this.idplataforma = idplataforma;
+        this.idarticulo = idarticulo;
+        this.etiquetas = etiquetas;
+    }
+
+    public int getIdvideojuego() {
+        return idvideojuego;
+    }
+
+    public void setIdvideojuego(int idvideojuego) {
+        this.idvideojuego = idvideojuego;
+    }
+
+    public Plataforma getIdplataforma() {
+        return idplataforma;
+    }
+
+    public void setIdplataforma(Plataforma idplataforma) {
+        this.idplataforma = idplataforma;
+    }
+
+    public Etiqueta[] getEtiquetas() {
+        return etiquetas;
+    }
+
+    public void setEtiquetas(Etiqueta[] etiquetas) {
+        this.etiquetas = etiquetas;
+    }
 }

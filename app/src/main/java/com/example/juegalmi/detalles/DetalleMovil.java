@@ -19,9 +19,12 @@ import com.example.juegalmi.R;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.DispositivoMovil;
+import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Videojuego;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,19 +82,25 @@ public class DetalleMovil extends Fragment {
         if(getArguments().containsKey("articulo"))
         {
             Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
-            Log.d("calll", String.valueOf(articulo.getIdarticulo()));
-            Call<List<DispositivoMovil>> call = ApiAdaptador.getApiService().getProducto(articulo.getIdarticulo());
-            call.enqueue(new Callback<List<DispositivoMovil>>() {
+            Call<List<Producto>> call = ApiAdaptador.getApiService().getProducto(articulo.getIdarticulo());
+            call.enqueue(new Callback<List<Producto>>() {
                 @Override
-                public void onResponse(Call<List<DispositivoMovil>> call, Response<List<DispositivoMovil>> response) {
+                public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
                     if(response.isSuccessful()){
-                        List<DispositivoMovil> lr = response.body();
+                        //Casting de List<Producto> a List<DispositivoMovil>
+                        /*List<DispositivoMovil> lr = response.body()
+                                .stream()
+                                .filter(DispositivoMovil.class::isInstance)
+                                .map(DispositivoMovil.class::cast)
+                                .collect(Collectors.toList());*/
+
+                        DispositivoMovil lr = (DispositivoMovil) response.body();
 
                         txtTitulo.setText(articulo.getArticulonombre());
-                        txtDetalles.setText(lr.get(0).getAlmacenamiento() + "GB, " + lr.get(0).getRam() + "GB RAM");  //falta el color///////////
+                        txtDetalles.setText(lr.getAlmacenamiento() + "GB, " + lr.getRam() + "GB RAM");  //falta el color///////////
                         txtMarca.setText(articulo.getIdmarca().getNombre());
                         //txtMarca.setText(articulo.getIdmarca().getNombre());  //falta el procesador//////////////////////////////////////////
-                        txtPantalla.setText(lr.get(0).getTamanoPantalla() + "''");
+                        txtPantalla.setText(lr.getTamanoPantalla() + "''");
                         txtPrecio.setText(articulo.getPrecio() + "€");
                         Glide
                                 .with(getContext())
@@ -103,7 +112,7 @@ public class DetalleMovil extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<List<DispositivoMovil>> call, Throwable t) {
+                public void onFailure(Call<List<Producto>> call, Throwable t) {
                     Log.d("calll", String.valueOf(call.request()));
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }

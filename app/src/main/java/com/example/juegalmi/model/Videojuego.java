@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Videojuego implements Serializable {
+public class Videojuego extends Producto implements Serializable {
     @SerializedName("idvideojuego")
     int idvideojuego;
     @SerializedName("idplataforma")
@@ -15,10 +15,9 @@ public class Videojuego implements Serializable {
     Etiqueta[] etiquetas;
 
     public Videojuego(int idvideojuego, Plataforma idplataforma, Articulo idarticulo, Etiqueta[] etiquetas) {
-        //super(idarticulo);
+        super(idarticulo);
         this.idvideojuego = idvideojuego;
         this.idplataforma = idplataforma;
-        this.idarticulo = idarticulo;
         this.etiquetas = etiquetas;
     }
 

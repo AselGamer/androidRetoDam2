@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class DispositivoMovil implements Serializable {
+public class DispositivoMovil extends Producto implements Serializable {
     @SerializedName("iddispositivomovil")
     int iddispositivomovil;
     @SerializedName("almacenamiento")
@@ -13,15 +13,13 @@ public class DispositivoMovil implements Serializable {
     String ram;
     @SerializedName("tamanoPantalla")
     String tamanoPantalla;
-    @SerializedName("idarticulo")
-    Articulo2 idarticulo;
 
-    public DispositivoMovil(int iddispositivomovil, String almacenamiento, String ram, String tamanoPantalla, Articulo2 idarticulo) {
+    public DispositivoMovil(int iddispositivomovil, String almacenamiento, String ram, String tamanoPantalla, Articulo idarticulo) {
+        super(idarticulo);
         this.iddispositivomovil = iddispositivomovil;
         this.almacenamiento = almacenamiento;
         this.ram = ram;
         this.tamanoPantalla = tamanoPantalla;
-        this.idarticulo = idarticulo;
     }
 
     public int getIddispositivomovil() {
@@ -54,13 +52,5 @@ public class DispositivoMovil implements Serializable {
 
     public void setTamanoPantalla(String tamanoPantalla) {
         this.tamanoPantalla = tamanoPantalla;
-    }
-
-    public Articulo2 getIdarticulo() {
-        return idarticulo;
-    }
-
-    public void setIdarticulo(Articulo2 idarticulo) {
-        this.idarticulo = idarticulo;
     }
 }

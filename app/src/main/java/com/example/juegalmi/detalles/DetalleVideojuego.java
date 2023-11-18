@@ -21,6 +21,8 @@ import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Videojuego;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,34 +73,35 @@ public class DetalleVideojuego extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*if(getArguments().containsKey("texto1"))
-        {
-            txtTitulo.setText(getArguments().getString("texto1"));
-        }
-        if(getArguments().containsKey("texto2"))
-        {
-            txtTitulo.setText(getArguments().getString("texto2"));
-        }
-        if(getArguments().containsKey("texto3"))
-        {
-            txtTitulo.setText(getArguments().getString("texto3"));
-        }*/
         if(getArguments().containsKey("articulo"))
         {
-            /*Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
-            Call<Videojuego> call = ApiAdaptador.getApiService().getProducto(articulo.getIdarticulo());
-            call.enqueue(new Callback<Videojuego>() {
+            Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
+            Call<List<Producto>> call = ApiAdaptador.getApiService().getProducto(articulo.getIdarticulo());
+            call.enqueue(new Callback<List<Producto>>() {
                 @Override
-                public void onResponse(Call<Videojuego> call, Response<Videojuego> response) {
+                public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
                     if(response.isSuccessful()){
+                        //Casting de List<Producto> a List<DispositivoMovil>
+                        /*List<DispositivoMovil> lr = response.body()
+                                .stream()
+                                .filter(DispositivoMovil.class::isInstance)
+                                .map(DispositivoMovil.class::cast)
+                                .collect(Collectors.toList());*/
+
                         Videojuego videojuego = (Videojuego) response.body();
 
                         txtTitulo.setText(articulo.getArticulonombre());
                         txtPlataforma.setText(videojuego.getIdplataforma().getNombre());
+                        String etiquetas = "";
                         for(int i=0; i<videojuego.getEtiquetas().length; i++){
-                            txtCategoria.setText(videojuego.getEtiquetas()[i].getNombre());
+                            if(i==0){
+                                etiquetas = videojuego.getEtiquetas()[i].getNombre();
+                            }else{
+                                etiquetas = etiquetas + ", " + videojuego.getEtiquetas()[i].getNombre();
+                            }
                         }
-                        //txtPrecioAlquiler.setText(articulo.getArticulonombre());
+                        txtCategoria.setText(etiquetas);
+                        //txtPrecioAlquiler.setText(articulo.getArticulonombre());  //falta precio alquiler
                         txtPrecioCompra.setText(articulo.getPrecio() + "€");
                     }else{
                         Toast.makeText(getContext(), "No se ha podido obtener el videojuego", Toast.LENGTH_SHORT).show();
@@ -106,11 +109,11 @@ public class DetalleVideojuego extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Videojuego> call, Throwable t) {
+                public void onFailure(Call<List<Producto>> call, Throwable t) {
                     Log.d("calll", String.valueOf(call.request()));
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
-            });*/
+            });
         }
     }
 }

@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegalmi.adaptadores.TipoAdaptador;
+import com.example.juegalmi.adaptadores.TransaccionAdaptador;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
@@ -38,7 +40,7 @@ import retrofit2.Response;
  */
 public class MisPedidos extends Fragment {
     private TextView txtNumTransaccion, fechaTransaccion, precioTransaccion;
-    private Button btnDetalle;
+    private ListView listTransacciones = null;
     private IControlFragmentos activity;
 
     public MisPedidos() {
@@ -73,18 +75,6 @@ public class MisPedidos extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_mis_pedidos, container, false);
 
-        txtNumTransaccion = vista.findViewById(R.id.txtNumTransaccion);
-        fechaTransaccion = vista.findViewById(R.id.fechaTransaccion);
-        precioTransaccion = vista.findViewById(R.id.precioTransaccion);
-        btnDetalle = vista.findViewById(R.id.btnDetalle);
-
-        return vista;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         Call<List<Transaccion>> call = ApiAdaptador.getApiService().getCompras("Bearer " + activity.obtenerToken(), "Compra");
         call.enqueue(new Callback<List<Transaccion>>() {
             @SuppressLint("NotifyDataSetChanged")
@@ -93,10 +83,10 @@ public class MisPedidos extends Fragment {
                 if(response.isSuccessful()){
                     List<Transaccion> lr = response.body();
 
-                    /*TipoAdaptador tipoAdaptador = new TipoAdaptador(vista.getContext(), lr);
+                    TransaccionAdaptador transaccionAdaptador = new TransaccionAdaptador(vista.getContext(), lr);
 
-                    listaTipos = vista.findViewById(R.id.listTipos);
-                    listaTipos.setAdapter(tipoAdaptador);*/
+                    listTransacciones = vista.findViewById(R.id.listTransacciones);
+                    listTransacciones.setAdapter(transaccionAdaptador);
                 }else{
                     Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
                 }
@@ -109,15 +99,11 @@ public class MisPedidos extends Fragment {
         });
 
 
-        btnDetalle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.cambiarTitulo("Pedido");
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.contenedor, new Pedido())
-                        .commit();
-            }
-        });
+        return vista;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

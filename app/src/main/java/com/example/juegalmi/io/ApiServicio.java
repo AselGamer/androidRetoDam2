@@ -46,7 +46,7 @@ public interface ApiServicio {
     Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);
 
     @GET("articulos/ver/{idarticulo}")
-    Call<List<DispositivoMovil>> getProducto(@Path("idarticulo") int idarticulo);
+    Call<List<Producto>> getProducto(@Path("idarticulo") int idarticulo);
 
     @GET("articulos/tipos")
     Call<Map<String, List<Articulo>>> getAllByType();

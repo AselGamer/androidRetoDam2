@@ -49,7 +49,7 @@ import retrofit2.Response;
 public class Todo extends Fragment {
     private ArrayList<Etiqueta> listaEtiquetas = new ArrayList<>();
     private IControlFragmentos activity;
-    private ListView listaTipos = null;
+    private ListView listTipos = null;
 
     public Todo() {
         // Required empty public constructor
@@ -94,8 +94,8 @@ public class Todo extends Fragment {
 
                     TipoAdaptador tipoAdaptador = new TipoAdaptador(vista.getContext(), lr);
 
-                    listaTipos = vista.findViewById(R.id.listTipos);
-                    listaTipos.setAdapter(tipoAdaptador);
+                    listTipos = vista.findViewById(R.id.listTipos);
+                    listTipos.setAdapter(tipoAdaptador);
                 }else{
                     Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
                 }

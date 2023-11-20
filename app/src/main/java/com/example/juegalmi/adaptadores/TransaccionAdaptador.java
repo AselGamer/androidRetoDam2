@@ -1,6 +1,7 @@
 package com.example.juegalmi.adaptadores;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransaccionAdaptador extends BaseAdapter {
+    private Bundle bundle = new Bundle();
     private Context context = null;
     private List<Transaccion> listaTransacciones;
     private IControlFragmentos activity;
@@ -64,8 +66,10 @@ public class TransaccionAdaptador extends BaseAdapter {
         btnDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Transaccion transaccion = listaTransacciones.get(i);
+                bundle.putSerializable("transaccion", transaccion);
                 activity.cambiarTitulo("Pedido");
-                activity.cambiarFragmento(new Pedido());
+                activity.cambiarFragmento(Pedido.newInstance(bundle));
             }
         });
 

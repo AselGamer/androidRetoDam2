@@ -1,12 +1,26 @@
 package com.example.juegalmi;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.juegalmi.adaptadores.DetalleTransaccionAdaptador;
+import com.example.juegalmi.adaptadores.TransaccionAdaptador;
+import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.DetalleTransaccion;
+import com.example.juegalmi.model.Transaccion;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,14 +28,17 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Pedido extends Fragment {
+    private TextView txtNumPedido, txtTotal;
+    private ListView listDetalleTransacciones = null;
+    private IControlFragmentos activity;
+    private Transaccion transaccion;
 
     public Pedido() {
         // Required empty public constructor
     }
 
-    public static Pedido newInstance(String param1, String param2) {
+    public static Pedido newInstance(Bundle args) {
         Pedido fragment = new Pedido();
-        Bundle args = new Bundle();
 
         fragment.setArguments(args);
         return fragment;
@@ -36,9 +53,62 @@ public class Pedido extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activity = (IControlFragmentos) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pedido, container, false);
+        View vista = inflater.inflate(R.layout.fragment_pedido, container, false);
+
+        txtNumPedido = vista.findViewById(R.id.txtNumPedido);
+        listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
+        txtTotal = vista.findViewById(R.id.txtTotal);
+
+        if(getArguments().containsKey("transaccion"))
+        {
+            transaccion = (Transaccion) getArguments().getSerializable("transaccion");
+
+            ArrayList<DetalleTransaccion> listaArticulos = new ArrayList();
+            ArrayList<Integer> listaCantidad = new ArrayList();
+            for(int i=0; i<transaccion.getDetalles().length; i++){
+                if(i==0){
+                    listaArticulos.add(transaccion.getDetalles()[i]);
+                    listaCantidad.add(1);
+                }else{
+                    for(int j=0; j<listaArticulos.size(); j++){
+                        if(transaccion.getDetalles()[i].getIdarticulo().getIdarticulo() == listaArticulos.get(j).getIdarticulo().getIdarticulo()){
+                            listaCantidad.set(j, listaCantidad.get(j) + 1);
+                        }else{
+                            listaArticulos.add(transaccion.getDetalles()[i]);
+                            listaCantidad.add(1);
+                        }
+                    }
+                }
+            }
+
+            DetalleTransaccionAdaptador detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), listaArticulos, listaCantidad);
+
+            listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
+            listDetalleTransacciones.setAdapter(detalleTransaccionAdaptador);
+        }
+
+        return vista;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        txtNumPedido.setText(transaccion.getIdtransaccion());
+
+        float total = 0;
+        for(int i=0; i<transaccion.getDetalles().length; i++){
+            total = total + transaccion.getDetalles()[i].getPrecio_total();
+        }
+        txtTotal.setText(total + "€");
     }
 }

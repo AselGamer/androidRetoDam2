@@ -65,6 +65,6 @@ public interface ApiServicio {
     Call<List<Etiqueta>> getEtiquetas();
 
     @GET("transaccion/{tipoTransaccion}")
-    Call<List<Transaccion>> getCompras(@Header("Authorization") String authToken, @Path("tipoTransaccion") String tipoTransaccion);
+    Call<List<Transaccion>> getTransacciones(@Header("Authorization") String authToken, @Path("tipoTransaccion") String tipoTransaccion);
 
 }

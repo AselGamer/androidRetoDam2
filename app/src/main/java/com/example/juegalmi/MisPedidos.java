@@ -39,7 +39,6 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MisPedidos extends Fragment {
-    private TextView txtNumTransaccion, fechaTransaccion, precioTransaccion;
     private ListView listTransacciones = null;
     private IControlFragmentos activity;
 
@@ -75,7 +74,7 @@ public class MisPedidos extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_mis_pedidos, container, false);
 
-        Call<List<Transaccion>> call = ApiAdaptador.getApiService().getCompras("Bearer " + activity.obtenerToken(), "Compra");
+        Call<List<Transaccion>> call = ApiAdaptador.getApiService().getTransacciones("Bearer " + activity.obtenerToken(), "Compra");
         call.enqueue(new Callback<List<Transaccion>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override

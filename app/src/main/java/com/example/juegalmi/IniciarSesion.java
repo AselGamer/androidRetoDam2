@@ -159,7 +159,8 @@ public class IniciarSesion extends Fragment {
                 btnEnviar.startAnimation(animation);
 
                 //INICIAR SESION: Retrofit
-                Login login = new Login("example@email.com", "Almi123");    //cambiar antes del la presentacion del reto
+                Login login = new Login(edtEmail.getText().toString(), edtContrasenya.getText().toString());
+                System.out.println(edtEmail.getText().toString());
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
 
                 call.enqueue(new Callback<Respuesta>() {

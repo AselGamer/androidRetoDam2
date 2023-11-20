@@ -1,23 +1,17 @@
 package com.example.juegalmi.io;
 
 import com.example.juegalmi.model.Articulo;
-import com.example.juegalmi.model.DispositivoMovil;
+import com.example.juegalmi.model.Busqueda;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Transaccion;
 import com.example.juegalmi.model.Usuario;
-import com.example.juegalmi.model.Videojuego;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -25,7 +19,6 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiServicio {
 
@@ -39,8 +32,16 @@ public interface ApiServicio {
     @GET("usuario/data")
     Call<Usuario> getAutorizacion(@Header("Authorization") String authToken);
 
+    @Headers("Content-Type: application/json")
+    @POST("register")
+    Call<Respuesta> crearUsuario(@Body Usuario usuario);
+
     @GET("articulos")
     Call<List<Articulo>> getArticulos();
+
+    @Headers("Content-Type: application/json")
+    @POST("articulos/buscar")
+    Call<List<Articulo>> buscar(@Body Busqueda busqueda);
 
     @GET("articulos/tipo/{tipoarticulo}")
     Call<List<Articulo>> getArticulos(@Path("tipoarticulo") String tipoarticulo);

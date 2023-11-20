@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class Etiqueta implements Serializable {
     @SerializedName("idetiqueta")
-    int idetiqueta;
+    private int idetiqueta;
     @SerializedName("nombre")
-    String nombre;
+    private String nombre;
 
     public Etiqueta(int idetiqueta, String nombre) {
         this.idetiqueta = idetiqueta;

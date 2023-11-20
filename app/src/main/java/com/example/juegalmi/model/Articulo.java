@@ -6,25 +6,25 @@ import java.io.Serializable;
 
 public class Articulo implements Serializable {
     @SerializedName("idarticulo")
-    int idarticulo;
+    private int idarticulo;
     @SerializedName("articulonombre")
-    String articulonombre;
+    private String articulonombre;
     @SerializedName("nombre")
-    String nombre;
+    private String nombre;
     @SerializedName("tipoarticulo")
-    String tipoarticulo;
+    private String tipoarticulo;
     @SerializedName("precio")
-    float precio;
+    private float precio;
     @SerializedName("stock")
-    int stock;
+    private int stock;
     @SerializedName("foto")
-    String foto;
+    private String foto;
     @SerializedName("idmarca")
-    Marca idmarca;
+    private Marca idmarca;
     @SerializedName("idtipoClase")
-    int idtipoClase;
+    private int idtipoClase;
     @SerializedName("stockAlquiler")
-    int stockAlquiler;
+    private int stockAlquiler;
 
     public Articulo(int idarticulo, String articulonombre, String nombre, String tipoarticulo, float precio, int stock, String foto, Marca idmarca, int idtipoClase, int stockAlquiler) {
         this.idarticulo = idarticulo;

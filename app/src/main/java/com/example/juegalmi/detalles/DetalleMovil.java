@@ -18,13 +18,9 @@ import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
-import com.example.juegalmi.model.DispositivoMovil;
 import com.example.juegalmi.model.Producto;
-import com.example.juegalmi.model.Videojuego;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +32,7 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class DetalleMovil extends Fragment {
-    private TextView txtTitulo, txtDetalles, txtMarca, txtProcesador, txtPantalla, txtPrecio;
+    private TextView txtTitulo, txtMarca, txtPantalla, txtPrecio;
     private ImageView imgFoto;
 
     public DetalleMovil() {
@@ -65,9 +61,7 @@ public class DetalleMovil extends Fragment {
 
         //Aprovechamos para recoger(instanciar) los botones y demas
         txtTitulo = vista.findViewById(R.id.txtTitulo);
-        txtDetalles = vista.findViewById(R.id.txtDetalles);
         txtMarca = vista.findViewById(R.id.txtMarca);
-        txtProcesador = vista.findViewById(R.id.txtProcesador);
         txtPantalla = vista.findViewById(R.id.txtPantalla);
         txtPrecio = vista.findViewById(R.id.txtPrecio);
         imgFoto = vista.findViewById(R.id.imgFoto);
@@ -88,19 +82,16 @@ public class DetalleMovil extends Fragment {
                 public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
                     if(response.isSuccessful()){
                         //Casting de List<Producto> a List<DispositivoMovil>
+                        List<Producto> lr = response.body();
                         /*List<DispositivoMovil> lr = response.body()
                                 .stream()
                                 .filter(DispositivoMovil.class::isInstance)
                                 .map(DispositivoMovil.class::cast)
                                 .collect(Collectors.toList());*/
 
-                        DispositivoMovil lr = (DispositivoMovil) response.body();
-
                         txtTitulo.setText(articulo.getArticulonombre());
-                        txtDetalles.setText(lr.getAlmacenamiento() + "GB, " + lr.getRam() + "GB RAM");  //falta el color///////////
                         txtMarca.setText(articulo.getIdmarca().getNombre());
-                        //txtMarca.setText(articulo.getIdmarca().getNombre());  //falta el procesador//////////////////////////////////////////
-                        txtPantalla.setText(lr.getTamanoPantalla() + "''");
+                        txtPantalla.setText(lr.get(0).getTamanoPantalla() + "''");
                         txtPrecio.setText(articulo.getPrecio() + "€");
                         Glide
                                 .with(getContext())

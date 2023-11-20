@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class Plataforma implements Serializable {
     @SerializedName("idplataforma")
-    int idplataforma;
+    private int idplataforma;
     @SerializedName("nombre")
-    String nombre;
+    private String nombre;
 
     public Plataforma(int idplataforma, String nombre) {
         this.idplataforma = idplataforma;

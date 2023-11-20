@@ -3,8 +3,8 @@ package com.example.juegalmi.model;
 import java.io.Serializable;
 
 public class FotoGaleria implements Serializable {
-    int recurso = -1;
-    String texto = "";
+    private int recurso = -1;
+    private String texto = "";
 
     public FotoGaleria(int recurso, String texto) {
         this.recurso = recurso;

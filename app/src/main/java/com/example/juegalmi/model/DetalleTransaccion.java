@@ -6,15 +6,15 @@ import java.io.Serializable;
 
 public class DetalleTransaccion implements Serializable {
     @SerializedName("iddetalletransaccion")
-    int iddetalletransaccion;
-    @SerializedName("idproducto")
-    Articulo idproducto;
+    private int iddetalletransaccion;
+    @SerializedName("idarticulo")
+    private Articulo idarticulo;
     @SerializedName("precio_total")
-    float precio_total;
+    private float precio_total;
 
-    public DetalleTransaccion(int iddetalletransaccion, Articulo idproducto, float precio_total) {
+    public DetalleTransaccion(int iddetalletransaccion, Articulo idarticulo, float precio_total) {
         this.iddetalletransaccion = iddetalletransaccion;
-        this.idproducto = idproducto;
+        this.idarticulo = idarticulo;
         this.precio_total = precio_total;
     }
 
@@ -26,12 +26,12 @@ public class DetalleTransaccion implements Serializable {
         this.iddetalletransaccion = iddetalletransaccion;
     }
 
-    public Articulo getIdproducto() {
-        return idproducto;
+    public Articulo getIdarticulo() {
+        return idarticulo;
     }
 
-    public void setIdproducto(Articulo idproducto) {
-        this.idproducto = idproducto;
+    public void setIdarticulo(Articulo idarticulo) {
+        this.idarticulo = idarticulo;
     }
 
     public float getPrecio_total() {

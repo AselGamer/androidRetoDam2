@@ -1,28 +1,46 @@
 package com.example.juegalmi.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-    private int idusuario = -1;
+    /*@SerializedName("idusuario")
+    private int idusuario = -1;*/
+    @SerializedName("nombre")
     private String nombre = "";
+    @SerializedName("apellido1")
     private String apellido1 = "";
+    @SerializedName("apellido2")
     private String apellido2 = "";
+    @SerializedName("email")
     private String email = "";
+    @SerializedName("password")
+    private String password = "";
+    @SerializedName("telefono")
     private String telefono = "";
+    @SerializedName("calle")
     private String calle = "";
+    @SerializedName("numPortal")
     private String numPortal = "";
+    @SerializedName("piso")
     private String piso = "";
+    @SerializedName("codigoPostal")
     private String codigoPostal = "";
+    @SerializedName("ciudad")
     private String ciudad = "";
+    @SerializedName("pais")
     private String pais = "";
+    @SerializedName("provincia")
     private String provincia = "";
 
-    public Usuario(int idusuario, String nombre, String apellido1, String apellido2, String email, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String pais, String provincia) {
-        this.idusuario = idusuario;
+    public Usuario(String nombre, String apellido1, String apellido2, String email, String password, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String pais, String provincia) {
+        //this.idusuario = idusuario;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.email = email;
+        this.password = password;
         this.telefono = telefono;
         this.calle = calle;
         this.numPortal = numPortal;
@@ -33,13 +51,13 @@ public class Usuario implements Serializable {
         this.provincia = provincia;
     }
 
-    public int getIdusuario() {
+    /*public int getIdusuario() {
         return idusuario;
     }
 
     public void setIdusuario(int idusuario) {
         this.idusuario = idusuario;
-    }
+    }*/
 
     public String getNombre() {
         return nombre;
@@ -71,6 +89,14 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTelefono() {

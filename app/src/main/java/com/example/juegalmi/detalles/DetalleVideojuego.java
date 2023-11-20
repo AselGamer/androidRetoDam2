@@ -6,20 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Producto;
-import com.example.juegalmi.model.Respuesta;
-import com.example.juegalmi.model.Videojuego;
 
 import java.util.List;
 
@@ -34,6 +33,7 @@ import retrofit2.Response;
  */
 public class DetalleVideojuego extends Fragment {
     private TextView txtTitulo, txtPlataforma, txtCategoria, txtPrecioAlquiler, txtPrecioCompra;
+    private ImageView imgVideojuego;
 
     public DetalleVideojuego() {
         // Required empty public constructor
@@ -65,6 +65,7 @@ public class DetalleVideojuego extends Fragment {
         txtCategoria = vista.findViewById(R.id.txtCategoria);
         txtPrecioAlquiler = vista.findViewById(R.id.txtPrecioAlquiler);
         txtPrecioCompra = vista.findViewById(R.id.txtPrecioCompra);
+        imgVideojuego = vista.findViewById(R.id.imgVideojuego);
 
         return vista;
     }
@@ -88,21 +89,25 @@ public class DetalleVideojuego extends Fragment {
                                 .map(DispositivoMovil.class::cast)
                                 .collect(Collectors.toList());*/
 
-                        Videojuego videojuego = (Videojuego) response.body();
+                        List<Producto> lr = response.body();
 
                         txtTitulo.setText(articulo.getArticulonombre());
-                        txtPlataforma.setText(videojuego.getIdplataforma().getNombre());
+                        txtPlataforma.setText(lr.get(0).getIdplataforma().getNombre());
                         String etiquetas = "";
-                        for(int i=0; i<videojuego.getEtiquetas().length; i++){
+                        for(int i=0; i<lr.get(0).getEtiquetas().length; i++){
                             if(i==0){
-                                etiquetas = videojuego.getEtiquetas()[i].getNombre();
+                                etiquetas = lr.get(0).getEtiquetas()[i].getNombre();
                             }else{
-                                etiquetas = etiquetas + ", " + videojuego.getEtiquetas()[i].getNombre();
+                                etiquetas = etiquetas + ", " + lr.get(0).getEtiquetas()[i].getNombre();
                             }
                         }
                         txtCategoria.setText(etiquetas);
                         //txtPrecioAlquiler.setText(articulo.getArticulonombre());  //falta precio alquiler
                         txtPrecioCompra.setText(articulo.getPrecio() + "€");
+                        Glide
+                                .with(getContext())
+                                .load("https://retoasel.duckdns.org/images/" + articulo.getFoto())
+                                .into(imgVideojuego);
                     }else{
                         Toast.makeText(getContext(), "No se ha podido obtener el videojuego", Toast.LENGTH_SHORT).show();
                     }

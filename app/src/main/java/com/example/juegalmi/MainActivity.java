@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
-import com.example.juegalmi.asynctask.Cargando;
 import com.example.juegalmi.botonesAbajo.Galeria;
 import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.botonesAbajo.Reparaciones;
@@ -25,6 +23,7 @@ import com.example.juegalmi.botonesAbajo.Ubicacion;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.Busqueda;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Usuario;
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private LinearLayout layRecycler, contenedor;
     private Usuario usuario;
     private String token = "";
+    private int numBusqueda = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         listaArticulos = new ArrayList<>();
         listaEtiquetas = new ArrayList<>();
 
-        rellenarArticulos();
+        //rellenarArticulos();
+        //rellenarArticulosBuscador();
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         paramsMP = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -249,7 +250,9 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
         recyclerBuscador.setAdapter(adaptadorBuscador);
-        filtro(query);
+        Busqueda busqueda = new Busqueda(query);
+        rellenarArticulosBuscador(busqueda);
+        //filtro(query);
 
         return false;
     }
@@ -265,7 +268,10 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     private void filtro(String newText) {
         ArrayList<Articulo> listaFiltro = new ArrayList<>();
-        if(!newText.equals("")){
+        recyclerBuscador.setVisibility(View.VISIBLE);
+        adaptadorBuscador.filtrar(listaFiltro);
+        layRecycler.setLayoutParams(params);
+        /*if(!newText.equals("")){
             for(Articulo item : listaArticulos){
                 if(item.getArticulonombre().toLowerCase().contains(newText.toLowerCase())){
                     listaFiltro.add(item);
@@ -284,52 +290,39 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
             recyclerBuscador.setVisibility(View.VISIBLE);
             adaptadorBuscador.filtrar(listaFiltro);
             layRecycler.setLayoutParams(params);
+        }*/
+    }
+
+    private void rellenarArticulosBuscador(Busqueda busqueda){
+        if(numBusqueda%2 == 0){
+            Call<List<Articulo>> call = ApiAdaptador.getApiService().buscar(busqueda);
+            call.enqueue(new Callback<List<Articulo>>() {
+                @Override
+                public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
+                    if(response.isSuccessful()){
+                        //ArrayList<Articulo> listaFiltro = new ArrayList<>();
+                        listaArticulos.clear();
+                        List<Articulo> lr = response.body();
+                        for(int i=0; i<lr.size(); i++){
+                            listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(), lr.get(i).getNombre(),
+                                    lr.get(i).getTipoarticulo(), lr.get(i).getPrecio(), lr.get(i).getStock(),
+                                    lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase(), lr.get(i).getStockAlquiler()));
+                        }
+                        recyclerBuscador.setVisibility(View.VISIBLE);
+                        adaptadorBuscador.filtrar(listaArticulos);
+                        layRecycler.setLayoutParams(paramsMP);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Articulo>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+        numBusqueda++;
     }
 
-    private void rellenarArticulos() {
-        Call<List<Articulo>> call = ApiAdaptador.getApiService().getArticulos();
-        call.enqueue(new Callback<List<Articulo>>() {
-            @Override
-            public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
-                if(response.isSuccessful()){
-                    List<Articulo> lr = response.body();
-                    for(int i=0; i<lr.size(); i++){
-                        listaArticulos.add(new Articulo(lr.get(i).getIdarticulo(), lr.get(i).getArticulonombre(), lr.get(i).getNombre(),
-                                lr.get(i).getTipoarticulo(), lr.get(i).getPrecio(), lr.get(i).getStock(),
-                                lr.get(i).getFoto(), lr.get(i).getIdmarca(), lr.get(i).getIdtipoClase(), lr.get(i).getStockAlquiler()));
-                    }
-                }else{
-                    Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Articulo>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /*private void rellenarEtiquetas() {
-        Call<List<Etiqueta>> call = ApiAdaptador.getApiService().getEtiquetas();
-        call.enqueue(new Callback<List<Etiqueta>>() {
-            @Override
-            public void onResponse(Call<List<Etiqueta>> call, Response<List<Etiqueta>> response) {
-                if(response.isSuccessful()){
-                    List<Etiqueta> lr = response.body();
-                    for(int i=0; i<lr.size(); i++){
-                        listaEtiquetas.add(new Etiqueta(lr.get(i).getIdetiqueta(), lr.get(i).getNombre()));
-                    }
-                }else{
-                    Toast.makeText(getApplicationContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Etiqueta>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
 }

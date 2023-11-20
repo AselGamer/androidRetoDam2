@@ -1,10 +1,13 @@
 package com.example.juegalmi.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Login implements Serializable {
-
+    @SerializedName("username")
     private String username = "";
+    @SerializedName("password")
     private String password = "";
 
     public Login(String username, String password) {

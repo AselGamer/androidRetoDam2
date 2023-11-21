@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Pedido extends Fragment {
-    private TextView txtNumPedido, txtTotal;
+    private TextView txtNumPedido, txtTotal, txtPrecioTotal;
     private ListView listDetalleTransacciones = null;
     private IControlFragmentos activity;
     private Transaccion transaccion;
@@ -69,6 +69,7 @@ public class Pedido extends Fragment {
         txtNumPedido = vista.findViewById(R.id.txtNumPedido);
         listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
         txtTotal = vista.findViewById(R.id.txtTotal);
+        txtPrecioTotal = vista.findViewById(R.id.txtPrecioTotal);
 
         DetalleTransaccionAdaptador detalleTransaccionAdaptador;
         if(getArguments().containsKey("transaccion"))
@@ -117,18 +118,27 @@ public class Pedido extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        System.out.println(transaccion.getIdtransaccion());
+        if(getArguments().containsKey("transaccion"))
+        {
+            txtNumPedido.setText(String.valueOf(transaccion.getIdtransaccion()));
 
-        txtNumPedido.setText(String.valueOf(transaccion.getIdtransaccion()));
-
-        if(transaccion.getFecha() == null){     //ya que Alquiler no tiene el campo fecha
-            txtTotal.setText(transaccion.getPrecio() + "€");
-        }else{
-            float total = 0;
-            for(int i=0; i<transaccion.getDetalles().length; i++){
-                total = total + transaccion.getDetalles()[i].getPrecio_total();
+            if(transaccion.getFecha() == null){     //ya que Alquiler no tiene el campo fecha
+                txtPrecioTotal.setText(transaccion.getPrecio() + "€");
+            }else{
+                float total = 0;
+                for(int i=0; i<transaccion.getDetalles().length; i++){
+                    total = total + transaccion.getDetalles()[i].getPrecio_total();
+                }
+                txtPrecioTotal.setText(total + "€");
             }
-            txtTotal.setText(total + "€");
+        }else if(getArguments().containsKey("reparacion")){
+            txtNumPedido.setText(String.valueOf(reparacion.getIdreparacion()));
+            if(reparacion.getFechaFin() != null){
+                txtPrecioTotal.setText(reparacion.getPrecio() + "€");
+            }else{
+                txtTotal.setText("");
+                txtPrecioTotal.setText("");
+            }
         }
     }
 }

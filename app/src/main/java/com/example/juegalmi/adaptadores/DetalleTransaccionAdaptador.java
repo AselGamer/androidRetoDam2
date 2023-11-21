@@ -24,6 +24,7 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
     private Transaccion transaccion;
     private Reparacion reparacion;
     private IControlFragmentos activity;
+    private View barra;
 
     public DetalleTransaccionAdaptador(Context context, ArrayList<DetalleTransaccion> listaArticulos, ArrayList<Integer> listaCantidad) {
         this.context = context;
@@ -43,7 +44,7 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(transaccion == null){
+        if(transaccion == null && reparacion == null){
             return listaArticulos.size();
         }else{
             return 1;
@@ -52,10 +53,14 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        if(transaccion == null){
-            return listaArticulos.get(i);
+        if(reparacion == null){
+            if(transaccion == null){
+                return listaArticulos.get(i);
+            }else{
+                return transaccion;
+            }
         }else{
-            return transaccion;
+            return reparacion;
         }
     }
 
@@ -75,6 +80,7 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
         TextView txtPrecioArticulo = fila.findViewById(R.id.txtPrecioArticulo);
         TextView txtFechaInicio = fila.findViewById(R.id.txtFechaInicio);
         TextView txtFechaFin = fila.findViewById(R.id.txtFechaFin);
+        View barra = fila.findViewById(R.id.barra);
         LinearLayout.LayoutParams paramsCompra = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams paramsAlquiler = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         if(reparacion == null){
@@ -114,7 +120,15 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
             }
         }else{  //Reparacion
             txtArticulo.setText("Problema: " + reparacion.getProblema());
-            ///////////////////////////////////////////////////////////////////////////////////
+            txtCantidadPrecio.setText("Estado: " + reparacion.getIdestadoreparacion().getNombre());
+            txtFechaInicio.setText("Fecha: " + reparacion.getFechaInicio());
+            txtFechaFin.setText("Comentario: " + reparacion.getComentarioReparacion());
+            if(reparacion.getFechaFin() != null){
+                txtPrecioArticulo.setText(reparacion.getPrecio() + "€");
+            }else{
+                txtPrecioArticulo.setText("");
+                barra.setVisibility(View.INVISIBLE);
+            }
         }
 
         return fila;

@@ -79,7 +79,6 @@ public class MisAlquileres extends Fragment {
 
                     listTransacciones = vista.findViewById(R.id.listTransacciones);
                     listTransacciones.setAdapter(transaccionAdaptador);
-                    ///////////////////////////////////////////////////////////////////////////////
                 }else{
                     Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
                 }

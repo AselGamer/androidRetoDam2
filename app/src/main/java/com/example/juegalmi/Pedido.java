@@ -18,6 +18,7 @@ import com.example.juegalmi.adaptadores.TransaccionAdaptador;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.DetalleTransaccion;
+import com.example.juegalmi.model.Reparacion;
 import com.example.juegalmi.model.Transaccion;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Pedido extends Fragment {
     private ListView listDetalleTransacciones = null;
     private IControlFragmentos activity;
     private Transaccion transaccion;
+    private Reparacion reparacion;
 
     public Pedido() {
         // Required empty public constructor
@@ -68,29 +70,41 @@ public class Pedido extends Fragment {
         listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
         txtTotal = vista.findViewById(R.id.txtTotal);
 
+        DetalleTransaccionAdaptador detalleTransaccionAdaptador;
         if(getArguments().containsKey("transaccion"))
         {
             transaccion = (Transaccion) getArguments().getSerializable("transaccion");
 
-            ArrayList<DetalleTransaccion> listaArticulos = new ArrayList();
-            ArrayList<Integer> listaCantidad = new ArrayList();
-            for(int i=0; i<transaccion.getDetalles().length; i++){
-                if(i==0){
-                    listaArticulos.add(transaccion.getDetalles()[i]);
-                    listaCantidad.add(1);
-                }else{
-                    for(int j=0; j<listaArticulos.size(); j++){
-                        if(transaccion.getDetalles()[i].getIdarticulo().getIdarticulo() == listaArticulos.get(j).getIdarticulo().getIdarticulo()){
-                            listaCantidad.set(j, listaCantidad.get(j) + 1);
-                        }else{
-                            listaArticulos.add(transaccion.getDetalles()[i]);
-                            listaCantidad.add(1);
+            if(transaccion.getFecha() == null){   //ya que Alquiler no tiene el campo fecha
+                detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), transaccion);
+            }else{
+                ArrayList<DetalleTransaccion> listaArticulos = new ArrayList();
+                ArrayList<Integer> listaCantidad = new ArrayList();
+                for(int i=0; i<transaccion.getDetalles().length; i++){
+                    if(i==0){
+                        listaArticulos.add(transaccion.getDetalles()[i]);
+                        listaCantidad.add(1);
+                    }else{
+                        for(int j=0; j<listaArticulos.size(); j++){
+                            if(transaccion.getDetalles()[i].getIdarticulo().getIdarticulo() == listaArticulos.get(j).getIdarticulo().getIdarticulo()){
+                                listaCantidad.set(j, listaCantidad.get(j) + 1);
+                            }else{
+                                listaArticulos.add(transaccion.getDetalles()[i]);
+                                listaCantidad.add(1);
+                            }
                         }
                     }
                 }
+
+                detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), listaArticulos, listaCantidad);
             }
 
-            DetalleTransaccionAdaptador detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), listaArticulos, listaCantidad);
+            listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
+            listDetalleTransacciones.setAdapter(detalleTransaccionAdaptador);
+        }else if(getArguments().containsKey("reparacion")){
+            reparacion = (Reparacion) getArguments().getSerializable("reparacion");
+
+            detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), reparacion);
 
             listDetalleTransacciones = vista.findViewById(R.id.listDetalleTransacciones);
             listDetalleTransacciones.setAdapter(detalleTransaccionAdaptador);
@@ -103,12 +117,18 @@ public class Pedido extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        txtNumPedido.setText(transaccion.getIdtransaccion());
+        System.out.println(transaccion.getIdtransaccion());
 
-        float total = 0;
-        for(int i=0; i<transaccion.getDetalles().length; i++){
-            total = total + transaccion.getDetalles()[i].getPrecio_total();
+        txtNumPedido.setText(String.valueOf(transaccion.getIdtransaccion()));
+
+        if(transaccion.getFecha() == null){     //ya que Alquiler no tiene el campo fecha
+            txtTotal.setText(transaccion.getPrecio() + "€");
+        }else{
+            float total = 0;
+            for(int i=0; i<transaccion.getDetalles().length; i++){
+                total = total + transaccion.getDetalles()[i].getPrecio_total();
+            }
+            txtTotal.setText(total + "€");
         }
-        txtTotal.setText(total + "€");
     }
 }

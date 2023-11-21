@@ -29,12 +29,12 @@ public class Usuario implements Serializable {
     private String codigoPostal = "";
     @SerializedName("ciudad")
     private String ciudad = "";
-    @SerializedName("pais")
-    private String pais = "";
     @SerializedName("provincia")
     private String provincia = "";
+    @SerializedName("pais")
+    private String pais = "";
 
-    public Usuario(String nombre, String apellido1, String apellido2, String email, String password, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String pais, String provincia) {
+    public Usuario(String nombre, String apellido1, String apellido2, String email, String password, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String provincia, String pais) {
         //this.idusuario = idusuario;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -47,8 +47,8 @@ public class Usuario implements Serializable {
         this.piso = piso;
         this.codigoPostal = codigoPostal;
         this.ciudad = ciudad;
-        this.pais = pais;
         this.provincia = provincia;
+        this.pais = pais;
     }
 
     /*public int getIdusuario() {
@@ -146,6 +146,13 @@ public class Usuario implements Serializable {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 
     public String getPais() {
         return pais;
@@ -155,11 +162,4 @@ public class Usuario implements Serializable {
         this.pais = pais;
     }
 
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
 }

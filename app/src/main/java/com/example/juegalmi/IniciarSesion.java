@@ -53,7 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IniciarSesion extends Fragment {
 
     private TextView txtRegistrate;
-    private Button btnEnviar, btnToken;
+    private Button btnEnviar;
     private EditText edtEmail;
     private EditText edtContrasenya;
     private IControlFragmentos activity;
@@ -99,8 +99,6 @@ public class IniciarSesion extends Fragment {
         btnEnviar = vista.findViewById(R.id.btnEnviar);
         edtEmail = vista.findViewById(R.id.edtEmail);
         edtContrasenya = vista.findViewById(R.id.edtContrasenya);
-
-        btnToken = vista.findViewById(R.id.btnToken);
 
         animation = AnimationUtils.loadAnimation(vista.getContext(), R.anim.mover);
 
@@ -160,15 +158,37 @@ public class IniciarSesion extends Fragment {
 
                 //INICIAR SESION: Retrofit
                 Login login = new Login(edtEmail.getText().toString(), edtContrasenya.getText().toString());
-                System.out.println(edtEmail.getText().toString());
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
 
                 call.enqueue(new Callback<Respuesta>() {
                     @Override
                     public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(getContext(), response.body().getToken(), Toast.LENGTH_SHORT).show();
                             token = response.body().getToken();
+
+                            Call<Usuario> call2 = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
+                            call2.enqueue(new Callback<Usuario>() {
+                                @Override
+                                public void onResponse(Call<Usuario> call2, Response<Usuario> response) {
+                                    if(response.isSuccessful()){
+                                        Usuario usuario = response.body();
+                                        activity.cambiarTitulo("");
+                                        activity.cambiarSesion(usuario);
+                                        activity.cambiarToken(token);
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.contenedor, new Productos())
+                                                .commit();
+                                    }else{
+                                        Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Usuario> call2, Throwable t) {
+                                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }else{
                             Log.d("Dam2", response.message());
                             Toast.makeText(getContext(), "El Login no es correcto", Toast.LENGTH_SHORT).show();
@@ -177,36 +197,6 @@ public class IniciarSesion extends Fragment {
 
                     @Override
                     public void onFailure(Call<Respuesta> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        btnToken.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Call<Usuario> call = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);
-                call.enqueue(new Callback<Usuario>() {
-                    @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                        if(response.isSuccessful()){
-                            Usuario usuario = response.body();
-                            activity.cambiarTitulo("");
-                            activity.cambiarSesion(usuario);
-                            activity.cambiarToken(token);
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.contenedor, new Productos())
-                                    .commit();
-                        }else{
-                            Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });

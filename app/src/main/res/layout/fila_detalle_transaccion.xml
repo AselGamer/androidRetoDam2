@@ -27,6 +27,22 @@
             />
 
         <TextView
+            android:id="@+id/txtFechaInicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fechaInicio"
+            style="@style/estiloTexto"
+            />
+
+        <TextView
+            android:id="@+id/txtFechaFin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fechaFin"
+            style="@style/estiloTexto"
+            />
+
+        <TextView
             android:id="@+id/txtPrecioArticulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

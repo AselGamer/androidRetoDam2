@@ -5,6 +5,7 @@ import com.example.juegalmi.model.Busqueda;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Producto;
+import com.example.juegalmi.model.Reparacion;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Transaccion;
 import com.example.juegalmi.model.Usuario;
@@ -18,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiServicio {
@@ -35,6 +37,10 @@ public interface ApiServicio {
     @Headers("Content-Type: application/json")
     @POST("register")
     Call<Respuesta> crearUsuario(@Body Usuario usuario);
+
+    @Headers("Content-Type: application/json")
+    @PUT("usuario/actualizar")
+    Call<Respuesta> actualizarUsuario(@Header("Authorization") String authToken, @Body Usuario usuario);
 
     @GET("articulos")
     Call<List<Articulo>> getArticulos();
@@ -66,5 +72,8 @@ public interface ApiServicio {
 
     @GET("transaccion/{tipoTransaccion}")
     Call<List<Transaccion>> getTransacciones(@Header("Authorization") String authToken, @Path("tipoTransaccion") String tipoTransaccion);
+
+    @GET("reparacion")
+    Call<List<Reparacion>> getReparaciones(@Header("Authorization") String authToken);
 
 }

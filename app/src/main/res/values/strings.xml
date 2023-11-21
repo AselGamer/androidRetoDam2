@@ -85,6 +85,9 @@
 
     <string name="buscar">Buscar...</string>
     <string name="cambiarFoto">Cambiar foto</string>
+    <string name="fechaInicio">Fecha Inicio: </string>
+    <string name="fechaFin">Fecha Fin: </string>
+    <string name="comentario">Comentario: </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

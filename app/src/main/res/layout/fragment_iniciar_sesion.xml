@@ -56,7 +56,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:id="@+id/btnEnviar"
-        android:text="Recibir token"
+        android:text="@string/iniciar"
         android:backgroundTint="@color/colorBoton"
         android:textColor="@color/black"
         style="@style/estiloTexto"
@@ -70,19 +70,6 @@
         android:layout_height="wrap_content"
         />
 -->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:id="@+id/btnToken"
-        android:text="Enviar token"
-        android:backgroundTint="@color/colorBoton"
-        android:textColor="@color/black"
-        style="@style/estiloTexto"
-        android:textStyle="bold"
-        />
 
     <LinearLayout
         android:layout_width="wrap_content"

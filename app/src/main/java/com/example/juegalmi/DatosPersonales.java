@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.juegalmi.interfaces.IControlFragmentos;
+import com.example.juegalmi.io.ApiAdaptador;
+import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -39,6 +43,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DatosPersonales#newInstance} factory method to
@@ -46,9 +54,9 @@ import java.util.List;
  */
 public class DatosPersonales extends Fragment {
 
-    private EditText edtEmail, edtNombre, edtApellido1, edtApellido2, edtTelefono, edtDireccion, edtNumDireccion, edtPiso, edtCp, edtCiudad, edtProvincia, edtPais;
+    private EditText edtEmail, edtPassword, edtRepassword, edtNombre, edtApellido1, edtApellido2, edtTelefono, edtDireccion, edtNumDireccion, edtPiso, edtCp, edtCiudad, edtProvincia, edtPais;
     private IControlFragmentos activity;
-    private Button btnFoto;
+    private Button btnEnviar, btnFoto;
     private ImageView mPhotoImageView;
     private String mCurrentPhotoPath;
     private Uri photoUri;
@@ -102,6 +110,8 @@ public class DatosPersonales extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_datos_personales, container, false);
 
         edtEmail = vista.findViewById(R.id.edtEmail);
+        edtPassword = vista.findViewById(R.id.edtPassword);
+        edtRepassword = vista.findViewById(R.id.edtRepassword);
         edtNombre = vista.findViewById(R.id.edtNombre);
         edtApellido1 = vista.findViewById(R.id.edtApellido1);
         edtApellido2 = vista.findViewById(R.id.edtApellido2);
@@ -113,6 +123,8 @@ public class DatosPersonales extends Fragment {
         edtCiudad = vista.findViewById(R.id.edtCiudad);
         edtProvincia = vista.findViewById(R.id.edtProvincia);
         edtPais = vista.findViewById(R.id.edtPais);
+
+        btnEnviar = vista.findViewById(R.id.btnEnviar);
 
         btnFoto = vista.findViewById(R.id.btnFoto);
         mPhotoImageView = vista.findViewById(R.id.imgUsuario);
@@ -126,6 +138,7 @@ public class DatosPersonales extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         edtEmail.setText(activity.obtenerSesion().getEmail());
+        edtPassword.setText(activity.obtenerSesion().getPassword());
         edtNombre.setText(activity.obtenerSesion().getNombre());
         edtApellido1.setText(activity.obtenerSesion().getApellido1());
         edtApellido2.setText(activity.obtenerSesion().getApellido2());
@@ -137,6 +150,34 @@ public class DatosPersonales extends Fragment {
         edtCiudad.setText(activity.obtenerSesion().getCiudad());
         edtProvincia.setText(activity.obtenerSesion().getProvincia());
         edtPais.setText(activity.obtenerSesion().getPais());
+
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Usuario usuario = new Usuario(edtNombre.getText().toString(), edtApellido1.getText().toString(), edtApellido2.getText().toString(), edtEmail.getText().toString(),
+                        edtPassword.getText().toString(), edtTelefono.getText().toString(), edtDireccion.getText().toString(), edtNumDireccion.getText().toString(),
+                        edtPiso.getText().toString(), edtCp.getText().toString(), edtCiudad.getText().toString(), edtProvincia.getText().toString(), edtPais.getText().toString());
+
+                Call<Respuesta> call = ApiAdaptador.getApiService().actualizarUsuario("Bearer " + activity.obtenerToken(), usuario);
+                call.enqueue(new Callback<Respuesta>() {
+                    @Override
+                    public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(getContext(), response.body().getData(), Toast.LENGTH_SHORT).show();
+                            activity.cambiarSesion(usuario);
+                        }else{
+                            Log.d("Dam2", response.message());
+                            Toast.makeText(getContext(), "Los campos no son correctos", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Respuesta> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -41,6 +41,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/marca"
+                style="@style/estiloSubtitulo"
+                />
+
+            <TextView
+                android:id="@+id/txtMarca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sony"
+                style="@style/estiloSubtitulo"
+                android:textStyle="normal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/plataforma"
                 style="@style/estiloSubtitulo"
                 />
@@ -73,23 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/precioAlquiler"
-                style="@style/estiloSubtitulo"
-                />
-
-            <TextView
-                android:id="@+id/txtPrecioAlquiler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3€"
-                style="@style/estiloTitulo"
-                android:textStyle="normal"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/precioCompra"
                 style="@style/estiloSubtitulo"
                 />
@@ -103,34 +103,54 @@
                 android:textStyle="normal"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/precioAlquiler"
+                style="@style/estiloSubtitulo"
+                />
+
+            <TextView
+                android:id="@+id/txtPrecioAlquiler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3€"
+                style="@style/estiloTitulo"
+                android:textStyle="normal"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnAnadir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:text="@string/anyadirCesta"
-        android:backgroundTint="@color/colorBoton"
+        android:backgroundTint="@color/colorTab"
         android:textColor="@color/black"
         style="@style/estiloTexto"
         android:textStyle="bold"
+        android:enabled="false"
         />
 
     <Button
+        android:id="@+id/btnAlquilar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:text="@string/alquilar"
-        android:backgroundTint="@color/colorBoton"
+        android:backgroundTint="@color/colorTab"
         android:textColor="@color/black"
         style="@style/estiloTexto"
         android:textStyle="bold"
+        android:enabled="false"
         />
 
 </LinearLayout>

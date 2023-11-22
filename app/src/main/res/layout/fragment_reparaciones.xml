@@ -58,6 +58,7 @@
             />
 
         <EditText
+            android:id="@+id/edtProblema"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -80,7 +81,7 @@
             android:layout_marginRight="40dp"
             android:id="@+id/btnEnviar"
             android:text="@string/enviar"
-            android:backgroundTint="@color/colorBoton"
+            android:backgroundTint="@color/colorTab"
             android:textColor="@color/black"
             style="@style/estiloTexto"
             android:textStyle="bold"

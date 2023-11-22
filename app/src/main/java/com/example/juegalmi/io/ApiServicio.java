@@ -2,12 +2,15 @@ package com.example.juegalmi.io;
 
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Busqueda;
+import com.example.juegalmi.model.DetalleTransaccion;
 import com.example.juegalmi.model.Etiqueta;
 import com.example.juegalmi.model.Login;
 import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Reparacion;
 import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.TramiteReparacion;
 import com.example.juegalmi.model.Transaccion;
+import com.example.juegalmi.model.TransaccionPedido;
 import com.example.juegalmi.model.Usuario;
 
 import java.util.List;
@@ -75,5 +78,13 @@ public interface ApiServicio {
 
     @GET("reparacion")
     Call<List<Reparacion>> getReparaciones(@Header("Authorization") String authToken);
+
+    @Headers("Content-Type: application/json")
+    @POST("transaccion/add")
+    Call<Respuesta> tramitarTransaccion(@Header("Authorization") String authToken, @Body TransaccionPedido transaccionPedido);
+
+    @Headers("Content-Type: application/json")
+    @POST("reparacion/add")
+    Call<Respuesta> tramitarReparacion(@Header("Authorization") String authToken, @Body TramiteReparacion tramiteReparacion);
 
 }

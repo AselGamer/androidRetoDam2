@@ -56,7 +56,7 @@ public class DatosPersonales extends Fragment {
 
     private EditText edtEmail, edtPassword, edtRepassword, edtNombre, edtApellido1, edtApellido2, edtTelefono, edtDireccion, edtNumDireccion, edtPiso, edtCp, edtCiudad, edtProvincia, edtPais;
     private IControlFragmentos activity;
-    private Button btnEnviar, btnFoto;
+    private Button btnEnviar, btnCambiarFoto, btnQuitarFoto;
     private ImageView mPhotoImageView;
     private String mCurrentPhotoPath;
     private Uri photoUri;
@@ -126,7 +126,8 @@ public class DatosPersonales extends Fragment {
 
         btnEnviar = vista.findViewById(R.id.btnEnviar);
 
-        btnFoto = vista.findViewById(R.id.btnFoto);
+        btnCambiarFoto = vista.findViewById(R.id.btnCambiarFoto);
+        btnQuitarFoto = vista.findViewById(R.id.btnQuitarFoto);
         mPhotoImageView = vista.findViewById(R.id.imgUsuario);
 
         return vista;
@@ -179,7 +180,7 @@ public class DatosPersonales extends Fragment {
             }
         });
 
-        btnFoto.setOnClickListener(new View.OnClickListener() {
+        btnCambiarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 abrirCamara();

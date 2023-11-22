@@ -11,6 +11,8 @@ public class Transaccion implements Serializable {
     private String latitud;
     @SerializedName("longitud")
     private String longitud;
+    @SerializedName("tipo_transaccion")
+    private String tipo_transaccion;
     @SerializedName("fecha")
     private String fecha;
     @SerializedName("fecha_inicio")
@@ -24,15 +26,10 @@ public class Transaccion implements Serializable {
     @SerializedName("detalles")
     private DetalleTransaccion[] detalles;
 
-    public Transaccion(int idtransaccion, String latitud, String longitud, String fecha, String fecha_inicio, String fecha_fin, String fecha_devolucion, float precio, DetalleTransaccion[] detalles) {
-        this.idtransaccion = idtransaccion;
+    public Transaccion(String latitud, String longitud, String tipo_transaccion, DetalleTransaccion[] detalles) {
         this.latitud = latitud;
         this.longitud = longitud;
-        this.fecha = fecha;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
-        this.fecha_devolucion = fecha_devolucion;
-        this.precio = precio;
+        this.tipo_transaccion = tipo_transaccion;
         this.detalles = detalles;
     }
 
@@ -58,6 +55,14 @@ public class Transaccion implements Serializable {
 
     public void setLongitud(String longitud) {
         this.longitud = longitud;
+    }
+
+    public String getTipo_transaccion() {
+        return tipo_transaccion;
+    }
+
+    public void setTipo_transaccion(String tipo_transaccion) {
+        this.tipo_transaccion = tipo_transaccion;
     }
 
     public String getFecha() {

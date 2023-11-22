@@ -30,18 +30,38 @@
                 app:strokeWidth="4dp"
                 />
 
-            <Button
-                android:layout_width="170dp"
+            <LinearLayout
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/btnFoto"
-                android:text="@string/cambiarFoto"
-                android:backgroundTint="@color/colorBoton"
-                android:textColor="@color/black"
-                style="@style/estiloTexto"
-                android:textStyle="bold"
-                />
+                android:orientation="vertical">
+
+                <Button
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/btnCambiarFoto"
+                    android:text="@string/cambiarFoto"
+                    android:backgroundTint="@color/colorBoton"
+                    android:textColor="@color/black"
+                    style="@style/estiloTexto"
+                    android:textStyle="bold"
+                    />
+
+                <Button
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/btnQuitarFoto"
+                    android:text="@string/quitarFoto"
+                    android:backgroundTint="@color/colorBoton"
+                    android:textColor="@color/black"
+                    style="@style/estiloTexto"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 

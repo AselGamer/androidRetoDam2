@@ -1,5 +1,7 @@
 package com.example.juegalmi.detalles;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,15 +12,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.juegalmi.Cesta;
+import com.example.juegalmi.IniciarSesion;
+import com.example.juegalmi.MisAlquileres;
 import com.example.juegalmi.R;
+import com.example.juegalmi.botonesAbajo.Productos;
+import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
+import com.example.juegalmi.model.DetallePedidoTransaccion;
+import com.example.juegalmi.model.DetalleTransaccion;
 import com.example.juegalmi.model.Producto;
+import com.example.juegalmi.model.Respuesta;
+import com.example.juegalmi.model.Transaccion;
+import com.example.juegalmi.model.TransaccionPedido;
+import com.example.juegalmi.model.Usuario;
 
 import java.util.List;
 
@@ -32,8 +46,10 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class DetalleVideojuego extends Fragment {
-    private TextView txtTitulo, txtPlataforma, txtCategoria, txtPrecioAlquiler, txtPrecioCompra;
+    private TextView txtTitulo, txtMarca, txtPlataforma, txtCategoria, txtPrecioAlquiler, txtPrecioCompra;
     private ImageView imgVideojuego;
+    private Button btnAnadir, btnAlquilar;
+    private IControlFragmentos activity;
 
     public DetalleVideojuego() {
         // Required empty public constructor
@@ -55,17 +71,27 @@ public class DetalleVideojuego extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activity = (IControlFragmentos) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_detalle_videojuego, container, false);
 
         //Aprovechamos para recoger(instanciar) los botones y demas
         txtTitulo = vista.findViewById(R.id.txtTitulo);
+        txtMarca = vista.findViewById(R.id.txtMarca);
         txtPlataforma = vista.findViewById(R.id.txtPlataforma);
         txtCategoria = vista.findViewById(R.id.txtCategoria);
         txtPrecioAlquiler = vista.findViewById(R.id.txtPrecioAlquiler);
         txtPrecioCompra = vista.findViewById(R.id.txtPrecioCompra);
         imgVideojuego = vista.findViewById(R.id.imgVideojuego);
+        btnAnadir = vista.findViewById(R.id.btnAnadir);
+        btnAlquilar = vista.findViewById(R.id.btnAlquilar);
 
         return vista;
     }
@@ -73,6 +99,18 @@ public class DetalleVideojuego extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(activity.obtenerSesion() == null){
+            btnAnadir.setEnabled(false);
+            btnAnadir.setBackgroundColor(Color.rgb(218, 231, 255));
+            btnAlquilar.setEnabled(false);
+            btnAlquilar.setBackgroundColor(Color.rgb(218, 231, 255));
+        }else{
+            btnAnadir.setEnabled(true);
+            btnAnadir.setBackgroundColor(Color.rgb(143, 178, 241));
+            btnAlquilar.setEnabled(true);
+            btnAlquilar.setBackgroundColor(Color.rgb(143, 178, 241));
+        }
 
         if(getArguments().containsKey("articulo"))
         {
@@ -92,6 +130,7 @@ public class DetalleVideojuego extends Fragment {
                         List<Producto> lr = response.body();
 
                         txtTitulo.setText(articulo.getArticulonombre());
+                        txtMarca.setText(articulo.getIdmarca().getNombre());
                         txtPlataforma.setText(lr.get(0).getIdplataforma().getNombre());
                         String etiquetas = "";
                         for(int i=0; i<lr.get(0).getEtiquetas().length; i++){
@@ -102,12 +141,55 @@ public class DetalleVideojuego extends Fragment {
                             }
                         }
                         txtCategoria.setText(etiquetas);
-                        //txtPrecioAlquiler.setText(articulo.getArticulonombre());  //falta precio alquiler
+                        txtPrecioAlquiler.setText(articulo.getPrecio()/2 + "€");    //ya que el precio de alquiler es siempre la mitad
                         txtPrecioCompra.setText(articulo.getPrecio() + "€");
                         Glide
                                 .with(getContext())
                                 .load("https://retoasel.duckdns.org/images/" + articulo.getFoto())
                                 .into(imgVideojuego);
+
+                        btnAnadir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                getActivity().getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.contenedor, new Cesta())
+                                        .commit();
+                            }
+                        });
+
+                        btnAlquilar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //System.out.println(lr.get(0).getIdarticulo().getStockAlquiler());
+                                DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(lr.get(0).getIdarticulo().getIdarticulo());
+                                DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[1];
+                                detalles[0] = detallePedidoTransaccion;
+                                //System.out.println(detalles[0].getIdarticulo().getStockAlquiler());
+                                TransaccionPedido transaccionPedido = new TransaccionPedido("30", "30", "Alquiler", detalles);
+
+                                Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarTransaccion("Bearer " + activity.obtenerToken(), transaccionPedido);
+                                call2.enqueue(new Callback<Respuesta>() {
+                                    @Override
+                                    public void onResponse(Call<Respuesta> call2, Response<Respuesta> response) {
+                                        if(response.isSuccessful()){
+                                            activity.cambiarTitulo("Mis Alquileres");
+                                            getActivity().getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .replace(R.id.contenedor, new MisAlquileres())
+                                                    .commit();
+                                        }else{
+                                            Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Respuesta> call2, Throwable t) {
+                                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
                     }else{
                         Toast.makeText(getContext(), "No se ha podido obtener el videojuego", Toast.LENGTH_SHORT).show();
                     }
@@ -115,7 +197,6 @@ public class DetalleVideojuego extends Fragment {
 
                 @Override
                 public void onFailure(Call<List<Producto>> call, Throwable t) {
-                    Log.d("calll", String.valueOf(call.request()));
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             });

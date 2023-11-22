@@ -122,7 +122,11 @@ public class DetalleTransaccionAdaptador extends BaseAdapter {
             txtArticulo.setText("Problema: " + reparacion.getProblema());
             txtCantidadPrecio.setText("Estado: " + reparacion.getIdestadoreparacion().getNombre());
             txtFechaInicio.setText("Fecha: " + reparacion.getFechaInicio());
-            txtFechaFin.setText("Comentario: " + reparacion.getComentarioReparacion());
+            if(reparacion.getComentarioReparacion() == null){
+                txtFechaFin.setText("Comentario: ");
+            }else{
+                txtFechaFin.setText("Comentario: " + reparacion.getComentarioReparacion());
+            }
             if(reparacion.getFechaFin() != null){
                 txtPrecioArticulo.setText(reparacion.getPrecio() + "€");
             }else{

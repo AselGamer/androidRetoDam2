@@ -199,10 +199,12 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public void cambiarTitulo(String titulo) {
         txtTitulo.setText(titulo);
-        if(usuario == null && !titulo.equals("Crear Cuenta")){
-            cambiarParametrosBuscador();
-        }else{
-            cambiarParametros();
+        if(titulo != null){
+            if(usuario == null && !titulo.equals("Crear Cuenta")){
+                cambiarParametrosBuscador();
+            }else{
+                cambiarParametros();
+            }
         }
     }
 

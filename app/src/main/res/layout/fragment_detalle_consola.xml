@@ -107,16 +107,18 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnAnadir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:text="@string/anyadirCesta"
-        android:backgroundTint="@color/colorBoton"
+        android:backgroundTint="@color/colorTab"
         android:textColor="@color/black"
         style="@style/estiloTexto"
         android:textStyle="bold"
+        android:enabled="false"
         />
 
 </LinearLayout>

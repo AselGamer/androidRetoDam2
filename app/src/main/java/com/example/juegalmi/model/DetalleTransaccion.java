@@ -9,13 +9,13 @@ public class DetalleTransaccion implements Serializable {
     private int iddetalletransaccion;
     @SerializedName("idarticulo")
     private Articulo idarticulo;
+    /*@SerializedName("idarticulo")
+    private int idarticulo;*/
     @SerializedName("precio_total")
     private float precio_total;
 
-    public DetalleTransaccion(int iddetalletransaccion, Articulo idarticulo, float precio_total) {
-        this.iddetalletransaccion = iddetalletransaccion;
+    public DetalleTransaccion(Articulo idarticulo) {
         this.idarticulo = idarticulo;
-        this.precio_total = precio_total;
     }
 
     public int getIddetalletransaccion() {

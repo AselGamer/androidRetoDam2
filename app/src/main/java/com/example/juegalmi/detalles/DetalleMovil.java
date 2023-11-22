@@ -1,5 +1,7 @@
 package com.example.juegalmi.detalles;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,12 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.juegalmi.R;
+import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Articulo;
 import com.example.juegalmi.model.Producto;
@@ -34,6 +38,8 @@ import retrofit2.Response;
 public class DetalleMovil extends Fragment {
     private TextView txtTitulo, txtMarca, txtPantalla, txtPrecio;
     private ImageView imgFoto;
+    private Button btnAnadir;
+    private IControlFragmentos activity;
 
     public DetalleMovil() {
         // Required empty public constructor
@@ -55,6 +61,13 @@ public class DetalleMovil extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activity = (IControlFragmentos) context;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_detalle_movil, container, false);
@@ -65,6 +78,7 @@ public class DetalleMovil extends Fragment {
         txtPantalla = vista.findViewById(R.id.txtPantalla);
         txtPrecio = vista.findViewById(R.id.txtPrecio);
         imgFoto = vista.findViewById(R.id.imgFoto);
+        btnAnadir = vista.findViewById(R.id.btnAnadir);
 
         return vista;
     }
@@ -72,6 +86,14 @@ public class DetalleMovil extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(activity.obtenerSesion() == null){
+            btnAnadir.setEnabled(false);
+            btnAnadir.setBackgroundColor(Color.rgb(218, 231, 255));
+        }else{
+            btnAnadir.setEnabled(true);
+            btnAnadir.setBackgroundColor(Color.rgb(143, 178, 241));
+        }
 
         if(getArguments().containsKey("articulo"))
         {

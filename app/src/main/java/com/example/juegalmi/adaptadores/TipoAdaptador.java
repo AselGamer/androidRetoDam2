@@ -56,7 +56,13 @@ public class TipoAdaptador extends BaseAdapter {
         View fila = inflater.inflate(R.layout.tipo_articulo_list, null);
 
         TextView textoNombre = fila.findViewById(R.id.txtSubtitulo);
-        textoNombre.setText(tipos[i]);
+        if (tipos[i].equals("DispositivoMovil"))
+        {
+            textoNombre.setText("Dispositivo Movil");
+        } else {
+            textoNombre.setText(tipos[i]);
+        }
+
 
         ArrayList<Articulo> ar = new ArrayList<Articulo>(this.tipoArticulos.get(tipos[i]));
 

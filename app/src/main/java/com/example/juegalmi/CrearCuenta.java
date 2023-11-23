@@ -95,7 +95,7 @@ public class CrearCuenta extends Fragment {
             public void onClick(View view) {
                 Usuario usuario = new Usuario(edtNombre.getText().toString(), edtApellido1.getText().toString(), edtApellido2.getText().toString(), edtEmail.getText().toString(),
                         edtPassword.getText().toString(), edtTelefono.getText().toString(), edtDireccion.getText().toString(), edtNumDireccion.getText().toString(),
-                        edtPiso.getText().toString(), edtCp.getText().toString(), edtCiudad.getText().toString(), edtProvincia.getText().toString(), edtPais.getText().toString());
+                        edtPiso.getText().toString(), edtCp.getText().toString(), edtCiudad.getText().toString(), edtProvincia.getText().toString(), edtPais.getText().toString(), "");
 
                 Call<Respuesta> call = ApiAdaptador.getApiService().crearUsuario(usuario);
                 call.enqueue(new Callback<Respuesta>() {

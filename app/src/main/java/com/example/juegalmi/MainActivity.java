@@ -1,13 +1,20 @@
 package com.example.juegalmi;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -32,6 +39,7 @@ import com.example.juegalmi.model.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     private BottomNavigationView bottomNavigationView;
     private TextView txtTitulo;
-    private ImageButton imgUsuario, imgCesta;
+    private ImageButton imgUsuario, imgCesta, imgMicro;
     private String txtSesion = "";
     private Call<ArrayList<Login>> call;
     private SearchView buscador;
@@ -134,6 +142,18 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                 }
             }
         });
+
+        this.imgMicro = findViewById(R.id.imgMicro);
+        imgMicro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Ahora puedes hablar...");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+                someActivityResultLauncher.launch(intent);
+            }
+        });
     }
 
     private boolean onItemSelectedListener(MenuItem item) {
@@ -184,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     private void cambiarParametros(){   //sin buscador
         params.height = 90;
-        params.width = 700;
+        params.width = 500;
         params.setMargins(20, 50, 100, 0);
         txtTitulo.setLayoutParams(params);
         txtTitulo.setVisibility(View.VISIBLE);
@@ -285,9 +305,9 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public boolean onQueryTextSubmit(String query) {    //cuando le damos a buscar
         recyclerBuscador.setAdapter(adaptadorBuscador);
-        Busqueda busqueda = new Busqueda(query);
+        Busqueda busqueda = new Busqueda(query.toLowerCase());
         rellenarArticulosBuscador(busqueda);
-        //filtro(query);
+
 
         return false;
     }
@@ -335,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                 @Override
                 public void onResponse(Call<List<Articulo>> call, Response<List<Articulo>> response) {
                     if(response.isSuccessful()){
+                        Log.d("busqueda", response.body().toString());
                         //ArrayList<Articulo> listaFiltro = new ArrayList<>();
                         listaArticulos.clear();
                         List<Articulo> lr = response.body();
@@ -359,5 +380,23 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         }
         numBusqueda++;
     }
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        ArrayList<String> arrayResultados;
+                        // There are no request codes
+                        Intent data = result.getData();
+                        arrayResultados = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        CharSequence[] cs = arrayResultados.toArray(new CharSequence[arrayResultados.size()]);
+                        String busqueda = Arrays.toString(cs);
+                        busqueda = busqueda.replace('[', ' ');
+                        busqueda = busqueda.replace(']', ' ');
+                        buscador.setQuery(busqueda.trim(), true);
+                    }
+                }
+            });
 
 }

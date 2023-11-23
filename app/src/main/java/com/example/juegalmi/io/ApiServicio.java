@@ -12,17 +12,23 @@ import com.example.juegalmi.model.TramiteReparacion;
 import com.example.juegalmi.model.Transaccion;
 import com.example.juegalmi.model.TransaccionPedido;
 import com.example.juegalmi.model.Usuario;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiServicio {
@@ -86,5 +92,16 @@ public interface ApiServicio {
     @Headers("Content-Type: application/json")
     @POST("reparacion/add")
     Call<Respuesta> tramitarReparacion(@Header("Authorization") String authToken, @Body TramiteReparacion tramiteReparacion);
+
+    @Multipart
+    @POST("usuario/ponerFoto")
+    Call<JsonObject> ponerFoto(
+            @Header("Authorization") String authToken,
+            @Part MultipartBody.Part foto
+            );
+    @DELETE("usuario/quitarFoto")
+    Call<JsonObject> quitarFoto(
+            @Header("Authorization") String authToken
+    );
 
 }

@@ -33,8 +33,10 @@ public class Usuario implements Serializable {
     private String provincia = "";
     @SerializedName("pais")
     private String pais = "";
+    @SerializedName("foto")
+    private String foto = "";
 
-    public Usuario(String nombre, String apellido1, String apellido2, String email, String password, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String provincia, String pais) {
+    public Usuario(String nombre, String apellido1, String apellido2, String email, String password, String telefono, String calle, String numPortal, String piso, String codigoPostal, String ciudad, String provincia, String pais, String foto) {
         //this.idusuario = idusuario;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -49,6 +51,7 @@ public class Usuario implements Serializable {
         this.ciudad = ciudad;
         this.provincia = provincia;
         this.pais = pais;
+        this.foto = foto;
     }
 
     /*public int getIdusuario() {
@@ -162,4 +165,11 @@ public class Usuario implements Serializable {
         this.pais = pais;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 }

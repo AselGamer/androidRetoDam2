@@ -28,10 +28,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.Usuario;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,9 +49,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
+import retrofit2.http.Part;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +72,7 @@ public class DatosPersonales extends Fragment {
     private ImageView mPhotoImageView;
     private String mCurrentPhotoPath;
     private Uri photoUri;
+    private MultipartBody.Part foto;
     private List<String> imagenesList = new ArrayList<>();  //Atributo para guardar las imágenes y creamos un Getter
     private ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -151,32 +164,74 @@ public class DatosPersonales extends Fragment {
         edtCiudad.setText(activity.obtenerSesion().getCiudad());
         edtProvincia.setText(activity.obtenerSesion().getProvincia());
         edtPais.setText(activity.obtenerSesion().getPais());
+        Glide
+                .with(view.getContext())
+                .load("https://retoasel.duckdns.org/userimages/"+ activity.obtenerSesion().getFoto())
+                .centerCrop()
+                .into(mPhotoImageView);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Usuario usuario = new Usuario(edtNombre.getText().toString(), edtApellido1.getText().toString(), edtApellido2.getText().toString(), edtEmail.getText().toString(),
                         edtPassword.getText().toString(), edtTelefono.getText().toString(), edtDireccion.getText().toString(), edtNumDireccion.getText().toString(),
-                        edtPiso.getText().toString(), edtCp.getText().toString(), edtCiudad.getText().toString(), edtProvincia.getText().toString(), edtPais.getText().toString());
+                        edtPiso.getText().toString(), edtCp.getText().toString(), edtCiudad.getText().toString(), edtProvincia.getText().toString(), edtPais.getText().toString(), "");
 
-                Call<Respuesta> call = ApiAdaptador.getApiService().actualizarUsuario("Bearer " + activity.obtenerToken(), usuario);
-                call.enqueue(new Callback<Respuesta>() {
-                    @Override
-                    public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(getContext(), response.body().getData(), Toast.LENGTH_SHORT).show();
-                            activity.cambiarSesion(usuario);
-                        }else{
-                            Log.d("Dam2", response.message());
-                            Toast.makeText(getContext(), "Los campos no son correctos", Toast.LENGTH_SHORT).show();
+
+
+                if (edtPassword.getText().toString().equals(edtRepassword.getText().toString()) && edtPassword.getText().toString().length() > 0)
+                {
+                    Call<Respuesta> call = ApiAdaptador.getApiService().actualizarUsuario("Bearer " + activity.obtenerToken(), usuario);
+                    call.enqueue(new Callback<Respuesta>() {
+                        @Override
+                        public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(getContext(), response.body().getData(), Toast.LENGTH_SHORT).show();
+                                if (foto != null)
+                                {
+                                    Call<JsonObject> callFoto = ApiAdaptador.getApiService().ponerFoto("Bearer " + activity.obtenerToken(), foto);
+                                    callFoto.enqueue(new Callback<JsonObject>() {
+                                        @Override
+                                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                            try {
+                                                if (response.isSuccessful())
+                                                {
+                                                    JSONObject jsonObject = new JSONObject(new Gson().toJson(response.body()));
+                                                    usuario.setFoto(jsonObject.get("nombre").toString());
+                                                    activity.cambiarSesion(usuario);
+                                                }
+
+                                            } catch (JSONException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            //usuario.setFoto(activity.obtenerSesion().getFoto());
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                                        }
+                                    });
+                                } else {
+                                    activity.cambiarSesion(usuario);
+                                }
+
+
+                            }else{
+                                Log.d("Dam2", response.message());
+                                Toast.makeText(getContext(), "Los campos no son correctos", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Respuesta> call, Throwable t) {
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Respuesta> call, Throwable t) {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getContext(), "Debes rellenar las dos contraseñas para editar tus datos", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -189,9 +244,32 @@ public class DatosPersonales extends Fragment {
 
         cargarImagenes();
 
-        /*GridView gvMiniaturas = findViewById(R.id.gvImagenes);
-        FotosGridViewAdapter adapter = new FotosGridViewAdapter(this);
-        gvMiniaturas.setAdapter(adapter);*/
+        btnQuitarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<JsonObject> callQuitar = ApiAdaptador.getApiService().quitarFoto("Bearer " + activity.obtenerToken());
+                callQuitar.enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        if (response.isSuccessful())
+                        {
+                            Usuario usuario = activity.obtenerSesion();
+                            usuario.setFoto("");
+                            activity.cambiarSesion(usuario);
+                            foto = null;
+                            Glide
+                                    .with(view.getContext())
+                                    .clear(mPhotoImageView);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
 
 
     }
@@ -215,7 +293,7 @@ public class DatosPersonales extends Fragment {
             if(photoFile != null)
             {
                 ContentValues values = new ContentValues();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String date = dateFormat.format(new Date());
                 values.put(MediaStore.Images.Media.TITLE, "Picture" + date + ".jpg");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
@@ -248,6 +326,10 @@ public class DatosPersonales extends Fragment {
     {
         Bitmap bitmap = null;
         try {
+            Glide
+                    .with(getContext())
+                    .load(photoUri)
+                    .into(mPhotoImageView);
             bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri); //de la ruta temporal que hemos creado en photoURI
             mPhotoImageView.setImageBitmap(bitmap); //el bitmap cargado se muestra en un IMAGEVIEW
         } catch (IOException e) {
@@ -281,6 +363,8 @@ public class DatosPersonales extends Fragment {
             String photoFile = "Picture_" + date + ".jpg";
             filename = nuevaCarpeta.getPath() + File.separator + photoFile;
             File pictureFile = new File(filename);
+            RequestBody requestFile = RequestBody.create(pictureFile, MediaType.parse("multipart/form-data"));
+            this.foto = MultipartBody.Part.createFormData("foto", pictureFile.getName(), requestFile);
 
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);

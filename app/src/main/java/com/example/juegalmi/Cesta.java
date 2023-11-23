@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -67,7 +69,7 @@ public class Cesta extends Fragment {
     private FusedLocationProviderClient fusedLocationClient;
     private double latitud;
     private double longitud;
-
+    private Animation animation;
 
     public Cesta() {
         // Required empty public constructor
@@ -153,6 +155,8 @@ public class Cesta extends Fragment {
         txtPrecioTotal = vista.findViewById(R.id.txtPrecioTotal);
         btnComprar = vista.findViewById(R.id.btnComprar);
 
+        animation = AnimationUtils.loadAnimation(vista.getContext(), R.anim.mover);
+
         return vista;
     }
 
@@ -161,26 +165,36 @@ public class Cesta extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         float precio = 0;
-
-        /*for(int i=0; i<activity.obtenerListaArticulos().size(); i++){
-            precio = precio + activity.obtenerListaArticulos().get(i).getPrecio() * activity.obtenerListaCantidad().get(i);
-        }*/
+        int cantidad = 0;
         for (int i = 0; i < listaArticulos.size(); i++) {
             precio = precio + listaArticulos.get(i).getPrecio() * listaCantidad.get(i);
+            cantidad = cantidad + listaCantidad.get(i);
         }
         txtPrecioTotal.setText(precio + "€");
 
+        int finalCantidad = cantidad;
         btnComprar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onClick(View view) {
-                DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[listaArticulos.size()];
+                //ANIMACION
+                btnComprar.startAnimation(animation);
+
+                DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[finalCantidad];
                 for (int i = 0; i < listaArticulos.size(); i++) {
-                    DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(listaArticulos.get(i).getIdarticulo());
-                    detalles[i] = detallePedidoTransaccion;
+                    if(listaCantidad.get(i) == 1){
+                        DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(listaArticulos.get(i).getIdarticulo());
+                        detalles[i] = detallePedidoTransaccion;
+                    }else{
+                        for(int j=0; j<listaCantidad.size(); j++){
+                            DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(listaArticulos.get(i).getIdarticulo());
+                            detalles[i+j] = detallePedidoTransaccion;
+                        }
+                    }
                 }
 
-                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+                /*fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
                 if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -207,12 +221,11 @@ public class Cesta extends Fragment {
                     @Override
                     public void onSuccess(Location location) {
                         latitud = location.getLatitude();
-                        longitud = location.getLongitude();
+                        longitud = location.getLongitude();*/
+                        latitud = 30;
+                        longitud = 30;
                         TransaccionPedido transaccionPedido = new TransaccionPedido(latitud+"", longitud+"", "Compra", detalles);
 
-                        for(int i=0; i<transaccionPedido.getDetalles().length; i++){
-                            System.out.println(transaccionPedido.getDetalles()[i].getIdarticulo());
-                        }
 
                         Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarTransaccion("Bearer " + activity.obtenerToken(), transaccionPedido);
                         call2.enqueue(new Callback<Respuesta>() {
@@ -234,8 +247,8 @@ public class Cesta extends Fragment {
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    }
-                });
+                    //}
+                //});
 
 
 

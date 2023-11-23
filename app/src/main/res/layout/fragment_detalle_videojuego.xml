@@ -24,9 +24,9 @@
 
         <ImageView
             android:id="@+id/imgVideojuego"
-            android:layout_width="wrap_content"
+            android:layout_width="210dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/ic_launcher_background"
             />
 
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="40dp"
+            android:paddingLeft="5dp"
             >
 
             <TextView
@@ -98,8 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="46,99€"
-                style="@style/estiloTitulo"
-                android:textStyle="normal"
+                style="@style/estiloSubtitulo"
                 />
 
             <TextView
@@ -114,8 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3€"
-                style="@style/estiloTitulo"
-                android:textStyle="normal"
+                style="@style/estiloSubtitulo"
                 />
 
         </LinearLayout>

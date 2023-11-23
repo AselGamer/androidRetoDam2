@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegalmi.MisAlquileres;
+import com.example.juegalmi.MisReparaciones;
 import com.example.juegalmi.R;
 import com.example.juegalmi.adaptadores.SpinnerAdaptador;
 import com.example.juegalmi.interfaces.IControlFragmentos;
@@ -37,11 +40,12 @@ import retrofit2.Response;
 public class Reparaciones extends Fragment {
 
     private TextView tvSpinner;
-    private Spinner sp;
+    //private Spinner sp;
     private int ver=0;
     private EditText edtProblema;
     private Button btnEnviar;
     private IControlFragmentos activity;
+    private Animation animation;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -62,9 +66,10 @@ public class Reparaciones extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_reparaciones, container, false);
 
         //Aprovechamos para recoger(instanciar) los botones y demas
-        sp = vista.findViewById(R.id.spDispositivo);
+        //sp = vista.findViewById(R.id.spDispositivo);
         edtProblema = vista.findViewById(R.id.edtProblema);
         btnEnviar = vista.findViewById(R.id.btnEnviar);
+        animation = AnimationUtils.loadAnimation(vista.getContext(), R.anim.mover);
 
         if(activity.obtenerSesion() == null){
             btnEnviar.setEnabled(false);
@@ -84,12 +89,12 @@ public class Reparaciones extends Fragment {
         SpinnerAdaptador adapter = new SpinnerAdaptador(getContext(), dispositivos);
 
         //Asignamos el adaptador
-        sp.setAdapter(adapter);
+        //sp.setAdapter(adapter);
 
         //sp.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
 
         //Generamos el listener al seleccionar elemento
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(ver == 1){
@@ -103,11 +108,14 @@ public class Reparaciones extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ANIMACION
+                btnEnviar.startAnimation(animation);
+
                 TramiteReparacion tramiteReparacion = new TramiteReparacion(edtProblema.getText().toString());
 
                 Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarReparacion("Bearer " + activity.obtenerToken(), tramiteReparacion);
@@ -115,10 +123,10 @@ public class Reparaciones extends Fragment {
                     @Override
                     public void onResponse(Call<Respuesta> call2, Response<Respuesta> response) {
                         if(response.isSuccessful()){
-                            activity.cambiarTitulo("Mis Alquileres");
+                            activity.cambiarTitulo("Mis Reparaciones");
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.contenedor, new MisAlquileres())
+                                    .replace(R.id.contenedor, new MisReparaciones())
                                     .commit();
                         }else{
                             Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();

@@ -37,7 +37,7 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class DetalleMovil extends Fragment {
-    private TextView txtTitulo, txtMarca, txtPantalla, txtPrecio;
+    private TextView txtTitulo, txtMarca, txtPantalla, txtPrecio, txtAlmacenamiento, txtRam;
     private ImageView imgFoto;
     private Button btnAnadir;
     private IControlFragmentos activity;
@@ -79,6 +79,8 @@ public class DetalleMovil extends Fragment {
         txtMarca = vista.findViewById(R.id.txtMarca);
         txtPantalla = vista.findViewById(R.id.txtPantalla);
         txtPrecio = vista.findViewById(R.id.txtPrecio);
+        txtAlmacenamiento = vista.findViewById(R.id.txtAlmacenamiento);
+        txtRam = vista.findViewById(R.id.txtRam);
         imgFoto = vista.findViewById(R.id.imgFoto);
         btnAnadir = vista.findViewById(R.id.btnAnadir);
 
@@ -117,6 +119,8 @@ public class DetalleMovil extends Fragment {
                         txtMarca.setText(articulo.getIdmarca().getNombre());
                         txtPantalla.setText(lr.get(0).getTamanoPantalla() + "''");
                         txtPrecio.setText(articulo.getPrecio() + "€");
+                        txtAlmacenamiento.setText(lr.get(0).getAlmacenamiento());
+                        txtRam.setText(lr.get(0).getRam() + "GB");
                         Glide
                                 .with(getContext())
                                 .load("https://retoasel.duckdns.org/images/" + articulo.getFoto())

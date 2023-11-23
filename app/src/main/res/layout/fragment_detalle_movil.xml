@@ -24,9 +24,9 @@
 
         <ImageView
             android:id="@+id/imgFoto"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/ic_launcher_background"
             />
 
@@ -34,15 +34,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="40dp"
-            >
+            android:paddingLeft="5dp">
 
             <TextView
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/marca"
-                style="@style/estiloSubtitulo"
-                />
+                android:text="@string/marca" />
 
             <TextView
                 android:id="@+id/txtMarca"
@@ -53,53 +51,60 @@
                 android:textStyle="normal" />
 
             <TextView
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/procesador"
-                style="@style/estiloSubtitulo"
-                />
+                android:text="@string/almacenamiento" />
 
             <TextView
-                android:id="@+id/txtProcesador"
+                android:id="@+id/txtAlmacenamiento"
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chip A16 Bionic"
-                style="@style/estiloSubtitulo"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
 
             <TextView
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pantalla"
+                android:text="@string/ram" />
+
+            <TextView
+                android:id="@+id/txtRam"
                 style="@style/estiloSubtitulo"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chip A16 Bionic"
+                android:textStyle="normal" />
+
+            <TextView
+                style="@style/estiloSubtitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pantalla" />
 
             <TextView
                 android:id="@+id/txtPantalla"
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6.1''"
-                style="@style/estiloSubtitulo"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
 
             <TextView
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/precio"
-                style="@style/estiloSubtitulo"
-                />
+                android:text="@string/precioCompra" />
 
             <TextView
                 android:id="@+id/txtPrecio"
+                style="@style/estiloSubtitulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="959€"
-                style="@style/estiloTitulo"
-                android:textStyle="normal"
-                />
+                android:text="959€" />
 
         </LinearLayout>
 

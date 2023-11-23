@@ -14,8 +14,6 @@ public interface IControlFragmentos {
     public Usuario obtenerSesion();
     public void cambiarToken(String token);
     public String obtenerToken();
-    public ArrayList<Articulo> obtenerListaArticulos();
-    public ArrayList<Etiqueta> obtenerListaEtiquetas();
     public ArrayList<Articulo> obtenerListaArticulosCesta();
     public ArrayList<Integer> obtenerListaCantidad();
     public void cambiarListaArticulosCesta(Articulo articulo);

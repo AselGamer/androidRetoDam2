@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     private void cambiarParametros(){   //sin buscador
         params.height = 90;
-        params.width = 300;
+        params.width = 690;
         params.setMargins(20, 50, 0, 0);
         txtTitulo.setLayoutParams(params);
         txtTitulo.setVisibility(View.VISIBLE);
@@ -248,16 +248,6 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public String obtenerToken() {
         return token;
-    }
-
-    @Override
-    public ArrayList<Articulo> obtenerListaArticulos() {
-        return listaArticulos;
-    }
-
-    @Override
-    public ArrayList<Etiqueta> obtenerListaEtiquetas() {
-        return listaEtiquetas;
     }
 
     @Override
@@ -313,8 +303,6 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
         recyclerBuscador.setAdapter(adaptadorBuscador);
         Busqueda busqueda = new Busqueda(query.toLowerCase());
         rellenarArticulosBuscador(busqueda);
-
-
         return false;
     }
 

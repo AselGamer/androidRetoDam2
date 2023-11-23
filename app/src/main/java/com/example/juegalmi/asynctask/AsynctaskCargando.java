@@ -27,7 +27,7 @@ public class AsynctaskCargando extends AsyncTask<Void,Integer,Void> {
     //Es la parte que se ejecuta en segundo plano en el hilo
     @Override
     protected Void doInBackground(Void... voids) {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 10; i++)
         {
             try
             {

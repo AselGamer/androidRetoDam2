@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,17 +87,33 @@ public class Pedido extends Fragment {
                         listaArticulos.add(transaccion.getDetalles()[i]);
                         listaCantidad.add(1);
                     }else{
+                        boolean encontrado = false;
+                        //Log.d("idArticulo", String.valueOf(listaArticulos.size()));
                         for(int j=0; j<listaArticulos.size(); j++){
+                            Log.d("idArticulo", "i: " + i + " j: " + j + " - " + transaccion.getDetalles()[i].getIdarticulo().getIdarticulo());
+                            Log.d("idArticulo", "i: " + i + " j: " + j + " - " + listaArticulos.get(j).getIdarticulo().getIdarticulo());
                             if(transaccion.getDetalles()[i].getIdarticulo().getIdarticulo() == listaArticulos.get(j).getIdarticulo().getIdarticulo()){
+                                //Log.d("idArticulo", String.valueOf(j));
                                 listaCantidad.set(j, listaCantidad.get(j) + 1);
-                            }else{
-                                listaArticulos.add(transaccion.getDetalles()[i]);
-                                listaCantidad.add(1);
+                                encontrado = true;
+                                break;
                             }
                         }
+                        if(encontrado == false){
+                            listaArticulos.add(transaccion.getDetalles()[i]);
+                            listaCantidad.add(1);
+                        }
                     }
-                    System.out.println(transaccion.getDetalles());
+                    //System.out.println(transaccion.getDetalles()[i].getIdarticulo().getIdarticulo());
+
                 }
+
+                /*for(int i=0; i<listaArticulos.size(); i++){
+                    System.out.println(listaArticulos.get(i).getIdarticulo().getIdarticulo());
+                }
+                for(int i=0; i<listaCantidad.size(); i++){
+                    System.out.println(listaCantidad.get(i));
+                }*/
 
                 detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), listaArticulos, listaCantidad);
             }

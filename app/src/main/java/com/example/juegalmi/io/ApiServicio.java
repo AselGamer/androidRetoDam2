@@ -51,9 +51,6 @@ public interface ApiServicio {
     @PUT("usuario/actualizar")
     Call<Respuesta> actualizarUsuario(@Header("Authorization") String authToken, @Body Usuario usuario);
 
-    @GET("articulos")
-    Call<List<Articulo>> getArticulos();
-
     @Headers("Content-Type: application/json")
     @POST("articulos/buscar")
     Call<List<Articulo>> buscar(@Body Busqueda busqueda);

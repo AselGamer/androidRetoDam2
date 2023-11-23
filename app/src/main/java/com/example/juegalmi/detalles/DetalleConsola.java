@@ -37,7 +37,7 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class DetalleConsola extends Fragment {
-    private TextView txtTitulo, txtDetalles, txtMarca, txtNumMandos, txtPlataformas, txtPrecio;
+    private TextView txtTitulo, txtDetalles, txtMarca, txtNumMandos, txtPlataformas, txtPrecio, txtAlmacenamiento;
     private ImageView imgFoto;
     private Button btnAnadir;
     private IControlFragmentos activity;
@@ -80,6 +80,7 @@ public class DetalleConsola extends Fragment {
         txtNumMandos = vista.findViewById(R.id.txtNumMandos);
         txtPlataformas = vista.findViewById(R.id.txtPlataformas);
         txtPrecio = vista.findViewById(R.id.txtPrecio);
+        txtAlmacenamiento = vista.findViewById(R.id.txtAlmacenamiento);
         imgFoto = vista.findViewById(R.id.imgFoto);
         btnAnadir = vista.findViewById(R.id.btnAnadir);
 
@@ -118,6 +119,7 @@ public class DetalleConsola extends Fragment {
                         txtTitulo.setText(articulo.getArticulonombre());
                         txtMarca.setText(articulo.getIdmarca().getNombre());
                         txtNumMandos.setText(lr.get(0).getCantmandos());
+                        txtAlmacenamiento.setText(lr.get(0).getAlmacenamiento());
                         String plataformas = "";
                         for(int i=0; i<lr.get(0).getPlataformas().length; i++){
                             if(i==0){

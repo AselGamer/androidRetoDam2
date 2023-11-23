@@ -92,10 +92,12 @@ public class Cesta extends Fragment {
 
             listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
             listaCantidad = new ArrayList<>(activity.obtenerListaCantidad());
+
             boolean encontrado = false;
 
             for(int i=0; i<listaArticulos.size(); i++){
                 if(listaArticulos.get(i).getIdarticulo() == articulo.getIdarticulo()){
+                    activity.cambiarTitulo("Cesta (" + listaArticulos.size() + ")");
                     listaCantidad.set(i, listaCantidad.get(i) + 1);
                     activity.cambiarListaCantidad(listaCantidad);
                     encontrado = true;
@@ -103,6 +105,8 @@ public class Cesta extends Fragment {
                 }
             }
             if(encontrado == false){
+                listaArticulos.add(articulo);
+                activity.cambiarTitulo("Cesta (" + listaArticulos.size() + ")");
                 activity.cambiarListaArticulosCesta(articulo);
                 listaCantidad.add(1);
                 activity.cambiarListaCantidad(listaCantidad);
@@ -114,6 +118,15 @@ public class Cesta extends Fragment {
         }else if(getArguments().containsKey("listaArticulos")){
             listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
             listaCantidad = new ArrayList<>(activity.obtenerListaCantidad());
+
+            recyclerCesta.setLayoutManager(new LinearLayoutManager(vista.getContext()));
+            cestaAdaptador = new CestaAdaptador(vista.getContext(), listaArticulos, listaCantidad);
+            recyclerCesta.setAdapter(cestaAdaptador);
+        }else if(getArguments().containsKey("cambiarTitulo")){
+            listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
+            listaCantidad = new ArrayList<>(activity.obtenerListaCantidad());
+
+            activity.cambiarTitulo("Cesta (" + listaArticulos.size() + ")");
 
             recyclerCesta.setLayoutManager(new LinearLayoutManager(vista.getContext()));
             cestaAdaptador = new CestaAdaptador(vista.getContext(), listaArticulos, listaCantidad);
@@ -131,30 +144,38 @@ public class Cesta extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         float precio = 0;
-        for(int i=0; i<activity.obtenerListaArticulos().size(); i++){
+        /*for(int i=0; i<activity.obtenerListaArticulos().size(); i++){
             precio = precio + activity.obtenerListaArticulos().get(i).getPrecio() * activity.obtenerListaCantidad().get(i);
+        }*/
+        for(int i=0; i<listaArticulos.size(); i++){
+            precio = precio + listaArticulos.get(i).getPrecio() * listaCantidad.get(i);
         }
         txtPrecioTotal.setText(precio + "€");
 
         btnComprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //////////////////////////////////////
-                /*DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(lr.get(0).getIdarticulo().getIdarticulo());
-                DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[1];
-                detalles[0] = detallePedidoTransaccion;
-                //System.out.println(detalles[0].getIdarticulo().getStockAlquiler());
+                DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[listaArticulos.size()];
+                for(int i=0; i<listaArticulos.size(); i++){
+                    DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(listaArticulos.get(i).getIdarticulo());
+                    detalles[i] = detallePedidoTransaccion;
+                }
+
                 TransaccionPedido transaccionPedido = new TransaccionPedido("30", "30", "Compra", detalles);
+
+                for(int i=0; i<transaccionPedido.getDetalles().length; i++){
+                    System.out.println(transaccionPedido.getDetalles()[i].getIdarticulo());
+                }
 
                 Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarTransaccion("Bearer " + activity.obtenerToken(), transaccionPedido);
                 call2.enqueue(new Callback<Respuesta>() {
                     @Override
                     public void onResponse(Call<Respuesta> call2, Response<Respuesta> response) {
                         if(response.isSuccessful()){
-                            activity.cambiarTitulo("Mis Alquileres");
+                            activity.cambiarTitulo("Mis Pedidos");
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.contenedor, new MisAlquileres())
+                                    .replace(R.id.contenedor, new MisPedidos())
                                     .commit();
                         }else{
                             Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
@@ -165,7 +186,7 @@ public class Cesta extends Fragment {
                     public void onFailure(Call<Respuesta> call2, Throwable t) {
                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
-                });*/
+                });
             }
         });
     }

@@ -95,6 +95,7 @@ public class Pedido extends Fragment {
                             }
                         }
                     }
+                    System.out.println(transaccion.getDetalles());
                 }
 
                 detalleTransaccionAdaptador = new DetalleTransaccionAdaptador(vista.getContext(), listaArticulos, listaCantidad);

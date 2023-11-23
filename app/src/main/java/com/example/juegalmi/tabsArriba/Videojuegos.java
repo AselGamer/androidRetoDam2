@@ -39,7 +39,7 @@ import retrofit2.Response;
  */
 public class Videojuegos extends Fragment {
     private IControlFragmentos activity;
-    private ListView listaCategorias = null;
+    private ListView listCategorias = null;
 
     public Videojuegos() {
         // Required empty public constructor
@@ -77,8 +77,8 @@ public class Videojuegos extends Fragment {
 
                     TipoAdaptador tipoAdaptador = new TipoAdaptador(vista.getContext(), lr);
 
-                    listaCategorias = vista.findViewById(R.id.listCategorias);
-                    listaCategorias.setAdapter(tipoAdaptador);
+                    listCategorias = vista.findViewById(R.id.listCategorias);
+                    listCategorias.setAdapter(tipoAdaptador);
                 }else{
                     Toast.makeText(getContext(), "No se han podido cargar los articulos", Toast.LENGTH_SHORT).show();
                 }
@@ -115,8 +115,6 @@ public class Videojuegos extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     private void rellenarFotos() {

@@ -126,7 +126,6 @@ public class DetalleConsola extends Fragment {
                         }
                         txtPlataformas.setText(plataformas);
                         txtPrecio.setText(articulo.getPrecio() + "€");
-                        System.out.println(articulo.getFoto());
                         Glide
                                 .with(getContext())
                                 .load("https://retoasel.duckdns.org/images/" + articulo.getFoto())

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.juegalmi.adaptadores.RecyclerAdaptador;
+import com.example.juegalmi.asynctask.Cargando;
 import com.example.juegalmi.botonesAbajo.Galeria;
 import com.example.juegalmi.botonesAbajo.Productos;
 import com.example.juegalmi.botonesAbajo.Reparaciones;
@@ -47,23 +49,27 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     private LinearLayout.LayoutParams params, paramsMP;
     private RecyclerAdaptador adaptador, adaptadorBuscador;
     private RecyclerView recyclerBuscador;
-    private ArrayList<Articulo> listaArticulos;
+    private ArrayList<Articulo> listaArticulos, listaArticulosCesta;
+    private ArrayList<Integer> listaCantidad;
     private ArrayList<Etiqueta> listaEtiquetas;
     private LinearLayout layRecycler, contenedor;
     private Usuario usuario;
     private String token = "";
     private int numBusqueda = 0;
+    private Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*final Intent intent = new Intent(this, Cargando.class);
-        startActivity(intent);*/
+        final Intent intent = new Intent(this, Cargando.class);
+        startActivity(intent);
 
         listaArticulos = new ArrayList<>();
         listaEtiquetas = new ArrayList<>();
+        listaArticulosCesta = new ArrayList<>();
+        listaCantidad = new ArrayList<>();
 
         //rellenarArticulos();
         //rellenarArticulosBuscador();
@@ -121,12 +127,10 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                             .replace(R.id.contenedor, new IniciarSesion())
                             .commit();
                 }else{
-                    txtTitulo.setText("Cesta");
+                    bundle.putSerializable("listaArticulos", listaArticulos);
+                    txtTitulo.setText("Cesta (" + listaArticulos.size() + ")");
                     cambiarParametros();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.contenedor, new Cesta())
-                            .commit();
+                    cambiarFragmento(Cesta.newInstance(bundle));
                 }
             }
         });
@@ -199,12 +203,10 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     @Override
     public void cambiarTitulo(String titulo) {
         txtTitulo.setText(titulo);
-        if(titulo != null){
-            if(usuario == null && !titulo.equals("Crear Cuenta")){
-                cambiarParametrosBuscador();
-            }else{
-                cambiarParametros();
-            }
+        if(usuario == null && !titulo.equals("Crear Cuenta")){
+            cambiarParametrosBuscador();
+        }else{
+            cambiarParametros();
         }
     }
 
@@ -237,6 +239,37 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
     public ArrayList<Etiqueta> obtenerListaEtiquetas() {
         return listaEtiquetas;
     }
+
+    @Override
+    public ArrayList<Articulo> obtenerListaArticulosCesta() {
+        return listaArticulosCesta;
+    }
+
+    @Override
+    public ArrayList<Integer> obtenerListaCantidad() {
+        return listaCantidad;
+    }
+
+    @Override
+    public void cambiarListaArticulosCesta(Articulo articulo) {
+        listaArticulosCesta.add(articulo);
+    }
+
+    @Override
+    public void quitarListaArticulosCesta(int posicion) {
+        listaArticulosCesta.remove(posicion);
+    }
+
+    @Override
+    public void cambiarListaCantidad(ArrayList<Integer> listaCantidad) {
+        this.listaCantidad = listaCantidad;
+    }
+
+    @Override
+    public void quitarListaCantidad(int posicion) {
+        listaCantidad.remove(posicion);
+    }
+
 
     @Override
     public void cambiarFragmento(Fragment fragmento) {

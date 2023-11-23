@@ -50,6 +50,7 @@ public class DetalleVideojuego extends Fragment {
     private ImageView imgVideojuego;
     private Button btnAnadir, btnAlquilar;
     private IControlFragmentos activity;
+    private Bundle bundle = new Bundle();
 
     public DetalleVideojuego() {
         // Required empty public constructor
@@ -129,7 +130,11 @@ public class DetalleVideojuego extends Fragment {
 
                         List<Producto> lr = response.body();
 
-                        txtTitulo.setText(articulo.getArticulonombre());
+                        if(articulo.getArticulonombre() == null){
+                            txtTitulo.setText(articulo.getNombre());
+                        }else{
+                            txtTitulo.setText(articulo.getArticulonombre());
+                        }
                         txtMarca.setText(articulo.getIdmarca().getNombre());
                         txtPlataforma.setText(lr.get(0).getIdplataforma().getNombre());
                         String etiquetas = "";
@@ -151,10 +156,9 @@ public class DetalleVideojuego extends Fragment {
                         btnAnadir.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                getActivity().getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.contenedor, new Cesta())
-                                        .commit();
+                                bundle.putSerializable("articulo", articulo);
+                                activity.cambiarTitulo("Cesta (" + activity.obtenerListaArticulos().size() + ")");
+                                activity.cambiarFragmento(Cesta.newInstance(bundle));
                             }
                         });
 

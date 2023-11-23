@@ -153,9 +153,6 @@ public class IniciarSesion extends Fragment {
                 //PROGRESSBAR
 
 
-                //ANIMACION
-                btnEnviar.startAnimation(animation);
-
                 //INICIAR SESION: Retrofit
                 Login login = new Login(edtEmail.getText().toString(), edtContrasenya.getText().toString());
                 Call<Respuesta> call = ApiAdaptador.getApiService().login(login);
@@ -164,6 +161,8 @@ public class IniciarSesion extends Fragment {
                     @Override
                     public void onResponse(Call<Respuesta> call, Response<Respuesta> response) {
                         if(response.isSuccessful()){
+                            //ANIMACION
+                            btnEnviar.startAnimation(animation);
                             token = response.body().getToken();
 
                             Call<Usuario> call2 = ApiAdaptador.getApiService().getAutorizacion("Bearer " + token);

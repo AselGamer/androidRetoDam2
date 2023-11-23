@@ -75,7 +75,11 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
                 .load("https://retoasel.duckdns.org/images/" + listaArticulos.get(position).getFoto())
                 .into(holder.imagen);
 
-        holder.txtTexto1.setText(listaArticulos.get(position).getArticulonombre());
+        if(listaArticulos.get(position).getTipoarticulo() == null){
+            holder.txtTexto1.setText(listaArticulos.get(position).getNombre());
+        }else{
+            holder.txtTexto1.setText(listaArticulos.get(position).getArticulonombre());
+        }
         holder.txtTexto2.setText(String.valueOf(listaArticulos.get(position).getPrecio()));
         holder.txtTexto3.setText(listaArticulos.get(position).getIdmarca().getNombre());
 
@@ -84,7 +88,6 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
             public void onClick(View view) {
                 //DE AQUI A DETALLE VIDEOJUEGO, CONSOLA, MOVIL...
                 LayoutInflater inflater = LayoutInflater.from(context);  //Declaración del inflador
-
                 //Carga de la vista. Parametros: 1.-Archivo XML, 2.-El linear layout
                 View vista;
                 if(buscador == true){
@@ -97,19 +100,27 @@ public class RecyclerAdaptador extends RecyclerView.Adapter<RecyclerAdaptador.Mi
 
                 Articulo articulo = listaArticulos.get(position);
 
-                activity.cambiarTitulo(listaArticulos.get(position).getTipoarticulo());
+
 
                 /*bundle.putString("texto1", holder.txtTexto1.getText().toString());
                 bundle.putString("texto2", holder.txtTexto2.getText().toString());
                 bundle.putString("texto3", holder.txtTexto3.getText().toString());*/
                 bundle.putSerializable("articulo", articulo);
 
-                if(listaArticulos.get(position).getTipoarticulo().equals("Videojuego")){
+                if(listaArticulos.get(position).getTipoarticulo() == null){
+                    activity.cambiarTitulo("Videojuego");
                     activity.cambiarFragmento(DetalleVideojuego.newInstance(bundle));
-                }else if(listaArticulos.get(position).getTipoarticulo().equals("Consola")){
-                    activity.cambiarFragmento(DetalleConsola.newInstance(bundle));
-                }else if(listaArticulos.get(position).getTipoarticulo().equals("DispositivoMovil")){
-                    activity.cambiarFragmento(DetalleMovil.newInstance(bundle));
+                }else{
+                    if(listaArticulos.get(position).getTipoarticulo().equals("Videojuego")){
+                        activity.cambiarTitulo(listaArticulos.get(position).getTipoarticulo());
+                        activity.cambiarFragmento(DetalleVideojuego.newInstance(bundle));
+                    }else if(listaArticulos.get(position).getTipoarticulo().equals("Consola")){
+                        activity.cambiarTitulo(listaArticulos.get(position).getTipoarticulo());
+                        activity.cambiarFragmento(DetalleConsola.newInstance(bundle));
+                    }else if(listaArticulos.get(position).getTipoarticulo().equals("DispositivoMovil")){
+                        activity.cambiarTitulo(listaArticulos.get(position).getTipoarticulo());
+                        activity.cambiarFragmento(DetalleMovil.newInstance(bundle));
+                    }
                 }
 
                 //vista.getContext().get

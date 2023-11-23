@@ -1,15 +1,24 @@
 package com.example.juegalmi;
 
+
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +37,11 @@ import com.example.juegalmi.model.DetallePedidoTransaccion;
 import com.example.juegalmi.model.Producto;
 import com.example.juegalmi.model.Respuesta;
 import com.example.juegalmi.model.TransaccionPedido;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 
 import java.util.ArrayList;
 
@@ -50,6 +64,10 @@ public class Cesta extends Fragment {
     private IControlFragmentos activity;
     private TextView txtPrecioTotal;
     private Button btnComprar;
+    private FusedLocationProviderClient fusedLocationClient;
+    private double latitud;
+    private double longitud;
+
 
     public Cesta() {
         // Required empty public constructor
@@ -86,8 +104,7 @@ public class Cesta extends Fragment {
 
         recyclerCesta = vista.findViewById(R.id.recyclerBuscador);
 
-        if(getArguments().containsKey("articulo"))
-        {
+        if (getArguments().containsKey("articulo")) {
             Articulo articulo = (Articulo) getArguments().getSerializable("articulo");
 
             listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
@@ -95,8 +112,8 @@ public class Cesta extends Fragment {
 
             boolean encontrado = false;
 
-            for(int i=0; i<listaArticulos.size(); i++){
-                if(listaArticulos.get(i).getIdarticulo() == articulo.getIdarticulo()){
+            for (int i = 0; i < listaArticulos.size(); i++) {
+                if (listaArticulos.get(i).getIdarticulo() == articulo.getIdarticulo()) {
                     activity.cambiarTitulo("Cesta (" + listaArticulos.size() + ")");
                     listaCantidad.set(i, listaCantidad.get(i) + 1);
                     activity.cambiarListaCantidad(listaCantidad);
@@ -104,7 +121,7 @@ public class Cesta extends Fragment {
                     break;
                 }
             }
-            if(encontrado == false){
+            if (encontrado == false) {
                 listaArticulos.add(articulo);
                 activity.cambiarTitulo("Cesta (" + listaArticulos.size() + ")");
                 activity.cambiarListaArticulosCesta(articulo);
@@ -115,14 +132,14 @@ public class Cesta extends Fragment {
             recyclerCesta.setLayoutManager(new LinearLayoutManager(vista.getContext()));
             cestaAdaptador = new CestaAdaptador(vista.getContext(), listaArticulos, listaCantidad);
             recyclerCesta.setAdapter(cestaAdaptador);
-        }else if(getArguments().containsKey("listaArticulos")){
+        } else if (getArguments().containsKey("listaArticulos")) {
             listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
             listaCantidad = new ArrayList<>(activity.obtenerListaCantidad());
 
             recyclerCesta.setLayoutManager(new LinearLayoutManager(vista.getContext()));
             cestaAdaptador = new CestaAdaptador(vista.getContext(), listaArticulos, listaCantidad);
             recyclerCesta.setAdapter(cestaAdaptador);
-        }else if(getArguments().containsKey("cambiarTitulo")){
+        } else if (getArguments().containsKey("cambiarTitulo")) {
             listaArticulos = new ArrayList<>(activity.obtenerListaArticulosCesta());
             listaCantidad = new ArrayList<>(activity.obtenerListaCantidad());
 
@@ -144,49 +161,84 @@ public class Cesta extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         float precio = 0;
+
         /*for(int i=0; i<activity.obtenerListaArticulos().size(); i++){
             precio = precio + activity.obtenerListaArticulos().get(i).getPrecio() * activity.obtenerListaCantidad().get(i);
         }*/
-        for(int i=0; i<listaArticulos.size(); i++){
+        for (int i = 0; i < listaArticulos.size(); i++) {
             precio = precio + listaArticulos.get(i).getPrecio() * listaCantidad.get(i);
         }
         txtPrecioTotal.setText(precio + "€");
 
         btnComprar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onClick(View view) {
                 DetallePedidoTransaccion[] detalles = new DetallePedidoTransaccion[listaArticulos.size()];
-                for(int i=0; i<listaArticulos.size(); i++){
+                for (int i = 0; i < listaArticulos.size(); i++) {
                     DetallePedidoTransaccion detallePedidoTransaccion = new DetallePedidoTransaccion(listaArticulos.get(i).getIdarticulo());
                     detalles[i] = detallePedidoTransaccion;
                 }
 
-                TransaccionPedido transaccionPedido = new TransaccionPedido("30", "30", "Compra", detalles);
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
-                for(int i=0; i<transaccionPedido.getDetalles().length; i++){
-                    System.out.println(transaccionPedido.getDetalles()[i].getIdarticulo());
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
                 }
-
-                Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarTransaccion("Bearer " + activity.obtenerToken(), transaccionPedido);
-                call2.enqueue(new Callback<Respuesta>() {
+                fusedLocationClient.getCurrentLocation(LocationRequest.QUALITY_HIGH_ACCURACY, new CancellationToken() {
+                    @NonNull
                     @Override
-                    public void onResponse(Call<Respuesta> call2, Response<Respuesta> response) {
-                        if(response.isSuccessful()){
-                            activity.cambiarTitulo("Mis Pedidos");
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.contenedor, new MisPedidos())
-                                    .commit();
-                        }else{
-                            Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
-                        }
+                    public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                        return null;
                     }
 
                     @Override
-                    public void onFailure(Call<Respuesta> call2, Throwable t) {
-                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                    public boolean isCancellationRequested() {
+                        return false;
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        latitud = location.getLatitude();
+                        longitud = location.getLongitude();
+                        TransaccionPedido transaccionPedido = new TransaccionPedido(latitud+"", longitud+"", "Compra", detalles);
+
+                        for(int i=0; i<transaccionPedido.getDetalles().length; i++){
+                            System.out.println(transaccionPedido.getDetalles()[i].getIdarticulo());
+                        }
+
+                        Call<Respuesta> call2 = ApiAdaptador.getApiService().tramitarTransaccion("Bearer " + activity.obtenerToken(), transaccionPedido);
+                        call2.enqueue(new Callback<Respuesta>() {
+                            @Override
+                            public void onResponse(Call<Respuesta> call2, Response<Respuesta> response) {
+                                if(response.isSuccessful()){
+                                    activity.cambiarTitulo("Mis Pedidos");
+                                    getActivity().getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.contenedor, new MisPedidos())
+                                            .commit();
+                                }else{
+                                    Toast.makeText(getContext(), "El Token no es correcto", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Respuesta> call2, Throwable t) {
+                                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
+
+
+
             }
         });
     }

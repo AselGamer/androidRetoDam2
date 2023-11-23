@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     private void cambiarParametros(){   //sin buscador
         params.height = 90;
-        params.width = 500;
-        params.setMargins(20, 50, 100, 0);
+        params.width = 300;
+        params.setMargins(20, 50, 0, 0);
         txtTitulo.setLayoutParams(params);
         txtTitulo.setVisibility(View.VISIBLE);
         buscador.setVisibility(View.INVISIBLE);

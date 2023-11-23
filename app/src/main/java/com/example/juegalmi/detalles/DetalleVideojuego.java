@@ -157,7 +157,6 @@ public class DetalleVideojuego extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 bundle.putSerializable("articulo", articulo);
-                                activity.cambiarTitulo("Cesta (" + activity.obtenerListaArticulos().size() + ")");
                                 activity.cambiarFragmento(Cesta.newInstance(bundle));
                             }
                         });

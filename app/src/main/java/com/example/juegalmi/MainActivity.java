@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
                             .replace(R.id.contenedor, new IniciarSesion())
                             .commit();
                 }else{
-                    bundle.putSerializable("listaArticulos", listaArticulos);
-                    txtTitulo.setText("Cesta (" + listaArticulos.size() + ")");
+                    boolean cambiarTitulo = true;
+                    bundle.putSerializable("cambiarTitulo", cambiarTitulo);
                     cambiarParametros();
                     cambiarFragmento(Cesta.newInstance(bundle));
                 }
@@ -277,7 +277,13 @@ public class MainActivity extends AppCompatActivity implements IControlFragmento
 
     @Override
     public void quitarListaArticulosCesta(int posicion) {
-        listaArticulosCesta.remove(posicion);
+        if(listaCantidad.get(posicion) <= 1){
+            listaArticulosCesta.remove(posicion);
+            listaCantidad.remove(posicion);
+        }else{
+            int cantidad = listaCantidad.get(posicion) - 1;
+            listaCantidad.set(posicion, cantidad);
+        }
     }
 
     @Override

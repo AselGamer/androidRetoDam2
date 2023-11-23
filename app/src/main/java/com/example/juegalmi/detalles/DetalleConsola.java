@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.juegalmi.Cesta;
 import com.example.juegalmi.R;
 import com.example.juegalmi.interfaces.IControlFragmentos;
 import com.example.juegalmi.io.ApiAdaptador;
@@ -40,6 +41,7 @@ public class DetalleConsola extends Fragment {
     private ImageView imgFoto;
     private Button btnAnadir;
     private IControlFragmentos activity;
+    private Bundle bundle = new Bundle();
 
     public DetalleConsola() {
         // Required empty public constructor
@@ -130,6 +132,15 @@ public class DetalleConsola extends Fragment {
                                 .with(getContext())
                                 .load("https://retoasel.duckdns.org/images/" + articulo.getFoto())
                                 .into(imgFoto);
+
+                        btnAnadir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                bundle.putSerializable("articulo", articulo);
+                                activity.cambiarFragmento(Cesta.newInstance(bundle));
+                            }
+                        });
+
                     }else{
                         Toast.makeText(getContext(), "No se ha podido obtener el videojuego", Toast.LENGTH_SHORT).show();
                     }

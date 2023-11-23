@@ -64,8 +64,8 @@ public class CestaAdaptador extends RecyclerView.Adapter<CestaAdaptador.MiViewHo
             @Override
             public void onClick(View view) {
                 activity.quitarListaArticulosCesta(position);
-                activity.quitarListaCantidad(position);
-                activity.cambiarTitulo("Cesta (" + activity.obtenerListaArticulos().size() + ")");
+                activity.cambiarTitulo("Cesta (" + activity.obtenerListaArticulosCesta().size() + ")");
+                System.out.println(activity.obtenerListaArticulosCesta().size());
                 bundle.putSerializable("listaArticulos", listaArticulos);
                 activity.cambiarFragmento(Cesta.newInstance(bundle));
             }

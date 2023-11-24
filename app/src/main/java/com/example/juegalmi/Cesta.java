@@ -67,8 +67,8 @@ public class Cesta extends Fragment {
     private TextView txtPrecioTotal;
     private Button btnComprar;
     private FusedLocationProviderClient fusedLocationClient;
-    private double latitud;
-    private double longitud;
+    private double latitud = 0;
+    private double longitud = 0;
     private Animation animation;
 
     public Cesta() {
@@ -194,7 +194,7 @@ public class Cesta extends Fragment {
                 }
 
 
-                /*fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
                 if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -221,9 +221,7 @@ public class Cesta extends Fragment {
                     @Override
                     public void onSuccess(Location location) {
                         latitud = location.getLatitude();
-                        longitud = location.getLongitude();*/
-                        latitud = 30;
-                        longitud = 30;
+                        longitud = location.getLongitude();
                         TransaccionPedido transaccionPedido = new TransaccionPedido(latitud+"", longitud+"", "Compra", detalles);
 
 
@@ -247,8 +245,8 @@ public class Cesta extends Fragment {
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
-                    //}
-                //});
+                    }
+                });
 
 
 
